@@ -41,7 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\ArtistDTO.cs" />
+    <Compile Include="DTO\BandDTO.cs" />
+    <Compile Include="DTO\BandSongDTO.cs" />
+    <Compile Include="DTO\CommentDTO.cs" />
+    <Compile Include="DTO\CountryDTO.cs" />
+    <Compile Include="DTO\GenreDTO.cs" />
+    <Compile Include="DTO\PlaylistDTO.cs" />
+    <Compile Include="DTO\RatingDTO.cs" />
+    <Compile Include="DTO\SongDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MuzON.Domain\MuzON.Domain.csproj">
+      <Project>{7b4f73c8-13a4-4b9b-8b20-9d02d3b0df26}</Project>
+      <Name>MuzON.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
