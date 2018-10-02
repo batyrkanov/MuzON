@@ -68,6 +68,7 @@
     <Compile Include="DTO\CountryDTO.cs" />
     <Compile Include="DTO\GenreDTO.cs" />
     <Compile Include="DTO\PlaylistDTO.cs" />
+    <Compile Include="DTO\PlaylistSongDTO.cs" />
     <Compile Include="DTO\RatingDTO.cs" />
     <Compile Include="DTO\SongDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />

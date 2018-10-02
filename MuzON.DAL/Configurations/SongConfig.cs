@@ -12,18 +12,11 @@ namespace MuzON.DAL.Configurations
     {
         public SongConfig()
         {
-            HasMany(c => c.Playlists)
-                .WithMany(s => s.Songs)
-                .Map(t => t.MapLeftKey("SongId") 
-                .MapRightKey("PlaylistId") 
-                .ToTable("SongPlaylist"));
-
             HasMany(c => c.Genres)
                 .WithMany(s => s.Songs)
                 .Map(t => t.MapLeftKey("SongId") 
                 .MapRightKey("GenreId") 
                 .ToTable("SongGenres"));
-            
         }
     }
 }

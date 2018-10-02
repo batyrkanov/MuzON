@@ -63,8 +63,14 @@
     <Compile Include="Entities\Genre.cs" />
     <Compile Include="Entities\Playlist.cs" />
     <Compile Include="Entities\Rating.cs" />
+    <Compile Include="Entities\PlaylistSong.cs" />
     <Compile Include="Entities\Song.cs" />
-    <Compile Include="Identity\IdentityModels.cs" />
+    <Compile Include="Identity\ApplicationRoleManager.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
+    <Compile Include="Identity\Role.cs" />
+    <Compile Include="Identity\UserClaim.cs" />
+    <Compile Include="Identity\UserLogin.cs" />
+    <Compile Include="Identity\UserRole.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

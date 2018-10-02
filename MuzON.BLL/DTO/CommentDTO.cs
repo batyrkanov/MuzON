@@ -10,11 +10,8 @@ namespace MuzON.BLL.DTO
     public class CommentDTO
     {
         public Guid Id { get; set; }
-        public string CommentText { get; set; }
-        public Guid? SongId { get; set; }
-        public Guid? UserId { get; set; }
-
-        public virtual Song Song { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public string Text { get; set; }
+        public Guid SongId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MuzON.Domain.Identity.IdentityModels;
 
 namespace MuzON.DAL.Repositories
 {
@@ -29,8 +28,8 @@ namespace MuzON.DAL.Repositories
         public UnitOfWork(string connectionString)
         {
             context = new MuzONContext(connectionString);
-            applicationUserManager = new ApplicationUserManager(new CustomUserStore(context));
-            applicationRoleManager = new ApplicationRoleManager(new CustomRoleStore(context));
+            applicationUserManager = new ApplicationUserManager(new UserStore(context));
+            applicationRoleManager = new ApplicationRoleManager(new RoleStore(context));
         }
 
 
@@ -113,9 +112,9 @@ namespace MuzON.DAL.Repositories
             }
         }
 
-        public IdentityModels.ApplicationUserManager ApplicationUserManager { get { return applicationUserManager; } }
+        public ApplicationUserManager ApplicationUserManager { get { return applicationUserManager; } }
 
-        public IdentityModels.ApplicationRoleManager ApplicationRoleManager { get { return applicationRoleManager; } }
+        public ApplicationRoleManager ApplicationRoleManager { get { return applicationRoleManager; } }
 
         // Save
         public void Save()

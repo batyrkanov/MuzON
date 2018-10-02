@@ -10,13 +10,13 @@ namespace MuzON.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Image { get; set; }
+        public byte[] Image { get; set; }
         public int Index { get; set; }
-        public virtual ICollection<Song> Songs { get; set; }
+        public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; }
 
         public Playlist()
         {
-            Songs = new List<Song>();
+            PlaylistSongs = new List<PlaylistSong>();
         }
     }
 }

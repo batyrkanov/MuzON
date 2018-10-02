@@ -14,7 +14,7 @@ namespace MuzON.DAL.Configurations
         {
             HasKey(e => new { e.ArtistId, e.BandId, e.SongId });
 
-            HasOptional(e => e.Song)
+            HasRequired(e => e.Song)
                 .WithMany(e => e.BandSongs)
                 .HasForeignKey(e => e.SongId);
 

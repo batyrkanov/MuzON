@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using MuzON.DAL.Configurations;
 using MuzON.Domain.Entities;
+using MuzON.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,11 +9,10 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MuzON.Domain.Identity.IdentityModels;
 
 namespace MuzON.DAL.EF
 {
-    public class MuzONContext : IdentityDbContext<ApplicationUser, CustomRole, Guid, CustomUserLogin, CustomUserRole, CustomUserClaim>
+    public class MuzONContext : IdentityDbContext<ApplicationUser, Role, Guid, UserLogin, UserRole, UserClaim>
     {
         public DbSet<Band> Bands { get; set; }
         public DbSet<Artist> Artists { get; set; }
@@ -23,6 +23,7 @@ namespace MuzON.DAL.EF
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<BandSong> BandSongs { get; set; }
+        public DbSet<PlaylistSong> PlaylistSongs { get; set; }
 
         public MuzONContext(string connectionString) : base(connectionString) { }
 
