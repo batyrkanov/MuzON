@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MuzON.BLL.MappingProfiles
 {
-    public class BLLMapingProfile : Profile
+    public class BLLMappingProfile : Profile
     {
-        public BLLMapingProfile()
+        public BLLMappingProfile()
         {
             CreateMap<Artist, ArtistDTO>(MemberList.None).ReverseMap();
 

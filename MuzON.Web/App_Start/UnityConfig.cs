@@ -1,6 +1,12 @@
+using MuzON.BLL.Interfaces;
+using MuzON.BLL.Services;
+using MuzON.DAL.Repositories;
+using MuzON.Domain.Interfaces;
 using System;
 
 using Unity;
+using Unity.AspNet.Mvc;
+using Unity.Injection;
 
 namespace MuzON.Web
 {
@@ -39,7 +45,9 @@ namespace MuzON.Web
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
-
+            container.RegisterType<IArtistService, ArtistService>(new PerRequestLifetimeManager());
+            container.RegisterType<ICountryService, CountryService>(new PerRequestLifetimeManager());
+            container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager(), new InjectionConstructor("DefaultConnection"));
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
         }

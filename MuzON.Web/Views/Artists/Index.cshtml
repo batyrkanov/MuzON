@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MuzON.Web.Models.ArtistViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Artists</h2>
+
+<div class="container">
+    <br />
+    <div>
+        <table id="tableGrid" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Country</th>
+                    <th>Birth Date</th>
+                    <th>Image</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#tableGrid").DataTable({
+                "ajax": {
+                    "url": "/Artists/GetList",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "FullName" },
+                    { "data": "CountryId" },
+                    {
+                        "data": "BirthDate"
+                        //"render": function (BirthDate) {
+                        //    var date = new Date(BirthDate * 1000);
+                        //    // Hours part from the timestamp
+                        //    var hours = date.getHours();
+                        //    // Minutes part from the timestamp
+                        //    var minutes = "0" + date.getMinutes();
+                        //    // Seconds part from the timestamp
+                        //    var seconds = "0" + date.getSeconds();
+
+                        //    // Will display time in 10:30:23 format
+                        //    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                        //    return formattedTime;
+                        //}
+                    },
+
+                    {
+                        "data": "Image", "render": function (Image) {
+                            return "<img id=\"imageSize\" src=\"data:image/jpeg;base64,"+ Image + "\" />"
+                        }
+                    },
+                    {
+                        "data": "Id", "render": function (Id) {
+                            return "<a class=\"btn btn-info\" href=/Artists/Edit/" +Id+ ">Edit</a>"
+                        }
+                    },
+                    {
+                        "data": "Id", "render": function (Id) {
+                            return "<a class=\"btn btn-danger\" href=/Artists/Delete/" + Id + ">Delete</a>"
+                        }
+                    }
+                ]
+            })
+        });
+    </script>
+}

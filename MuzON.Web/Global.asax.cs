@@ -1,5 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using MuzON.BLL.MappingProfiles;
+using MuzON.Web.MappingProfiles;
+using MuzON.DAL.EF;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +21,22 @@ namespace MuzON.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutoMapperConfiguration.Configure();
+        }
+    }
+
+    public class AutoMapperConfiguration
+    {
+        public static void Configure()
+        {
+            Mapper.Initialize(x =>
+            {
+                x.AllowNullCollections = true;
+                x.AddProfile<BLLMappingProfile>();
+                x.AddProfile<WebMappingProfile>();
+            });
+
+            Mapper.Configuration.AssertConfigurationIsValid();
         }
     }
 }

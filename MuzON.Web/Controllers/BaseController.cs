@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MuzON.BLL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,27 @@ namespace MuzON.Web.Controllers
 {
     public class BaseController : Controller
     {
-        // GET: Base
-        public ActionResult Index()
+        public IArtistService artistService;
+        public ICountryService countryService;
+        // Artists controller constructor
+        public BaseController(IArtistService artistServ,
+                              ICountryService countryServ)
         {
-            return View();
+            artistService = artistServ;
+            countryService = countryServ;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    artistService.Dispose();
+                }
+                catch { }
+            }
+            base.Dispose(disposing);
         }
     }
 }
