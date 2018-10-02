@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MuzON.Domain.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,6 @@ namespace MuzON.Domain.Entities
         public Guid UserId { get; set; }
 
         public virtual Song Song { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public virtual User User { get; set; }
     }
 }

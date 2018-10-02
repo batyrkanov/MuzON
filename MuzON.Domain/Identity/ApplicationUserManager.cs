@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace MuzON.Domain.Identity
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser, Guid>
+    public class ApplicationUserManager : UserManager<User, Guid>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser, Guid> store)
+        public ApplicationUserManager(IUserStore<User, Guid> store)
             : base(store)
         { }
     }

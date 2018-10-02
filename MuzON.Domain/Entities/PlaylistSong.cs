@@ -8,6 +8,7 @@ namespace MuzON.Domain.Entities
 {
     public class PlaylistSong
     {
+        public Guid Id { get; set; }
         public Guid SongId { get; set; }
         public Guid PlaylistId { get; set; }
         public int Index { get; set; }

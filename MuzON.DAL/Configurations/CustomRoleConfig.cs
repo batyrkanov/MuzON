@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MuzON.Domain.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MuzON.Domain.Identity.IdentityModels;
 
 namespace MuzON.DAL.Configurations
 {
-    class CustomRoleConfig : EntityTypeConfiguration<CustomRole>
+    class CustomRoleConfig : EntityTypeConfiguration<Role>
     {
         // Configure with FLUENT API
         public CustomRoleConfig()

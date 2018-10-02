@@ -54,7 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Identity\User.cs" />
     <Compile Include="Entities\Artist.cs" />
     <Compile Include="Entities\Band.cs" />
     <Compile Include="Entities\BandSong.cs" />

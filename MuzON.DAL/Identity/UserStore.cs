@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MuzON.DAL.Identity
 {
     // Extend Identity classes to specify a Guid for the key
-    public class UserStore : UserStore<ApplicationUser, Role, Guid, UserLogin, UserRole, UserClaim>
+    public class UserStore : UserStore<User, Role, Guid, UserLogin, UserRole, UserClaim>
     {
         public UserStore(MuzONContext context)
             : base(context)

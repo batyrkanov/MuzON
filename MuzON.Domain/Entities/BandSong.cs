@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace MuzON.Domain.Entities
 {
     public class BandSong
     {
+        public Guid Id { get; set; }
         public Guid? BandId { get; set; }
         public Guid? ArtistId { get; set; }
         public Guid SongId { get; set; }

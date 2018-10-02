@@ -12,7 +12,7 @@ namespace MuzON.DAL.Configurations
     {
         public BandSongConfig()
         {
-            HasKey(e => new { e.ArtistId, e.BandId, e.SongId });
+            HasKey(x => x.Id);
 
             HasRequired(e => e.Song)
                 .WithMany(e => e.BandSongs)

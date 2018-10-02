@@ -1,4 +1,5 @@
 ﻿using MuzON.Domain.Entities;
+using MuzON.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace MuzON.DAL.Configurations
 {
-    public class ApplicationUserConfig : EntityTypeConfiguration<ApplicationUser>
+    public class UserConfig : EntityTypeConfiguration<User>
     {
         // Configure with FLUENT API
-        public ApplicationUserConfig()
+        public UserConfig()
         {
             HasMany(p => p.Roles)
             .WithRequired()

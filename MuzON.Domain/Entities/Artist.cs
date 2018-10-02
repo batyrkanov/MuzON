@@ -15,11 +15,11 @@ namespace MuzON.Domain.Entities
         public Guid CountryId { get; set; }
         public virtual Country Country { get; set; }
         public virtual ICollection<BandSong> BandSongs { get; set; }
-        public virtual ICollection<Band> Bands { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
 
         public Artist()
         {
-            Bands = new List<Band>();
+            Members = new List<Member>();
             BandSongs = new List<BandSong>();
         }
     }
