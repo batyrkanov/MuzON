@@ -11,5 +11,7 @@ namespace MuzON.BLL.DTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public ICollection<GenreDTO> Genres { get; set; }
+        public ICollection<PlaylistSongDTO> PlaylistSongs { get; set; }
     }
 }
