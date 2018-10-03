@@ -15,7 +15,10 @@ namespace MuzON.Web.MappingProfiles
             CreateMap<ArtistDTO, ArtistViewModel>(MemberList.None)
                 .ForMember(f=>f.Image,opt=>opt.MapFrom(src=>Convert.ToBase64String(src.Image)))
                 .ForMember(f=>f.BirthDate, opt=>opt.MapFrom(src=>DateTime.Parse(src.BirthDate.ToString("yyyy-MM-dd")))).ReverseMap();
+
             CreateMap<CountryDTO, CountryViewModel>(MemberList.None).ReverseMap();
+
+            CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
         }
     }
 }

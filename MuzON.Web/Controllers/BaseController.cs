@@ -11,12 +11,21 @@ namespace MuzON.Web.Controllers
     {
         public IArtistService artistService;
         public ICountryService countryService;
+        public IUserService userService;
+
         // Artists controller constructor
         public BaseController(IArtistService artistServ,
                               ICountryService countryServ)
         {
             artistService = artistServ;
             countryService = countryServ;
+        }
+
+        // Account controller constructor
+        public BaseController(
+                    IUserService userServ)
+        {
+            userService = userServ;
         }
 
         protected override void Dispose(bool disposing)

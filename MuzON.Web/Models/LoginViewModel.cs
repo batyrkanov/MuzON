@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace MuzON.Domain.Identity
+namespace MuzON.Web.Models
 {
-    public class UserLogin : IdentityUserLogin<Guid>
+    public class LoginViewModel
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }

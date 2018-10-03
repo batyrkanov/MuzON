@@ -4,6 +4,7 @@ using MuzON.BLL.Interfaces;
 using MuzON.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -17,11 +18,13 @@ namespace MuzON.Web.Controllers
             : base(artistServ, countryServ) { }
 
         // GET: Artists
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult GetList()
         {
             var artistDTOs = artistService.GetArtists();
@@ -30,6 +33,7 @@ namespace MuzON.Web.Controllers
             return Json(new { data = artists }, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             var countryDTOs = countryService.GetCountries();
@@ -39,11 +43,11 @@ namespace MuzON.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult Create(ArtistViewModel artistViewModel, HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid)
             {
-                artistViewModel.BirthDate = DateTime.Parse(artistViewModel.BirthDate.ToString("yyyy-MM-dd"));
                 var artistDTO = Mapper.Map<ArtistViewModel, ArtistDTO>(artistViewModel);
                 artistDTO.Id = Guid.NewGuid();
                 using (var binaryReader = new BinaryReader(uploadImage.InputStream))
