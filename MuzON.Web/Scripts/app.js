@@ -20,36 +20,126 @@
                     return currentDate;
                 }
             },
-
             {
-                "data": "Image", "render": function (Image) {
+                "data": "Image",
+                "orderable": false,
+                "searchable": false,
+                "sortable": false,  
+                "render": function (Image) {
                     return "<img id=\"imageSize\" src=\"data:image/jpeg;base64," + Image + "\" />";
                 }
             },
             {
-                "data": "Id", "render": function (Id) {
-                    return "<a class=\"btn btn-info\" href=/Artists/Edit/" + Id + ">Edit</a>";
+                "data": "Id",
+                "searchable": false,
+                "sortable": false,
+                "orderable": false,
+                "render": function (Id) {
+                    return `<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Artists/Edit/` + Id + `" id="btnEditArtist">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+                            </button>`;
                 }
             },
             {
-                "data": "Id", "render": function (Id) {
-                    return "<a class=\"btn btn-danger\" href=/Artists/Delete/" + Id + ">Delete</a>";
+                "data": "Id",
+                "searchable": false,
+                "sortable": false,
+                "orderable": false,
+                "render": function (Id) {
+                    return `<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Artists/Details/` + Id + `" id="btnDetailsArtist">
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Details
+                            </button>`;
                 }
+            },
+            {
+                "data": "Id",
+                "orderable": false,
+                "searchable": false,
+                "sortable": false,  
+                "render": function (Id) {
+                    return `<button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Artists/Delete/` + Id + `" id="btnDeleteArtist">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+                            </button>`;                }
             }
         ]
     });
 });
-$(document).on('shown.bs.modal', function (e) {
-    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+
+$("#btnCreateArtist").on("click", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#createArtistContainer').html(data);
+
+        $('#createArtistModal').modal('show');
+    });
+
+});  
+$("#tableGrid").on("click", "#btnEditArtist", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#editArtistContainer').html(data);
+
+        $('#editArtistModal').modal('show');
+    });
+
 });
 
-function Edit() {
-    $('#myModal').modal('show');
-    $('#exampleModalLabel').text('Edit Artist');
-    $('#MessageError').text('');
-}
-function Create() {
-    $('#myModal').modal('show');
-    $('#exampleModalLabel').text('Add Artist');
-    $('#MessageError').text('');
+$("#tableGrid").on("click", "#btnDeleteArtist", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#deleteArtistContainer').html(data);
+
+        $('#deleteArtistModal').modal('show');
+    });
+
+});
+
+$("#tableGrid").on("click", "#btnDetailsArtist", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#detailsArtistContainer').html(data);
+
+        $('#detailsArtistModal').modal('show');
+    });
+
+});
+
+function DeleteArtistSuccess(data) {
+
+    if (data != "success") {
+        $('#deleteArtistContainer').html(data);
+        return;
+    }
+    $('#deleteArtistModal').modal('hide');
+    $('#deleteArtistContainer').html("");
+} 
+
+function CreateArtistSuccess(data) {
+
+    if (data != "success") {
+        $('#createArtistContainer').html(data);
+        return;
+    }
+    $('#createArtistModal').modal('hide');
+    $('#createArtistContainer').html("");
+} 
+
+function UpdateArtistSuccess(data) {
+
+    if (data != "success") {
+        $('#editArtistContainer').html(data);
+        return;
+    }
+    $('#editArtistModal').modal('hide');
+    $('#editArtistContainer').html("");
+    assetListVM.refresh();
+
 }

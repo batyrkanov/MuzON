@@ -521,6 +521,11 @@
     <Content Include="Views\Artists\Create.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
+    <Content Include="Views\Artists\_CreatePartial.cshtml" />
+    <Content Include="Views\Artists\_EditPartial.cshtml" />
+    <Content Include="Views\Artists\Edit.cshtml" />
+    <Content Include="Views\Artists\_DeletePartial.cshtml" />
+    <Content Include="Views\Artists\_DetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

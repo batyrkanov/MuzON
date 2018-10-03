@@ -1,0 +1,53 @@
+﻿@model MuzON.Web.Models.ArtistViewModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Artist Details</h4>
+        </div>
+
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BirthDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BirthDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+
+                <dd>
+                    <img id="imageSize" src="data:image/jpeg;base64,@Model.Image" />
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CountryId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CountryId)
+                </dd>
+
+            </dl>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,28 +16,33 @@
                 <th>Birth Date</th>
                 <th>Image</th>
                 <th>Edit</th>
+                <th>Details</th>
                 <th>Delete</th>
             </tr>
         </thead>
     </table>
-    <div class="col-md-12">
-        <a id="AddArtist" class="btn btn-success" href="@Url.Action("Create","Artists")">Add Artist</a>
+    <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("Create","Artists")" id="btnCreateArtist">
+        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Add Artist
+    </button>
+</div>
+
+<div class="modal fade" id="createArtistModal" tabindex="-1" role="dialog" aria-labelledby="CreateArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="createArtistContainer">
     </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Error</h5>
-            </div>
-            <div class="modal-body">
-                <span id="MessageError"></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+<div class="modal fade" id="editArtistModal" tabindex="-1" role="dialog" aria-labelledby="CreateArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="editArtistContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="deleteArtistModal" tabindex="-1" role="dialog" aria-labelledby="DeleteArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="deleteArtistContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="detailsArtistModal" tabindex="-1" role="dialog" aria-labelledby="DetailsArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="detailsArtistContainer">
     </div>
 </div>
 @section scripts{
