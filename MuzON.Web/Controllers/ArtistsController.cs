@@ -12,8 +12,10 @@ namespace MuzON.Web.Controllers
 {
     public class ArtistsController : BaseController
     {
-        public ArtistsController(IArtistService artistServ, ICountryService countryServ)
-            : base(artistServ, countryServ) { }
+        public ArtistsController(IArtistService artistServ, 
+                                ICountryService countryServ,
+                                IBandService bandServ)
+            : base(bandServ, countryServ, artistServ) { }
 
         // GET: Artists
         [Authorize(Roles = "admin")]

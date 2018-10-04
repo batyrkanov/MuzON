@@ -12,12 +12,15 @@ namespace MuzON.Web.Controllers
         public IArtistService artistService;
         public ICountryService countryService;
         public IUserService userService;
+        public IBandService bandService;
 
-        // Artists controller constructor
-        public BaseController(IArtistService artistServ,
-                              ICountryService countryServ)
+        // Artists and Bands controller constructor
+        public BaseController(IBandService bandServ,
+                              ICountryService countryServ, 
+                              IArtistService artistServ)
         {
             artistService = artistServ;
+            bandService = bandServ;
             countryService = countryServ;
         }
 

@@ -209,6 +209,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
+    <Compile Include="Controllers\BandsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -216,6 +217,7 @@
     </Compile>
     <Compile Include="MappingProfiles\WebMappingProfile.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
+    <Compile Include="Models\BandViewModels.cs" />
     <Compile Include="Models\CountryViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -226,6 +228,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen-sprite.png" />
+    <Content Include="Content\chosen.css" />
+    <Content Include="Content\chosen.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
@@ -390,6 +396,16 @@
     <Content Include="Content\DataTables\jquery.dataTables.min.css" />
     <Content Include="Content\DataTables\jquery.dataTables_themeroller.css" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\docsupport\chosen.png" />
+    <Content Include="Content\docsupport\init.js" />
+    <Content Include="Content\docsupport\init.proto.js" />
+    <Content Include="Content\docsupport\jquery-1.12.4.min.js" />
+    <Content Include="Content\docsupport\jquery-3.2.1.min.js" />
+    <Content Include="Content\docsupport\oss-credit.png" />
+    <Content Include="Content\docsupport\prism.css" />
+    <Content Include="Content\docsupport\prism.js" />
+    <Content Include="Content\docsupport\prototype-1.7.0.0.js" />
+    <Content Include="Content\docsupport\style.css" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\sort_asc.png" />
     <Content Include="Content\images\sort_asc_disabled.png" />
@@ -411,6 +427,10 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Content\images\Sorting icons.psd" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\chosen.proto.js" />
+    <Content Include="Scripts\chosen.proto.min.js" />
     <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap4.js" />
@@ -526,6 +546,11 @@
     <Content Include="Views\Artists\Edit.cshtml" />
     <Content Include="Views\Artists\_DeletePartial.cshtml" />
     <Content Include="Views\Artists\_DetailsPartial.cshtml" />
+    <Content Include="Views\Bands\Index.cshtml" />
+    <Content Include="Views\Bands\_CreatePartial.cshtml" />
+    <Content Include="Views\Bands\_DetailsPartial.cshtml" />
+    <Content Include="Views\Bands\_DeletePartial.cshtml" />
+    <Content Include="Views\Bands\_EditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

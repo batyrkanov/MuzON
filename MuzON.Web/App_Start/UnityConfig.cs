@@ -46,6 +46,7 @@ namespace MuzON.Web
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
             container.RegisterType<IArtistService, ArtistService>(new PerRequestLifetimeManager());
+            container.RegisterType<IBandService, BandService>(new PerRequestLifetimeManager());
             container.RegisterType<ICountryService, CountryService>(new PerRequestLifetimeManager());
             container.RegisterType<IUserService, UserService>(new PerRequestLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager(), new InjectionConstructor("DefaultConnection"));

@@ -24,7 +24,6 @@ namespace MuzON.DAL.EF
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<BandSong> BandSongs { get; set; }
         public DbSet<PlaylistSong> PlaylistSongs { get; set; }
-        public DbSet<Member> Members { get; set; }
 
         static MuzONContext() { Database.SetInitializer<MuzONContext>(new DbInitializer());  }
 
@@ -37,9 +36,6 @@ namespace MuzON.DAL.EF
             
             // BandSongs Configuarations
             modelBuilder.Configurations.Add(new BandSongConfig());
-
-            // Members Configuarations
-            modelBuilder.Configurations.Add(new MemberConfig());
 
             // User Configuarations
             modelBuilder.Configurations.Add(new UserConfig());

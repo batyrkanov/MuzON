@@ -26,10 +26,16 @@ textarea {
     width: 78px;
 }
 
-#tableGrid{
+#tableArtistsGrid {
     width: 100%;
     text-align: center;
 }
+
+#tableBandsGrid {
+    width: 100%;
+    text-align: center;
+}
+
 #addButton{
     text-align:center;
 }

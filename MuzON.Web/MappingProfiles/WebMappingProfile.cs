@@ -20,6 +20,14 @@ namespace MuzON.Web.MappingProfiles
                 .ForMember(f => f.Image, opt => opt.MapFrom(src => Convert.ToBase64String(src.Image)))
                 .ForMember(f => f.BirthDate, opt => opt.MapFrom(src => DateTime.Parse(src.BirthDate.ToString("yyyy-MM-dd")))).ReverseMap();
 
+            CreateMap<BandDTO, BandIndexViewModel>(MemberList.None)
+                .ForMember(f => f.Image, opt => opt.MapFrom(src => Convert.ToBase64String(src.Image)))
+                .ForMember(f => f.CreatedDate, opt => opt.MapFrom(src => DateTime.Parse(src.CreatedDate.ToString("yyyy-MM-dd")))).ReverseMap();
+
+            CreateMap<BandDTO, BandViewModel>(MemberList.None)
+               .ForMember(f => f.Image, opt => opt.MapFrom(src => Convert.ToBase64String(src.Image)))
+               .ForMember(f => f.CreatedDate, opt => opt.MapFrom(src => DateTime.Parse(src.CreatedDate.ToString("yyyy-MM-dd")))).ReverseMap();
+
             CreateMap<CountryDTO, CountryViewModel>(MemberList.None).ReverseMap();
 
             CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
