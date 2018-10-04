@@ -10,5 +10,6 @@ namespace MuzON.BLL.Interfaces
     public interface ICountryService
     {
         IEnumerable<CountryDTO> GetCountries();
+        CountryDTO GetCountryById(Guid Id);
     }
 }

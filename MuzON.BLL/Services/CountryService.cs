@@ -25,5 +25,11 @@ namespace MuzON.BLL.Services
             var countries = _unitOfWork.Countries.GetAll().ToList();
             return Mapper.Map<IEnumerable<Country>, IEnumerable<CountryDTO>>(countries);
         }
+
+        public CountryDTO GetCountryById(Guid Id)
+        {
+            Country country = _unitOfWork.Countries.Get(Id);
+            return Mapper.Map<CountryDTO>(country);
+        }
     }
 }

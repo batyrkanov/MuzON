@@ -27,7 +27,7 @@ namespace MuzON.Web.Controllers
         {
             var artistDTOs = artistService.GetArtists();
             var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistDTOs);
-
+            
             return Json(new { data = artists }, JsonRequestBehavior.AllowGet);
         }
 
@@ -36,7 +36,8 @@ namespace MuzON.Web.Controllers
         {
             var artistDTO = artistService.GetArtistById(id);
             var artist = Mapper.Map<ArtistViewModel>(artistDTO);
-
+            var countryDTO = countryService.GetCountryById(artist.CountryId);
+            ViewBag.Country = Mapper.Map<CountryViewModel>(countryDTO).Name;
             if (Request.IsAjaxRequest())
                 return PartialView("_DetailsPartial", artist);
 

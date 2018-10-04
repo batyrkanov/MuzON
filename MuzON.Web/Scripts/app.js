@@ -59,7 +59,8 @@
                 "render": function (Id) {
                     return `<button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Artists/Delete/` + Id + `" id="btnDeleteArtist">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-                            </button>`;                }
+                            </button>`;
+                }
             }
         ]
     });
@@ -140,6 +141,5 @@ function UpdateArtistSuccess(data) {
     }
     $('#editArtistModal').modal('hide');
     $('#editArtistContainer').html("");
-    assetListVM.refresh();
 
 }
