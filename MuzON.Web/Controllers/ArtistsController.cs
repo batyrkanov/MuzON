@@ -26,8 +26,16 @@ namespace MuzON.Web.Controllers
         public ActionResult GetList()
         {
             var artistDTOs = artistService.GetArtists();
-            var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistDTOs);
-            
+            var artists = Mapper.Map<IEnumerable<ArtistIndexViewModel>>(artistDTOs);
+
+            foreach (var item in artists)
+            {
+                foreach (var artistDTO in artistDTOs)
+                {
+                    item.CountryName = artistDTO.Country.Name;
+                }
+            }
+
             return Json(new { data = artists }, JsonRequestBehavior.AllowGet);
         }
 

@@ -7,7 +7,7 @@
         },
         "columns": [
             { "data": "FullName" },
-            { "data": "CountryId" },
+            { "data": "CountryName" },
             {
                 "data": "BirthDate", "className": "datetime",
                 "render": function (BirthDate) {
