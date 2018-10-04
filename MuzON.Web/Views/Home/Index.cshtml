@@ -2,7 +2,14 @@
     ViewBag.Title = "Home Page";
 }
 <hr />
-<a class="btn btn-default" href="@Url.Action("Index", "Users")">Users</a>
-<a class="btn btn-default" href="@Url.Action("Index", "Artists")">Artists</a>
-<a class="btn btn-default" href="@Url.Action("Index", "Bands")">Bands</a>
-<a class="btn btn-default" href="@Url.Action("Index", "Songs")">Songs</a>
+@if (User.IsInRole("admin"))
+{
+    <a class="btn btn-default" href="@Url.Action("Index", "Users")">Users</a>
+    <a class="btn btn-default" href="@Url.Action("Index", "Artists")">Artists</a>
+    <a class="btn btn-default" href="@Url.Action("Index", "Bands")">Bands</a>
+    <a class="btn btn-default" href="@Url.Action("Index", "Songs")">Songs</a>
+}
+else
+{
+    <p>Songs comming soon.</p>
+}
