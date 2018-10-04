@@ -30,10 +30,7 @@ namespace MuzON.Web.Controllers
 
             foreach (var item in artists)
             {
-                foreach (var artistDTO in artistDTOs)
-                {
-                    item.CountryName = artistDTO.Country.Name;
-                }
+                item.CountryName = artistService.GetArtistById(item.Id).Country.Name;
             }
 
             return Json(new { data = artists }, JsonRequestBehavior.AllowGet);
