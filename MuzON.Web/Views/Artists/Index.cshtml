@@ -21,9 +21,11 @@
             </tr>
         </thead>
     </table>
-    <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("Create","Artists")" id="btnCreateArtist">
-        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Add Artist
-    </button>
+    <div class="container" id="addButton">
+        <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("Create","Artists")" id="btnCreateArtist">
+            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Add Artist
+        </button>
+    </div>
 </div>
 
 <div class="modal fade" id="createArtistModal" tabindex="-1" role="dialog" aria-labelledby="CreateArtistModal" aria-hidden="true" data-backdrop="static">

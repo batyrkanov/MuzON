@@ -17,6 +17,6 @@ namespace MuzON.Web.Models
         public DateTime BirthDate { get; set; }
         public string Image { get; set; }
         public Guid CountryId { get; set; }
-        //public CountryViewModel Country { get; set; }
+        public CountryViewModel Country { get; set; }
     }
 }

@@ -47,6 +47,7 @@ namespace MuzON.Web.Controllers
         public ActionResult Create()
         {
             var model = new ArtistViewModel();
+            model.BirthDate = DateTime.Today;
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name");
