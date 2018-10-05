@@ -36,7 +36,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                        @Html.EditorFor(model => model.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker", @required = "required" } })
                                         @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -55,7 +55,15 @@
                                     @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "form-control", @required = "required" })
-                                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.SelectedBands, (MultiSelectList)ViewBag.Bands, htmlAttributes: new { @class = "form-control", multiple = "multiple" })
+                                        @Html.ValidationMessageFor(model => model.SelectedBands, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +122,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                        @Html.EditorFor(model => model.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker", @required = "required" } })
                                         @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -135,9 +143,18 @@
                                     @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "form-control", @required = "required" })
-                                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.SelectedBands, (MultiSelectList)ViewBag.Bands, htmlAttributes: new { @class = "form-control", multiple = "multiple" })
+                                        @Html.ValidationMessageFor(model => model.SelectedBands, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="modal-footer">
                                 <div class="form-group">

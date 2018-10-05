@@ -51,15 +51,19 @@ namespace MuzON.Web.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            var artistsDTO = from a in artistService.GetArtists()
-                          select a;
+            var artistsDTO = artistService.GetArtists();
             var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistsDTO);
             ViewBag.Artists = new MultiSelectList(artists, "Id", "FullName");
+
             var model = new BandViewModel();
             model.CreatedDate = DateTime.Today;
+
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
-            ViewBag.CountryId = new SelectList(countries, "Id", "Name");
+            ViewBag.Country = new SelectList(countries, "Id", "Name");
+
+            // viewbag for post
+            ViewBag.Action = "create";
             return View("_CreateAndEditPartial", model);
         }
 
@@ -79,6 +83,10 @@ namespace MuzON.Web.Controllers
                 bandService.AddBand(bandDTO, SelectedArtists);
                 return RedirectToAction("Index");
             }
+            var artistsDTO = artistService.GetArtists();
+            var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistsDTO);
+            ViewBag.Artists = new MultiSelectList(artists, "Id", "FullName");
+
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name");
@@ -105,6 +113,9 @@ namespace MuzON.Web.Controllers
                              select a;
             var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistsDTO);
             ViewBag.Artists = new MultiSelectList(artists, "Id", "FullName");
+
+            // viewbag for post
+            ViewBag.Action = "edit";
             return PartialView("_CreateAndEditPartial", bandViewModel);
         }
 

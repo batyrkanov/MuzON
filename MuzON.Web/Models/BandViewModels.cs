@@ -27,7 +27,7 @@ namespace MuzON.Web.Models
         public string Image { get; set; }
         public Guid CountryId { get; set; }
         public List<Guid> SelectedArtists { get; set; }
-        public virtual ICollection<ArtistViewModel> Artists { get; set; }
+        public ICollection<ArtistViewModel> Artists { get; set; }
         
     }
 }

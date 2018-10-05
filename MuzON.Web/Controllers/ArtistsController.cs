@@ -40,10 +40,11 @@ namespace MuzON.Web.Controllers
         public ActionResult Details(Guid id)
         {
             var artistDTO = artistService.GetArtistById(id);
-            var artist = Mapper.Map<ArtistViewModel>(artistDTO);
+            var artist = Mapper.Map<ArtistDetailsViewModel>(artistDTO);
            
-            ViewBag.Country = artist.Country.Name;
+            ViewBag.Country = countryService.GetCountryById(artist.CountryId).Name;
 
+            ViewBag.bands = artist.Bands;
             return PartialView("_DetailsPartial",artist);
         }
 
@@ -56,6 +57,10 @@ namespace MuzON.Web.Controllers
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name");
 
+            var bandsDTO = bandService.GetBands();
+            var bands = Mapper.Map<IEnumerable<BandViewModel>>(bandsDTO);
+            ViewBag.Bands = new MultiSelectList(bands, "Id", "Name");
+
             // viewbag for post
             ViewBag.Action = "create";
             return PartialView("_CreateAndEditPartial", model);
@@ -64,7 +69,7 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ArtistViewModel artistViewModel, HttpPostedFileBase uploadImage, Guid CountryId)
+        public ActionResult Create(ArtistViewModel artistViewModel, HttpPostedFileBase uploadImage, Guid[] SelectedBands)
         {
             if (ModelState.IsValid)
             {
@@ -74,12 +79,17 @@ namespace MuzON.Web.Controllers
                 {
                     artistDTO.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
-                artistService.AddArtist(artistDTO, CountryId);
+                artistService.AddArtist(artistDTO, SelectedBands);
                 return RedirectToAction("Index");
             }
+            var bandsDTO = bandService.GetBands();
+            var bands = Mapper.Map<IEnumerable<BandViewModel>>(bandsDTO);
+            ViewBag.Bands = new MultiSelectList(bands, "Id", "Name");
+
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name");
+
             return PartialView("_CreateAndEditPartial", artistViewModel);
         }
 
@@ -94,7 +104,11 @@ namespace MuzON.Web.Controllers
             ArtistViewModel artistViewModel = Mapper.Map<ArtistViewModel>(artist);
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
-            ViewBag.CountryId = new SelectList(countries, "Id", "Name", artistViewModel.Country.Id);
+            ViewBag.CountryId = new SelectList(countries, "Id", "Name", artistViewModel.CountryId);
+
+            var bandsDTO = bandService.GetBands();
+            var bands = Mapper.Map<IEnumerable<BandViewModel>>(bandsDTO);
+            ViewBag.Bands = new MultiSelectList(bands, "Id", "Name");
 
             // viewbag for post
             ViewBag.Action = "edit";
@@ -104,7 +118,7 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ArtistViewModel artistViewModel, HttpPostedFileBase uploadImage, string image, Guid CountryId)
+        public ActionResult Edit(ArtistViewModel artistViewModel, HttpPostedFileBase uploadImage, string image, Guid[] selectedBands)
         {
 
             if (ModelState.IsValid)
@@ -120,12 +134,16 @@ namespace MuzON.Web.Controllers
                 else
                     artistDTO.Image = Convert.FromBase64String(image);
 
-                artistService.UpdateArtist(artistDTO, CountryId);
+                artistService.UpdateArtist(artistDTO, selectedBands);
                 return RedirectToAction("Index");
             }
+            var bandsDTO = bandService.GetBands();
+            var bands = Mapper.Map<IEnumerable<BandViewModel>>(bandsDTO);
+            ViewBag.Bands = new MultiSelectList(bands, "Id", "Name");
+
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
-            ViewBag.CountryId = new SelectList(countries, "Id", "Name", artistViewModel.Country.Id);
+            ViewBag.CountryId = new SelectList(countries, "Id", "Name", artistViewModel.CountryId);
             return PartialView("_CreateAndEditPartial", artistViewModel);
         }
 

@@ -20,10 +20,20 @@ namespace MuzON.BLL.Services
             _unitOfWork = uow;
         }
 
-        public void AddArtist(ArtistDTO artistDTO, Guid countryId)
+        public void AddArtist(ArtistDTO artistDTO, Guid[] selectedBands)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
-            artist.CountryId = countryId;
+            if (selectedBands != null)
+            {
+                artist.Bands = new List<Band>();
+
+                foreach (var c in _unitOfWork.Bands.SearchFor(co => selectedBands.Contains(co.Id)))
+                {
+                    artist.Bands.Add(c);
+                }
+            }
+            artist.CountryId = artistDTO.Country.Id;
+            artist.Country = _unitOfWork.Countries.Get(artist.CountryId);
             _unitOfWork.Artists.Create(artist);
             _unitOfWork.Save();
         }
@@ -52,12 +62,25 @@ namespace MuzON.BLL.Services
             return Mapper.Map<IEnumerable<Artist>, IEnumerable<ArtistDTO>>(artists);
         }
 
-        public void UpdateArtist(ArtistDTO artistDTO, Guid countryId)
+        public void UpdateArtist(ArtistDTO artistDTO, Guid[] selectedBands)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
-            if (artist.CountryId != countryId)
-                artist.CountryId = countryId;
+            if (artist.Bands == null)
+                artist.Bands = new List<Band>();
 
+            if (selectedBands != null)
+            {
+                artist.Bands.Clear();
+                foreach (var c in _unitOfWork.Bands.SearchFor(co => selectedBands.Contains(co.Id)))
+                {
+                    artist.Bands.Add(c);
+                }
+            }
+            if(artist.CountryId != artistDTO.Country.Id)
+            {
+                artist.CountryId = artistDTO.Country.Id;
+                artist.Country = _unitOfWork.Countries.Get(artist.CountryId);
+            }
             _unitOfWork.Artists.Update(artist);
             _unitOfWork.Save();
         }

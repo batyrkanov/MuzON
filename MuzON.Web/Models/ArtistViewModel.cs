@@ -16,8 +16,8 @@ namespace MuzON.Web.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
         public string Image { get; set; }
-        public CountryViewModel Country { get; set; }
-        public virtual ICollection<BandViewModel> Bands { get; set; }
+        public Guid CountryId { get; set; }
+        public List<Guid> SelectedBands { get; set; }
     }
 
     public class ArtistIndexViewModel
@@ -29,5 +29,17 @@ namespace MuzON.Web.Models
         public DateTime BirthDate { get; set; }
         public string Image { get; set; }
         public string CountryName { get; set; }
+    }
+
+    public class ArtistDetailsViewModel
+    {
+        public Guid Id { get; set; }
+        public string FullName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime BirthDate { get; set; }
+        public string Image { get; set; }
+        public Guid CountryId { get; set; }
+        public ICollection<BandViewModel> Bands { get; set; }
     }
 }

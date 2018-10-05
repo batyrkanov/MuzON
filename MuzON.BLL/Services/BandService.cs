@@ -32,6 +32,8 @@ namespace MuzON.BLL.Services
                     band.Artists.Add(c);
                 }
             }
+            band.CountryId = bandDTO.Country.Id;
+            band.Country = _unitOfWork.Countries.Get(band.CountryId);
             _unitOfWork.Bands.Create(band);
             _unitOfWork.Save();
         }
@@ -60,12 +62,19 @@ namespace MuzON.BLL.Services
             var band = Mapper.Map<Band>(bandDTO);
             if (selectedArtists != null)
             {
+                if (band.Artists == null)
+                    band.Artists = new List<Artist>();
                 band.Artists.Clear();
                 foreach (var c in _unitOfWork.Artists
                             .SearchFor(co => selectedArtists.Contains(co.Id)))
                 {
                     band.Artists.Add(c);
                 }
+            }
+            if (band.CountryId != bandDTO.Country.Id)
+            {
+                band.CountryId = bandDTO.Country.Id;
+                band.Country = _unitOfWork.Countries.Get(band.CountryId);
             }
             _unitOfWork.Bands.Update(band);
             _unitOfWork.Save();

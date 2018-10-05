@@ -19,6 +19,7 @@ namespace MuzON.Domain.Entities
 
         public Band()
         {
+            BandSongs = new List<BandSong>();
             Artists = new List<Artist>();
         }
     }
