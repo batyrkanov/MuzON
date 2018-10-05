@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>MuzON - портал бесплатной музыки</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-   
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -28,6 +28,12 @@
                         <li>@Html.ActionLink("Bands", "Index", "Bands")</li>
                         <li>@Html.ActionLink("Songs", "Index", "Songs")</li>
                     }
+                    else
+                    {
+                        <li>@Html.ActionLink("Artists", "Index", "Artists")</li>
+                        <li>@Html.ActionLink("Bands", "Index", "Bands")</li>
+                        <li>@Html.ActionLink("Songs", "Index", "Songs")</li>
+                    }
                 </ul>
                 @Html.Partial("_PartialLogin")
             </div>
@@ -37,13 +43,12 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - MuzON</p>
         </footer>
     </div>
   
-    @Scripts.Render("~/bundles/jquery")
+    
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Scripts/chosen.jquery.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

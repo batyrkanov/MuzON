@@ -13,7 +13,6 @@ namespace MuzON.BLL.DTO
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         public byte[] Image { get; set; }
-        public Guid CountryId { get; set; }
         public CountryDTO Country { get; set; }
         public ICollection<ArtistDTO> Artists { get; set; }
     }

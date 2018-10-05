@@ -16,7 +16,6 @@ namespace MuzON.Web.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
         public string Image { get; set; }
-        public Guid CountryId { get; set; }
         public CountryViewModel Country { get; set; }
         public virtual ICollection<BandViewModel> Bands { get; set; }
     }

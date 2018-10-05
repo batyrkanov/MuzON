@@ -23,8 +23,7 @@ namespace MuzON.Web.Controllers
         {
             return View();
         }
-
-        [Authorize(Roles = "admin")]
+        
         public ActionResult GetList()
         {
             var bandsDTO = bandService.GetBands();
@@ -46,9 +45,6 @@ namespace MuzON.Web.Controllers
             var countryDTO = countryService.GetCountryById(band.CountryId);
             ViewBag.Country = Mapper.Map<CountryViewModel>(countryDTO).Name;
             ViewBag.Artists = band.Artists;
-            if (Request.IsAjaxRequest())
-                return PartialView("_DetailsPartial", band);
-
             return PartialView("_DetailsPartial", band);
         }
 
@@ -64,7 +60,7 @@ namespace MuzON.Web.Controllers
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name");
-            return View("_CreatePartial", model);
+            return View("_CreateAndEditPartial", model);
         }
 
         [HttpPost]
@@ -86,7 +82,7 @@ namespace MuzON.Web.Controllers
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name");
-            return View("_CreatePartial", bandViewModel);
+            return PartialView("_CreateAndEditPartial", bandViewModel);
         }
 
         [Authorize(Roles = "admin")]
@@ -109,9 +105,7 @@ namespace MuzON.Web.Controllers
                              select a;
             var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistsDTO);
             ViewBag.Artists = new MultiSelectList(artists, "Id", "FullName");
-            if (Request.IsAjaxRequest())
-                return PartialView("_EditPartial", bandViewModel);
-            return View("_EditPartial", bandViewModel);
+            return PartialView("_CreateAndEditPartial", bandViewModel);
         }
 
         [HttpPost]
@@ -139,7 +133,7 @@ namespace MuzON.Web.Controllers
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name", bandViewModel.CountryId);
-            return PartialView("_EditPartial", bandViewModel);
+            return PartialView("_CreateAndEditPartial", bandViewModel);
         }
 
         [Authorize(Roles = "admin")]
@@ -151,9 +145,7 @@ namespace MuzON.Web.Controllers
                 return HttpNotFound();
             }
             BandViewModel bandViewModel = Mapper.Map<BandViewModel>(band);
-            if (Request.IsAjaxRequest())
-                return PartialView("_DeletePartial", bandViewModel);
-            return View("_DeletePartial", bandViewModel);
+            return PartialView("_DeletePartial", bandViewModel);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -163,8 +155,6 @@ namespace MuzON.Web.Controllers
         {
             var bandDTO = bandService.GetBandById(id);
             bandService.DeleteBand(bandDTO);
-            if (Request.IsAjaxRequest())
-                return View("Index");
             return RedirectToAction("Index");
         }
     }

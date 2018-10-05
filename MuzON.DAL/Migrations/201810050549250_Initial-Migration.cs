@@ -18,7 +18,21 @@ namespace MuzON.DAL.Migrations
                         CountryId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: true)
+                .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: false)
+                .Index(t => t.CountryId);
+            
+            CreateTable(
+                "dbo.Bands",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(),
+                        CreatedDate = c.DateTime(nullable: false),
+                        Image = c.Binary(),
+                        CountryId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: false)
                 .Index(t => t.CountryId);
             
             CreateTable(
@@ -33,47 +47,10 @@ namespace MuzON.DAL.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Artists", t => t.ArtistId)
                 .ForeignKey("dbo.Bands", t => t.BandId)
-                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: true)
+                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: false)
                 .Index(t => t.BandId)
                 .Index(t => t.ArtistId)
                 .Index(t => t.SongId);
-            
-            CreateTable(
-                "dbo.Bands",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        Name = c.String(),
-                        CreatedDate = c.DateTime(nullable: false),
-                        Image = c.Binary(),
-                        CountryId = c.Guid(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: true)
-                .Index(t => t.CountryId);
-            
-            CreateTable(
-                "dbo.Countries",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        Name = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Members",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        ArtistId = c.Guid(nullable: false),
-                        BandId = c.Guid(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Artists", t => t.ArtistId)
-                .ForeignKey("dbo.Bands", t => t.BandId)
-                .Index(t => t.ArtistId)
-                .Index(t => t.BandId);
             
             CreateTable(
                 "dbo.Songs",
@@ -94,17 +71,17 @@ namespace MuzON.DAL.Migrations
                         UserId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: false)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
                 .Index(t => t.SongId)
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.Users",
+                "dbo.AspNetUsers",
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        Email = c.String(),
+                        Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
                         SecurityStamp = c.String(),
@@ -114,9 +91,10 @@ namespace MuzON.DAL.Migrations
                         LockoutEndDateUtc = c.DateTime(),
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
-                        UserName = c.String(),
+                        UserName = c.String(nullable: false, maxLength: 256),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -128,7 +106,7 @@ namespace MuzON.DAL.Migrations
                         ClaimValue = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
                 .Index(t => t.UserId);
             
             CreateTable(
@@ -143,8 +121,8 @@ namespace MuzON.DAL.Migrations
                         Password = c.String(nullable: false),
                     })
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
-                .ForeignKey("dbo.Users", t => t.Id, cascadeDelete: true)
-                .Index(t => t.Id);
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.Ratings",
@@ -156,8 +134,8 @@ namespace MuzON.DAL.Migrations
                         UserId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: false)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
                 .Index(t => t.SongId)
                 .Index(t => t.UserId);
             
@@ -169,8 +147,8 @@ namespace MuzON.DAL.Migrations
                         RoleId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: false)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
             
@@ -193,8 +171,8 @@ namespace MuzON.DAL.Migrations
                         Index = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Playlists", t => t.PlaylistId, cascadeDelete: true)
-                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: true)
+                .ForeignKey("dbo.Playlists", t => t.PlaylistId, cascadeDelete: false)
+                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: false)
                 .Index(t => t.SongId)
                 .Index(t => t.PlaylistId);
             
@@ -210,13 +188,36 @@ namespace MuzON.DAL.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Roles",
+                "dbo.Countries",
                 c => new
                     {
                         Id = c.Guid(nullable: false),
                         Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.BandArtists",
+                c => new
+                    {
+                        Band_Id = c.Guid(nullable: false),
+                        Artist_Id = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Band_Id, t.Artist_Id })
+                .ForeignKey("dbo.Bands", t => t.Band_Id, cascadeDelete: false)
+                .ForeignKey("dbo.Artists", t => t.Artist_Id, cascadeDelete: false)
+                .Index(t => t.Band_Id)
+                .Index(t => t.Artist_Id);
             
             CreateTable(
                 "dbo.SongGenres",
@@ -226,8 +227,8 @@ namespace MuzON.DAL.Migrations
                         GenreId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => new { t.SongId, t.GenreId })
-                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: true)
-                .ForeignKey("dbo.Genres", t => t.GenreId, cascadeDelete: true)
+                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: false)
+                .ForeignKey("dbo.Genres", t => t.GenreId, cascadeDelete: false)
                 .Index(t => t.SongId)
                 .Index(t => t.GenreId);
             
@@ -235,46 +236,50 @@ namespace MuzON.DAL.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Bands", "CountryId", "dbo.Countries");
+            DropForeignKey("dbo.Artists", "CountryId", "dbo.Countries");
             DropForeignKey("dbo.BandSongs", "SongId", "dbo.Songs");
             DropForeignKey("dbo.PlaylistSongs", "SongId", "dbo.Songs");
             DropForeignKey("dbo.PlaylistSongs", "PlaylistId", "dbo.Playlists");
             DropForeignKey("dbo.SongGenres", "GenreId", "dbo.Genres");
             DropForeignKey("dbo.SongGenres", "SongId", "dbo.Songs");
-            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.Users");
-            DropForeignKey("dbo.Ratings", "UserId", "dbo.Users");
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Ratings", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Ratings", "SongId", "dbo.Songs");
-            DropForeignKey("dbo.AspNetUserLogins", "Id", "dbo.Users");
-            DropForeignKey("dbo.Comments", "UserId", "dbo.Users");
-            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.Users");
+            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Comments", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Comments", "SongId", "dbo.Songs");
             DropForeignKey("dbo.BandSongs", "BandId", "dbo.Bands");
-            DropForeignKey("dbo.Members", "BandId", "dbo.Bands");
-            DropForeignKey("dbo.Members", "ArtistId", "dbo.Artists");
-            DropForeignKey("dbo.Bands", "CountryId", "dbo.Countries");
-            DropForeignKey("dbo.Artists", "CountryId", "dbo.Countries");
             DropForeignKey("dbo.BandSongs", "ArtistId", "dbo.Artists");
+            DropForeignKey("dbo.BandArtists", "Artist_Id", "dbo.Artists");
+            DropForeignKey("dbo.BandArtists", "Band_Id", "dbo.Bands");
             DropIndex("dbo.SongGenres", new[] { "GenreId" });
             DropIndex("dbo.SongGenres", new[] { "SongId" });
+            DropIndex("dbo.BandArtists", new[] { "Artist_Id" });
+            DropIndex("dbo.BandArtists", new[] { "Band_Id" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.PlaylistSongs", new[] { "PlaylistId" });
             DropIndex("dbo.PlaylistSongs", new[] { "SongId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.Ratings", new[] { "UserId" });
             DropIndex("dbo.Ratings", new[] { "SongId" });
-            DropIndex("dbo.AspNetUserLogins", new[] { "Id" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Comments", new[] { "UserId" });
             DropIndex("dbo.Comments", new[] { "SongId" });
-            DropIndex("dbo.Members", new[] { "BandId" });
-            DropIndex("dbo.Members", new[] { "ArtistId" });
-            DropIndex("dbo.Bands", new[] { "CountryId" });
             DropIndex("dbo.BandSongs", new[] { "SongId" });
             DropIndex("dbo.BandSongs", new[] { "ArtistId" });
             DropIndex("dbo.BandSongs", new[] { "BandId" });
+            DropIndex("dbo.Bands", new[] { "CountryId" });
             DropIndex("dbo.Artists", new[] { "CountryId" });
             DropTable("dbo.SongGenres");
-            DropTable("dbo.Roles");
+            DropTable("dbo.BandArtists");
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Countries");
             DropTable("dbo.Playlists");
             DropTable("dbo.PlaylistSongs");
             DropTable("dbo.Genres");
@@ -282,13 +287,11 @@ namespace MuzON.DAL.Migrations
             DropTable("dbo.Ratings");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
-            DropTable("dbo.Users");
+            DropTable("dbo.AspNetUsers");
             DropTable("dbo.Comments");
             DropTable("dbo.Songs");
-            DropTable("dbo.Members");
-            DropTable("dbo.Countries");
-            DropTable("dbo.Bands");
             DropTable("dbo.BandSongs");
+            DropTable("dbo.Bands");
             DropTable("dbo.Artists");
         }
     }

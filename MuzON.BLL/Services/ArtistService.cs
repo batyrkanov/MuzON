@@ -20,9 +20,10 @@ namespace MuzON.BLL.Services
             _unitOfWork = uow;
         }
 
-        public void AddArtist(ArtistDTO artistDTO)
+        public void AddArtist(ArtistDTO artistDTO, Guid countryId)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
+            artist.CountryId = countryId;
             _unitOfWork.Artists.Create(artist);
             _unitOfWork.Save();
         }
@@ -51,9 +52,12 @@ namespace MuzON.BLL.Services
             return Mapper.Map<IEnumerable<Artist>, IEnumerable<ArtistDTO>>(artists);
         }
 
-        public void UpdateArtist(ArtistDTO artistDTO)
+        public void UpdateArtist(ArtistDTO artistDTO, Guid countryId)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
+            if (artist.CountryId != countryId)
+                artist.CountryId = countryId;
+
             _unitOfWork.Artists.Update(artist);
             _unitOfWork.Save();
         }

@@ -15,7 +15,6 @@ namespace MuzON.BLL.DTO
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
         public byte[] Image { get; set; }
-        public Guid CountryId { get; set; }
         public CountryDTO Country { get; set; }
         public ICollection<BandDTO> Bands { get; set; }
     }

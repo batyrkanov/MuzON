@@ -416,7 +416,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\artistsGrid.js" />
+    <Content Include="Scripts\bandsGrid.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -538,19 +539,15 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Artists\Index.cshtml" />
-    <Content Include="Views\Artists\Create.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
-    <Content Include="Views\Artists\_CreatePartial.cshtml" />
-    <Content Include="Views\Artists\_EditPartial.cshtml" />
-    <Content Include="Views\Artists\Edit.cshtml" />
+    <Content Include="Views\Artists\_CreateAndEditPartial.cshtml" />
     <Content Include="Views\Artists\_DeletePartial.cshtml" />
     <Content Include="Views\Artists\_DetailsPartial.cshtml" />
     <Content Include="Views\Bands\Index.cshtml" />
-    <Content Include="Views\Bands\_CreatePartial.cshtml" />
+    <Content Include="Views\Bands\_CreateAndEditPartial.cshtml" />
     <Content Include="Views\Bands\_DetailsPartial.cshtml" />
     <Content Include="Views\Bands\_DeletePartial.cshtml" />
-    <Content Include="Views\Bands\_EditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

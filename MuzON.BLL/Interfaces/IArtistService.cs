@@ -11,9 +11,9 @@ namespace MuzON.BLL.Interfaces
     {
         IEnumerable<ArtistDTO> GetArtists();
         ArtistDTO GetArtistById(Guid Id);
-        void AddArtist(ArtistDTO artistDTO);
+        void AddArtist(ArtistDTO artistDTO, Guid countryId);
         void DeleteArtist(ArtistDTO artistDTO);
-        void UpdateArtist(ArtistDTO artistDTO);
+        void UpdateArtist(ArtistDTO artistDTO, Guid countryId);
         void Dispose();
     }
 }

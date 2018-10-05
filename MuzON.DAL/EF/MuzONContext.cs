@@ -37,12 +37,6 @@ namespace MuzON.DAL.EF
             // BandSongs Configuarations
             modelBuilder.Configurations.Add(new BandSongConfig());
 
-            // User Configuarations
-            modelBuilder.Configurations.Add(new UserConfig());
-
-            // Role Configuarations
-            modelBuilder.Configurations.Add(new CustomRoleConfig());
-
             // Song Configuration
             modelBuilder.Configurations.Add(new SongConfig());
         }

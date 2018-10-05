@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace MuzON.DAL.EF
 {
-   public class DbInitializer : DropCreateDatabaseIfModelChanges<MuzONContext>
+   public class DbInitializer : CreateDatabaseIfNotExists<MuzONContext>
     {
         protected override void Seed(MuzONContext db)
         {
@@ -16,13 +16,7 @@ namespace MuzON.DAL.EF
             Genre jRockGenre = new Genre { Id = Guid.NewGuid(), Name = "J-Rock" };
 
             Country country = new Country { Id = Guid.NewGuid(), Name = "Bishkek" };
-
-            ApplicationUserManager userManager = new ApplicationUserManager(new UserStore(db));
-            var user = new User {Id = Guid.NewGuid(), Email = "admin@admin.com", UserName = "admin@admin.com" };
-            userManager.Create(user, "123123");
-            var roleManager = new ApplicationRoleManager(new RoleStore(db));
-            roleManager.Create(new Role("admin"));
-            userManager.AddToRole(user.Id, "admin");
+            
             db.Genres.Add(rockGenre);
             db.Genres.Add(jRockGenre);
             db.Countries.Add(country);

@@ -13,7 +13,7 @@ namespace MuzON.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201810020703445_Initial-Migration"; }
+            get { return "201810050549250_Initial-Migration"; }
         }
         
         string IMigrationMetadata.Source

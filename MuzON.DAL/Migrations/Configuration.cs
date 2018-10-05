@@ -1,5 +1,7 @@
 namespace MuzON.DAL.Migrations
 {
+    using MuzON.DAL.Identity;
+    using MuzON.Domain.Identity;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -12,10 +14,27 @@ namespace MuzON.DAL.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MuzON.DAL.EF.MuzONContext context)
+        protected override async void Seed(MuzON.DAL.EF.MuzONContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            if (!context.Roles.Any(r => r.Name == "admin"))
+            {
+                var store = new RoleStore(context);
+                var manager = new ApplicationRoleManager(store);
+                var role = new Role { Id = Guid.NewGuid(), Name = "admin" };
 
+                await manager.CreateAsync(role);
+            }
+
+            if (!context.Users.Any(u => u.UserName == "admin@admin.com"))
+            {
+                var store = new UserStore(context);
+                var manager = new ApplicationUserManager(store);
+                var user = new User { Id = Guid.NewGuid(),
+                    Email = "admin@admin.com", UserName = "admin@admin.com" };
+
+                await manager.CreateAsync(user, "123123");
+                await manager.AddToRoleAsync(user.Id, "admin");
+            }
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
