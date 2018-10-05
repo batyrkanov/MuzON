@@ -59,7 +59,8 @@ namespace MuzON.BLL.Services
 
         public void UpdateBand(BandDTO bandDTO, Guid[] selectedArtists)
         {
-            var band = Mapper.Map<Band>(bandDTO);
+            var band = _unitOfWork.Bands.Get(bandDTO.Id);
+                Mapper.Map(bandDTO, band);
             if (selectedArtists != null)
             {
                 if (band.Artists == null)

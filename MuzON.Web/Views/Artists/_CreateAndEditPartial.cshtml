@@ -131,7 +131,7 @@
                                     @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         <div class="editor-field">
-                                            <img id="imageSize" src="data:image/jpeg;base64,@Model.Image" />
+                                            <img id="imageSize" src="data:image/x-png,image/gif,image/jpeg;base64,@Model.Image" />
                                             <input type="hidden" name="image" value="@Model.Image" />
                                             <input class="form-control" type="file" id="uploadImage" name="uploadImage" accept="image/x-png,image/gif,image/jpeg" />
                                         </div>

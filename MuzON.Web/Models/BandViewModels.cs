@@ -15,6 +15,7 @@ namespace MuzON.Web.Models
         public DateTime CreatedDate { get; set; }
         public string Image { get; set; }
         public string CountryName { get; set; }
+        public ICollection<ArtistViewModel> Artists { get; set; }
     }
 
     public class BandViewModel

@@ -28,10 +28,15 @@ namespace MuzON.DAL.Repositories
         public UnitOfWork(string connectionString)
         {
             context = new MuzONContext(connectionString);
+            context.Database.Log = Log;
             applicationUserManager = new ApplicationUserManager(new UserStore(context));
             applicationRoleManager = new ApplicationRoleManager(new RoleStore(context));
         }
 
+        public void Log(string Message)
+        {
+            Console.WriteLine(Message);
+        }
 
         public IRepository<Artist> Artists
         {

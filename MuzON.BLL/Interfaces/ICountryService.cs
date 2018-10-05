@@ -11,5 +11,7 @@ namespace MuzON.BLL.Interfaces
     {
         IEnumerable<CountryDTO> GetCountries();
         CountryDTO GetCountryById(Guid Id);
+        void DeleteCountry(Guid? id, string countryName = null);
+        void AddCountry(string countryName);
     }
 }

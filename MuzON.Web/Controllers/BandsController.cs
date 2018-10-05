@@ -41,9 +41,9 @@ namespace MuzON.Web.Controllers
         public ActionResult Details(Guid id)
         {
             var bandDTO = bandService.GetBandById(id);
-            var band = Mapper.Map<BandViewModel>(bandDTO);
-            var countryDTO = countryService.GetCountryById(band.CountryId);
-            ViewBag.Country = Mapper.Map<CountryViewModel>(countryDTO).Name;
+            var band = Mapper.Map<BandIndexViewModel>(bandDTO);
+
+            ViewBag.Country = countryService.GetCountryById(bandDTO.Country.Id).Name;
             ViewBag.Artists = band.Artists;
             return PartialView("_DetailsPartial", band);
         }

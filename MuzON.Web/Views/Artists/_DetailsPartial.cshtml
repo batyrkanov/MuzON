@@ -1,4 +1,4 @@
-﻿@model MuzON.Web.Models.ArtistDetailsViewModel
+﻿@model MuzON.Web.Models.ArtistIndexViewModel
 @{
     Layout = null;
 }
@@ -55,7 +55,12 @@
                         </dd>
                     }
                 }
-
+                else
+                {
+                    <dd>
+                        <strong>No Bands</strong>
+                    </dd>
+                }
 
             </dl>
 

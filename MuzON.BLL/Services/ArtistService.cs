@@ -23,6 +23,7 @@ namespace MuzON.BLL.Services
         public void AddArtist(ArtistDTO artistDTO, Guid[] selectedBands)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
+            var country = _unitOfWork.Countries.Get(artist.CountryId);
             if (selectedBands != null)
             {
                 artist.Bands = new List<Band>();
@@ -33,7 +34,7 @@ namespace MuzON.BLL.Services
                 }
             }
             artist.CountryId = artistDTO.Country.Id;
-            artist.Country = _unitOfWork.Countries.Get(artist.CountryId);
+            artist.Country = country;
             _unitOfWork.Artists.Create(artist);
             _unitOfWork.Save();
         }
@@ -64,7 +65,8 @@ namespace MuzON.BLL.Services
 
         public void UpdateArtist(ArtistDTO artistDTO, Guid[] selectedBands)
         {
-            Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
+            Artist artist = _unitOfWork.Artists.Get(artistDTO.Id);
+                Mapper.Map(artistDTO, artist);
             if (artist.Bands == null)
                 artist.Bands = new List<Band>();
 
