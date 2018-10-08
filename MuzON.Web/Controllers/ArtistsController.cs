@@ -74,13 +74,7 @@ namespace MuzON.Web.Controllers
             {
                 var artistDTO = Mapper.Map<ArtistViewModel, ArtistDTO>(artistViewModel);
                 artistDTO.Id = Guid.NewGuid();
-                if(uploadImage != null)
-                {
-                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                    {
-                        artistDTO.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
-                    }
-                }
+                artistDTO.Image = util.SetImage(uploadImage, artistDTO.Image);
                 artistDTO.Country = countryService.GetCountryById(artistViewModel.CountryId);
                 artistService.AddArtist(artistDTO, SelectedBands);
                 return RedirectToAction("Index");
@@ -134,15 +128,7 @@ namespace MuzON.Web.Controllers
             if (ModelState.IsValid)
             {
                 var artistDTO = Mapper.Map<ArtistViewModel, ArtistDTO>(artistViewModel);
-                if (uploadImage != null)
-                {
-                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                    {
-                        artistDTO.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
-                    }
-                }
-                else
-                    artistDTO.Image = Convert.FromBase64String(image);
+                artistDTO.Image = util.SetImage(uploadImage, artistDTO.Image, image);
                 artistDTO.Country = countryService.GetCountryById(artistViewModel.CountryId);
                 artistService.UpdateArtist(artistDTO, selectedBands);
                 return RedirectToAction("Index");

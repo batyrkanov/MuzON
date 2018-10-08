@@ -13,6 +13,7 @@ namespace MuzON.Web.Controllers
         public ICountryService countryService;
         public IUserService userService;
         public IBandService bandService;
+        public Utility.Util util = new Utility.Util();
 
         // Artists and Bands controller constructor
         public BaseController(IBandService bandServ,
