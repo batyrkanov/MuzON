@@ -51,13 +51,9 @@ namespace MuzON.Web.Controllers
             var model = new BandViewModel();
             model.CreatedDate = DateTime.Today;
 
-            var countryDTOs = countryService.GetCountries();
-            var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
-            ViewBag.CountryId = new SelectList(countries, "Id", "Name");
+            ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
 
-            var artistsDTO = artistService.GetArtists();
-            var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistsDTO);
-            ViewBag.Artists = new MultiSelectList(artists, "Id", "FullName");
+            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists());
             
             // viewbag for post
             ViewBag.Action = "create";
@@ -80,13 +76,8 @@ namespace MuzON.Web.Controllers
                 bandService.AddBand(bandDTO, SelectedArtists);
                 return RedirectToAction("Index");
             }
-            var artistsDTO = artistService.GetArtists();
-            var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistsDTO);
-            ViewBag.Artists = new MultiSelectList(artists, "Id", "FullName");
-
-            var countryDTOs = countryService.GetCountries();
-            var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
-            ViewBag.CountryId = new SelectList(countries, "Id", "Name");
+            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists());
+            ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
             return PartialView("_CreateAndEditPartial", bandViewModel);
         }
 
@@ -94,21 +85,14 @@ namespace MuzON.Web.Controllers
         public ActionResult Edit(Guid id)
         {
             var band = bandService.GetBandById(id);
+
             if (band == null)
             {
                 return HttpNotFound();
             }
-            TempData["Artists"] = band.Artists;
+
             BandViewModel bandViewModel = Mapper.Map<BandViewModel>(band);
             
-
-            var countryDTOs = countryService.GetCountries();
-            var countries = Mapper.Map<IEnumerable<CountryViewModel>>(countryDTOs);
-            ViewBag.CountryId = new SelectList(countries, "Id", "Name", bandViewModel.CountryId);
-
-            var artistsDTO = from a in artistService.GetArtists()
-                             select a;
-            var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistsDTO);
             if (band.Artists != null)
             {
                 bandViewModel.SelectedArtists = new List<Guid>();
@@ -117,7 +101,9 @@ namespace MuzON.Web.Controllers
                     bandViewModel.SelectedArtists.Add(item.Id);
                 }
             }
-            ViewBag.Artists = new MultiSelectList(artists, "Id", "FullName");
+
+            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists(), bandViewModel.SelectedArtists);
+            ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
 
             // viewbag for post
             ViewBag.Action = "edit";
@@ -139,9 +125,8 @@ namespace MuzON.Web.Controllers
                 bandService.UpdateBand(bandDTO, SelectedArtists);
                 return RedirectToAction("Index");
             }
-            var countryDTOs = countryService.GetCountries();
-            var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
-            ViewBag.CountryId = new SelectList(countries, "Id", "Name", bandViewModel.CountryId);
+            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists(), bandViewModel.SelectedArtists);
+            ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
             return PartialView("_CreateAndEditPartial", bandViewModel);
         }
 
