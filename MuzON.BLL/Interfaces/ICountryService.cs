@@ -13,5 +13,6 @@ namespace MuzON.BLL.Interfaces
         CountryDTO GetCountryById(Guid Id);
         void DeleteCountry(Guid? id, string countryName = null);
         void AddCountry(string countryName);
+        void Dispose();
     }
 }

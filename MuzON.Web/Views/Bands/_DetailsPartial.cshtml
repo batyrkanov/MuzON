@@ -1,4 +1,4 @@
-﻿@model MuzON.Web.Models.BandIndexViewModel
+﻿@model MuzON.Web.Models.BandDetailsViewModel
 @{
     Layout = null;
 }
@@ -40,14 +40,14 @@
                 </dt>
 
                 <dd>
-                    @ViewBag.Country
+                    @Html.DisplayFor(model => model.CountryName)
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.Artists)
+                    <label>Artists</label>
                 </dt>
-                @if (ViewBag.Artists != null)
+                @if (Model.Artists != null)
                 {
-                    @foreach (MuzON.Web.Models.ArtistViewModel item in ViewBag.Artists)
+                    foreach (var item in Model.Artists)
                     {
                         <dd>
                             - @item.FullName

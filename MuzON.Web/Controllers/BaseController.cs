@@ -38,6 +38,8 @@ namespace MuzON.Web.Controllers
                 try
                 {
                     artistService.Dispose();
+                    bandService.Dispose();
+                    countryService.Dispose();
                 }
                 catch { }
             }

@@ -14,5 +14,6 @@ namespace MuzON.BLL.Interfaces
         void AddBand(BandDTO bandDTO, Guid[] selectedArtists);
         void DeleteBand(BandDTO bandDTO);
         void UpdateBand(BandDTO bandDTO, Guid[] selectedArtists);
+        void Dispose();
     }
 }

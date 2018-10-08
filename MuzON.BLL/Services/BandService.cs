@@ -23,6 +23,7 @@ namespace MuzON.BLL.Services
         public void AddBand(BandDTO bandDTO, Guid[] selectedArtists)
         {
             var band = Mapper.Map<Band>(bandDTO);
+            Country country = _unitOfWork.Countries.SearchFor(x => x.Id == band.CountryId).First();
             if (selectedArtists != null)
             {
                 band.Artists = new List<Artist>();
@@ -32,8 +33,8 @@ namespace MuzON.BLL.Services
                     band.Artists.Add(c);
                 }
             }
-            band.CountryId = bandDTO.Country.Id;
-            band.Country = _unitOfWork.Countries.Get(band.CountryId);
+            band.CountryId = country.Id;
+            band.Country = country;
             _unitOfWork.Bands.Create(band);
             _unitOfWork.Save();
         }
@@ -43,6 +44,11 @@ namespace MuzON.BLL.Services
             Band band = Mapper.Map<Band>(bandDTO);
             _unitOfWork.Bands.Delete(band.Id);
             _unitOfWork.Save();
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
 
         public BandDTO GetBandById(Guid id)
@@ -60,7 +66,9 @@ namespace MuzON.BLL.Services
         public void UpdateBand(BandDTO bandDTO, Guid[] selectedArtists)
         {
             var band = _unitOfWork.Bands.Get(bandDTO.Id);
-                Mapper.Map(bandDTO, band);
+            var countryId = band.CountryId;
+            Mapper.Map(bandDTO, band);
+            
             if (selectedArtists != null)
             {
                 if (band.Artists == null)
@@ -72,11 +80,14 @@ namespace MuzON.BLL.Services
                     band.Artists.Add(c);
                 }
             }
-            if (band.CountryId != bandDTO.Country.Id)
+
+            if(band.Id != countryId)
             {
-                band.CountryId = bandDTO.Country.Id;
-                band.Country = _unitOfWork.Countries.Get(band.CountryId);
+                Country country = _unitOfWork.Countries
+                    .SearchFor(x => x.Id == band.CountryId).First();
+                band.Country = country;
             }
+            
             _unitOfWork.Bands.Update(band);
             _unitOfWork.Save();
         }

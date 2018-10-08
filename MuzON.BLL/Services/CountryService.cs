@@ -47,6 +47,11 @@ namespace MuzON.BLL.Services
             }
         }
 
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
+        }
+
         public IEnumerable<CountryDTO> GetCountries()
         {
             var countries = _unitOfWork.Countries.GetAll().ToList();

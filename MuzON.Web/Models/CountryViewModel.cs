@@ -9,7 +9,5 @@ namespace MuzON.Web.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public ICollection<ArtistViewModel> Artists { get; set; }
-        public ICollection<BandViewModel> Bands { get; set; }
     }
 }

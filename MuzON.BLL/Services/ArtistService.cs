@@ -6,8 +6,6 @@ using MuzON.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MuzON.BLL.Services
 {
@@ -23,7 +21,8 @@ namespace MuzON.BLL.Services
         public void AddArtist(ArtistDTO artistDTO, Guid[] selectedBands)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
-            var country = _unitOfWork.Countries.Get(artist.CountryId);
+            Country country = _unitOfWork.Countries
+                .SearchFor(x => x.Id == artist.CountryId).First();
             if (selectedBands != null)
             {
                 artist.Bands = new List<Band>();
@@ -66,23 +65,28 @@ namespace MuzON.BLL.Services
         public void UpdateArtist(ArtistDTO artistDTO, Guid[] selectedBands)
         {
             Artist artist = _unitOfWork.Artists.Get(artistDTO.Id);
-                Mapper.Map(artistDTO, artist);
-            if (artist.Bands == null)
-                artist.Bands = new List<Band>();
-
+            var countryId = artist.CountryId;
+            
+            Mapper.Map(artistDTO, artist);
+            
             if (selectedBands != null)
             {
+                if (artist.Bands == null)
+                    artist.Bands = new List<Band>();
                 artist.Bands.Clear();
                 foreach (var c in _unitOfWork.Bands.SearchFor(co => selectedBands.Contains(co.Id)))
                 {
                     artist.Bands.Add(c);
                 }
             }
-            if(artist.CountryId != artistDTO.Country.Id)
+
+            if (artist.Id != countryId)
             {
-                artist.CountryId = artistDTO.Country.Id;
-                artist.Country = _unitOfWork.Countries.Get(artist.CountryId);
+                Country country = _unitOfWork.Countries
+                    .SearchFor(x => x.Id == artist.CountryId).First();
+                artist.Country = country;
             }
+
             _unitOfWork.Artists.Update(artist);
             _unitOfWork.Save();
         }

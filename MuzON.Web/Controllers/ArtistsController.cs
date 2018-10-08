@@ -5,6 +5,7 @@ using MuzON.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -40,11 +41,8 @@ namespace MuzON.Web.Controllers
         public ActionResult Details(Guid id)
         {
             var artistDTO = artistService.GetArtistById(id);
-            var artist = Mapper.Map<ArtistIndexViewModel>(artistDTO);
+            var artist = Mapper.Map<ArtistDetailsViewModel>(artistDTO);
            
-            ViewBag.Country = artistService.GetArtistById(id).Country.Name;
-
-            ViewBag.bands = artist.Bands;
             return PartialView("_DetailsPartial",artist);
         }
 
@@ -53,6 +51,7 @@ namespace MuzON.Web.Controllers
         {
             var model = new ArtistViewModel();
             model.BirthDate = DateTime.Today;
+
             var countryDTOs = countryService.GetCountries();
             var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name");
@@ -75,10 +74,14 @@ namespace MuzON.Web.Controllers
             {
                 var artistDTO = Mapper.Map<ArtistViewModel, ArtistDTO>(artistViewModel);
                 artistDTO.Id = Guid.NewGuid();
-                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                if(uploadImage != null)
                 {
-                    artistDTO.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
+                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                    {
+                        artistDTO.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
+                    }
                 }
+                artistDTO.Country = countryService.GetCountryById(artistViewModel.CountryId);
                 artistService.AddArtist(artistDTO, SelectedBands);
                 return RedirectToAction("Index");
             }
@@ -103,9 +106,16 @@ namespace MuzON.Web.Controllers
             }
             ArtistViewModel artistViewModel = Mapper.Map<ArtistViewModel>(artist);
             var countryDTOs = countryService.GetCountries();
-            var countries = Mapper.Map<IEnumerable<CountryDTO>, IEnumerable<CountryViewModel>>(countryDTOs);
+            var countries = Mapper.Map<IEnumerable<CountryViewModel>>(countryDTOs);
             ViewBag.CountryId = new SelectList(countries, "Id", "Name", artistViewModel.CountryId);
-
+            if(artist.Bands != null)
+            {
+                artistViewModel.SelectedBands = new List<Guid>();
+                foreach (var item in artist.Bands)
+                {
+                    artistViewModel.SelectedBands.Add(item.Id);
+                }
+            }
             var bandsDTO = bandService.GetBands();
             var bands = Mapper.Map<IEnumerable<BandViewModel>>(bandsDTO);
             ViewBag.Bands = new MultiSelectList(bands, "Id", "Name");
@@ -133,7 +143,7 @@ namespace MuzON.Web.Controllers
                 }
                 else
                     artistDTO.Image = Convert.FromBase64String(image);
-
+                artistDTO.Country = countryService.GetCountryById(artistViewModel.CountryId);
                 artistService.UpdateArtist(artistDTO, selectedBands);
                 return RedirectToAction("Index");
             }
