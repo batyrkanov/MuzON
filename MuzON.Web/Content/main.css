@@ -92,12 +92,14 @@ $black			: #222;
 }
 
 body {
-  color: #777777;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.625em;
-  position: relative;
+    padding-bottom: 320px;
+    min-height: 100vh;
+    color: #777777;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.625em;
+    position: relative;
 }
 
 ol, ul {
@@ -4311,6 +4313,16 @@ dl.accordion.time-line:before {
 /* =================================== */
 /*  Footer Styles
 /* =================================== */
+footer {
+    position: absolute;
+    padding: 100px 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+
 .footer-area {
   background-color: #04091e;
 }
@@ -4483,3 +4495,29 @@ dl.accordion.time-line:before {
 }
 
 /*-------- end footer Area -------------*/
+#imageSize {
+    width: 78px;
+}
+
+#tableArtistsGrid {
+    width: 100%;
+    text-align: center;
+}
+
+#tableBandsGrid {
+    width: 100%;
+    text-align: center;
+}
+
+#addButton {
+    text-align: center;
+}
+
+
+
+#table {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 0.2rem;
+}

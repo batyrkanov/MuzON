@@ -2,11 +2,12 @@
 @{
     ViewBag.Title = "Index";
 }
-<br />
-<br />
-<div class="container" id="addButton">
-    <h2>Bands</h2>
-</div>
+<section class="portfolio-area section-gap" id="portfolio">
+    <br />
+    <br />
+    <div class="container" id="addButton">
+        <h2>Bands</h2>
+    </div>
 
     <br />
     <div class="container">
@@ -18,9 +19,7 @@
                     <th>Country</th>
                     <th>Created Date</th>
                     <th>Image</th>
-                    <th>Edit</th>
-                    <th>Details</th>
-                    <th>Delete</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
         </table>
@@ -30,26 +29,26 @@
             </button>
         </div>
     </div>
-
-    <div class="modal fade" id="createBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
-        <div id="createBandContainer">
-        </div>
+</section>
+<div class="modal fade" id="createBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
+    <div id="createBandContainer">
     </div>
+</div>
 
-    <div class="modal fade" id="editBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
-        <div id="editBandContainer">
-        </div>
+<div class="modal fade" id="editBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
+    <div id="editBandContainer">
     </div>
+</div>
 
-    <div class="modal fade" id="deleteBandModal" tabindex="-1" role="dialog" aria-labelledby="DeleteBandModal" aria-hidden="true" data-backdrop="static">
-        <div id="deleteBandContainer">
-        </div>
+<div class="modal fade" id="deleteBandModal" tabindex="-1" role="dialog" aria-labelledby="DeleteBandModal" aria-hidden="true" data-backdrop="static">
+    <div id="deleteBandContainer">
     </div>
+</div>
 
-    <div class="modal fade" id="detailsBandModal" tabindex="-1" role="dialog" aria-labelledby="DetailsBandModal" aria-hidden="true" data-backdrop="static">
-        <div id="detailsBandContainer">
-        </div>
+<div class="modal fade" id="detailsBandModal" tabindex="-1" role="dialog" aria-labelledby="DetailsBandModal" aria-hidden="true" data-backdrop="static">
+    <div id="detailsBandContainer">
     </div>
-    @section scripts{
-        <script src="~/Scripts/bandsGrid.js"></script>
-    }
+</div>
+@section scripts{
+    <script src="~/Scripts/bandsGrid.js"></script>
+}

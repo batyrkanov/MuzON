@@ -35,31 +35,17 @@
                 "sortable": false,
                 "orderable": false,
                 "render": function (Id) {
-                    return `<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Bands/Edit/` + Id + `" id="btnEditBand">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
-                            </button>`;
-                }
-            },
-            {
-                "data": "Id",
-                "searchable": false,
-                "sortable": false,
-                "orderable": false,
-                "render": function (Id) {
-                    return `<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Bands/Details/` + Id + `" id="btnDetailsBand">
-                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Details
-                            </button>`;
-                }
-            },
-            {
-                "data": "Id",
-                "orderable": false,
-                "searchable": false,
-                "sortable": false,
-                "render": function (Id) {
-                    return `<button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Bands/Delete/` + Id + `" id="btnDeleteBand">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-                            </button>`;
+                    return `<div class="btn-group" role="group">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Bands/Edit/` + Id + `" id="btnEditBand">
+                                    <span class="fa fa-pencil" aria-hidden="true"></span> Edit
+                                </button>
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Bands/Details/` + Id + `" id="btnDetailsBand">
+                                    <span class="fa fa-eye" aria-hidden="true"></span> Details
+                                </button>
+                                <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Bands/Delete/` + Id + `" id="btnDeleteBand">
+                                    <span class="fa fa-trash" aria-hidden="true"></span> Delete
+                                </button>
+                            </div>`;
                 }
             }
         ]
