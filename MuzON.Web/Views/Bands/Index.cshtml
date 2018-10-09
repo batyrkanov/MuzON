@@ -2,51 +2,54 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Bands</h2>
-
 <br />
-<div>
-
-    <table id="tableBandsGrid" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Created Date</th>
-                <th>Image</th>
-                <th>Edit</th>
-                <th>Details</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-    </table>
-    <div class="container" id="addButton">
-        <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("Create","Bands")" id="btnCreateBand">
-            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Add Band
-        </button>
-    </div>
+<br />
+<div class="container" id="addButton">
+    <h2>Bands</h2>
 </div>
 
-<div class="modal fade" id="createBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
-    <div id="createBandContainer">
-    </div>
-</div>
+    <br />
+    <div class="container">
 
-<div class="modal fade" id="editBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
-    <div id="editBandContainer">
+        <table id="tableBandsGrid" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Created Date</th>
+                    <th>Image</th>
+                    <th>Edit</th>
+                    <th>Details</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="container" id="addButton">
+            <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("Create","Bands")" id="btnCreateBand">
+                <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Add Band
+            </button>
+        </div>
     </div>
-</div>
 
-<div class="modal fade" id="deleteBandModal" tabindex="-1" role="dialog" aria-labelledby="DeleteBandModal" aria-hidden="true" data-backdrop="static">
-    <div id="deleteBandContainer">
+    <div class="modal fade" id="createBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
+        <div id="createBandContainer">
+        </div>
     </div>
-</div>
 
-<div class="modal fade" id="detailsBandModal" tabindex="-1" role="dialog" aria-labelledby="DetailsBandModal" aria-hidden="true" data-backdrop="static">
-    <div id="detailsBandContainer">
+    <div class="modal fade" id="editBandModal" tabindex="-1" role="dialog" aria-labelledby="CreateBandModal" aria-hidden="true" data-backdrop="static">
+        <div id="editBandContainer">
+        </div>
     </div>
-</div>
-@section scripts{
-    <script src="~/Scripts/bandsGrid.js"></script>
-}
+
+    <div class="modal fade" id="deleteBandModal" tabindex="-1" role="dialog" aria-labelledby="DeleteBandModal" aria-hidden="true" data-backdrop="static">
+        <div id="deleteBandContainer">
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailsBandModal" tabindex="-1" role="dialog" aria-labelledby="DetailsBandModal" aria-hidden="true" data-backdrop="static">
+        <div id="detailsBandContainer">
+        </div>
+    </div>
+    @section scripts{
+        <script src="~/Scripts/bandsGrid.js"></script>
+    }

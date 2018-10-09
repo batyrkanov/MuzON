@@ -2092,26 +2092,26 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 99;
 }
 
-.nav-menu li {
+.nav-menu form li {
   position: relative;
   white-space: nowrap;
 }
 
-.nav-menu > li {
-  float: left;
-}
+    .nav-menu > form > li {
+        float: left;
+    }
 
-.nav-menu li:hover > ul,
-.nav-menu li.sfHover > ul {
-  display: block;
-}
+    .nav-menu form li:hover > ul,
+    .nav-menu form li.sfHover > ul {
+        display: block;
+    }
 
 .nav-menu ul ul {
   top: 0;
   right: 100%;
 }
 
-.nav-menu ul li {
+.nav-menu ul form li {
   min-width: 180px;
 }
 
@@ -2152,11 +2152,11 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
 }
 
-.nav-menu li:hover > a {
+.nav-menu form li:hover > a {
   color: #8490ff;
 }
 
-.nav-menu > li {
+.nav-menu > form > li {
   margin-left: 10px;
 }
 
@@ -2167,22 +2167,22 @@ h1, h2, h3, h4, h5, h6 {
   background: #fff;
 }
 
-.nav-menu ul li {
-  transition: 0.3s;
-}
+    .nav-menu ul form li {
+        transition: 0.3s;
+    }
 
-.nav-menu ul li a {
-  padding: 5px 10px;
-  color: #333;
-  transition: 0.3s;
-  display: block;
-  font-size: 12px;
-  text-transform: none;
-}
+    .nav-menu ul form li a {
+        padding: 5px 10px;
+        color: #333;
+        transition: 0.3s;
+        display: block;
+        font-size: 12px;
+        text-transform: none;
+    }
 
-.nav-menu ul li:hover > a {
-  color: #8490ff;
-}
+        .nav-menu ul form li:hover > a {
+            color: #8490ff;
+        }
 
 .nav-menu ul ul {
   margin-right: 10px;
@@ -2238,31 +2238,31 @@ h1, h2, h3, h4, h5, h6 {
   list-style: none;
 }
 
-#mobile-nav ul li {
-  position: relative;
-}
+    #mobile-nav ul form li {
+        position: relative;
+    }
 
-#mobile-nav ul li a {
-  color: #fff;
-  font-size: 13px;
-  text-transform: uppercase;
-  overflow: hidden;
-  padding: 10px 22px 10px 15px;
-  position: relative;
-  text-decoration: none;
-  width: 100%;
-  display: block;
-  outline: none;
-  font-weight: 400;
-}
+        #mobile-nav ul form li a {
+            color: #fff;
+            font-size: 13px;
+            text-transform: uppercase;
+            overflow: hidden;
+            padding: 10px 22px 10px 15px;
+            position: relative;
+            text-decoration: none;
+            width: 100%;
+            display: block;
+            outline: none;
+            font-weight: 400;
+        }
 
-#mobile-nav ul li a:hover {
-  color: #fff;
-}
+            #mobile-nav ul form li a:hover {
+                color: #fff;
+            }
 
-#mobile-nav ul li li {
-  padding-left: 30px;
-}
+    #mobile-nav ul form li li {
+        padding-left: 30px;
+    }
 
 #mobile-nav ul .menu-has-children i {
   position: absolute;

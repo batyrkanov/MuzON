@@ -30,9 +30,41 @@ namespace MuzON.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/DataTables/dataTables.bootstrap.min.css",
-                      "~/Content/DataTables/css/responsive.bootstrap.min.css"));
+                      "~/Content/Site.css",
+                      "~/Content/DataTables/dataTables.bootstrap4.min.css",
+                      "~/Content/DataTables/css/responsive.bootstrap4.min.css"));
+
+            bundles.Add(new StyleBundle("~/ContentStyles/css").Include(
+                    "~/Content/linearicons.css",
+                    "~/Content/font-awesome.min.css",
+                    "~/Content/bootstrap.css",
+                    "~/Content/magnific-popup.css",
+                    "~/Content/jquery-ui.css",
+                    "~/Content/nice-select.css",
+                    "~/Content/animate.min.css",
+                    "~/Content/owl.carousel.css",
+                    "~/Content/main.css",
+                     "~/Content/Site.css",
+                    "~/Content/DataTables/dataTables.bootstrap4.min.css",
+                    "~/Content/DataTables/css/responsive.bootstrap4.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/mainJS").Include(
+                      "~/Scripts/popper.min.js",
+                      "~/Scripts/vendor/bootstrap.min.js",
+                      "~/Scripts/easing.min.js",
+                      "~/Scripts/hoverIntent.js",
+                      "~/Scripts/superfish.min.js",
+                      "~/Scripts/jquery.magnific-popup.min.js",
+                      "~/Scripts/jquery.tabs.min.js",
+                      "~/Scripts/jquery.nice-select.min.js",
+                      "~/Scripts/isotope.pkgd.min.js",
+                      "~/Scripts/waypoints.min.js",
+                      "~/Scripts/jquery.counterup.min.js",
+                      "~/Scripts/simple-skillbar.js",
+                      "~/Scripts/owl.carousel.min.js",
+                      "~/Scripts/main.js",
+                      "~/Scripts/jquery.dataTables.min.js",
+                      "~/Scripts/dataTables.bootstrap4.min.js"));
         }
     }
 }

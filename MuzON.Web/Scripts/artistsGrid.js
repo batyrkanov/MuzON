@@ -35,31 +35,17 @@
                 "sortable": false,
                 "orderable": false,
                 "render": function (Id) {
-                    return `<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Artists/Edit/` + Id + `" id="btnEditArtist">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
-                            </button>`;
-                }
-            },
-            {
-                "data": "Id",
-                "searchable": false,
-                "sortable": false,
-                "orderable": false,
-                "render": function (Id) {
-                    return `<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Artists/Details/` + Id + `" id="btnDetailsArtist">
-                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Details
-                            </button>`;
-                }
-            },
-            {
-                "data": "Id",
-                "orderable": false,
-                "searchable": false,
-                "sortable": false,  
-                "render": function (Id) {
-                    return `<button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Artists/Delete/` + Id + `" id="btnDeleteArtist">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-                            </button>`;
+                    return `<div class="btn-group" role="group">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Artists/Edit/` + Id + `" id="btnEditArtist">
+                                    <span class="fa fa-pencil" aria-hidden="true"></span> Edit
+                                </button>
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Artists/Details/` + Id + `" id="btnDetailsArtist">
+                                    <span class="fa fa-eye" aria-hidden="true"></span> Details
+                                </button>
+                                <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Artists/Delete/` + Id + `" id="btnDeleteArtist">
+                                    <span class="fa fa-trash" aria-hidden="true"></span> Delete
+                                </button>
+                            </div>`;
                 }
             }
         ]

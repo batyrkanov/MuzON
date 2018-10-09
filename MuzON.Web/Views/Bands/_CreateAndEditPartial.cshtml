@@ -10,8 +10,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">Add Band</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 @using (Ajax.BeginForm("Create", "Bands", null,
                     new AjaxOptions
@@ -62,17 +62,15 @@
                             <div class="form-group">
                                 @Html.Label("Artists", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.ListBoxFor(model => model.SelectedArtists, (IEnumerable<SelectListItem>)ViewBag.Artists, htmlAttributes: new { @class = "chosen-select", multiple = "multiple" })
+                                    @Html.ListBoxFor(model => model.SelectedArtists, (IEnumerable<SelectListItem>)ViewBag.Artists, htmlAttributes: new { @class = "form-control", multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.SelectedArtists, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <input type="submit" class="btn btn-primary" value="Save" />
-                                </div>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-primary" value="Save" />
                             </div>
                         </div>
                     </div>
@@ -93,8 +91,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">Edit Band</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 @using (Ajax.BeginForm("Edit", "Bands", null,
                     new AjaxOptions

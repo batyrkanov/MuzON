@@ -1,8 +1,77 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Artists";
 }
-<hr />
-<a class="btn btn-default" href="@Url.Action("Index", "Users")">Users</a>
-<a class="btn btn-default" href="@Url.Action("Index", "Artists")">Artists</a>
-<a class="btn btn-default" href="@Url.Action("Index", "Bands")">Bands</a>
-<a class="btn btn-default" href="@Url.Action("Index", "Songs")">Songs</a>
+
+<section class="portfolio-area section-gap" id="portfolio">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">All Artists and Bands</h1>
+                    <p>They're already in our site.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <ul>
+                <li class="active" data-filter="*">All</li>
+                <li data-filter=".artist">Artists</li>
+                <li data-filter=".band">Bands</li>
+            </ul>
+        </div>
+
+        <div class="filters-content">
+            <div class="row grid">
+                @if (ViewBag.Artists != null)
+                {
+                    foreach (MuzON.Web.Models.ArtistDetailsViewModel a in ViewBag.Artists)
+                    {
+                        <div class="single-portfolio col-sm-4 all artist">
+                            <div class="relative">
+                                <div class="thumb">
+                                    @*<div class="overlay overlay-bg"></div>*@
+                                    <img class="image img-fluid" src="data:image/jpeg;base64,@a.Image" alt="">
+                                </div>
+                                @*<a href="@a.Image" class="img-pop-up">
+                                        <div class="middle">
+                                            <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
+                                        </div>
+                                    </a>*@
+                            </div>
+                            <div class="p-inner">
+                                <h4>@a.FullName</h4>
+                                <div class="cat">@a.CountryName</div>
+                            </div>
+                        </div>
+                    }
+                }
+                @if (ViewBag.Bands != null)
+                {
+                    foreach (MuzON.Web.Models.BandDetailsViewModel b in ViewBag.Bands)
+                    {
+                        <div class="single-portfolio col-sm-4 all band">
+                            <div class="relative">
+                                <div class="thumb">
+                                    @*<div class="overlay overlay-bg"></div>*@
+                                    <img class="image img-fluid" src="data:image/jpeg;base64,@b.Image" alt="">
+                                </div>
+                            </div>
+                            <div class="p-inner">
+                                <h4>@b.Name</h4>
+                                <div class="cat">@b.CountryName</div>
+                            </div>
+                        </div>
+                    }
+                }
+                @if (ViewBag.Artists == null && ViewBag.Bands == null)
+                {
+                    <div class="single-portfolio col-sm-4 all">
+                        <h3>No items</h3>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MuzON.DAL.EF
 {
-   public class DbInitializer : DropCreateDatabaseAlways<MuzONContext>
+   public class DbInitializer : CreateDatabaseIfNotExists<MuzONContext>
     {
         protected override void Seed(MuzONContext db)
         {

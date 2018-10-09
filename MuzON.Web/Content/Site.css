@@ -39,3 +39,17 @@ textarea {
 #addButton{
     text-align:center;
 }
+
+footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+}
+
+#table {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 0.2rem;
+}
