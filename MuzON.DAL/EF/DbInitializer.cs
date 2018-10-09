@@ -5,10 +5,11 @@ using MuzON.Domain.Entities;
 using MuzON.Domain.Identity;
 using System;
 using System.Data.Entity;
+using System.Linq;
 
 namespace MuzON.DAL.EF
 {
-   public class DbInitializer : CreateDatabaseIfNotExists<MuzONContext>
+   public class DbInitializer : DropCreateDatabaseAlways<MuzONContext>
     {
         protected override void Seed(MuzONContext db)
         {
@@ -17,7 +18,7 @@ namespace MuzON.DAL.EF
 
             Country country = new Country { Id = Guid.NewGuid(), Name = "Bishkek" };
             Country berlin = new Country { Id = Guid.NewGuid(), Name = "Berlin" };
-
+            
             db.Genres.Add(rockGenre);
             db.Genres.Add(jRockGenre);
             db.Countries.Add(country);

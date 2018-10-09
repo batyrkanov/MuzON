@@ -49,8 +49,10 @@ namespace MuzON.Web.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            var model = new ArtistViewModel();
-            model.BirthDate = DateTime.Today;
+            var model = new ArtistViewModel
+            {
+                BirthDate = DateTime.Today
+            };
 
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
             ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands());

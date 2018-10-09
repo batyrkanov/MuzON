@@ -48,8 +48,10 @@ namespace MuzON.Web.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            var model = new BandViewModel();
-            model.CreatedDate = DateTime.Today;
+            var model = new BandViewModel
+            {
+                CreatedDate = DateTime.Today
+            };
 
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
 

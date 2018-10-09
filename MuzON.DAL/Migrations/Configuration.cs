@@ -1,6 +1,7 @@
 namespace MuzON.DAL.Migrations
 {
     using MuzON.DAL.Identity;
+    using MuzON.Domain.Entities;
     using MuzON.Domain.Identity;
     using System;
     using System.Data.Entity;
@@ -29,8 +30,12 @@ namespace MuzON.DAL.Migrations
             {
                 var store = new UserStore(context);
                 var manager = new ApplicationUserManager(store);
-                var user = new User { Id = Guid.NewGuid(),
-                    Email = "admin@admin.com", UserName = "admin@admin.com" };
+                var user = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Email = "admin@admin.com",
+                    UserName = "admin@admin.com"
+                };
 
                 await manager.CreateAsync(user, "123123");
                 await manager.AddToRoleAsync(user.Id, "admin");
