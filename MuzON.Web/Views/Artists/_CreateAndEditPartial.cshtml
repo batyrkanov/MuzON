@@ -3,7 +3,11 @@
     /**/
     Layout = null;
 }
-
+<style>
+    #SelectedBands_chosen{
+        width: 100%;
+    }
+</style>
 @{
     if (ViewBag.Action == "create")
     {
@@ -54,7 +58,7 @@
                             <div class="form-group">
                                 @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select country", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -62,7 +66,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.ListBoxFor(model => model.SelectedBands, (IEnumerable<SelectListItem>)ViewBag.Bands, htmlAttributes: new { @class = "form-control", multiple = "multiple" })
+                                    @Html.ListBoxFor(model => model.SelectedBands, (IEnumerable<SelectListItem>)ViewBag.Bands, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select bands", multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.SelectedBands, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -139,7 +143,7 @@
                             <div class="form-group">
                                 @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "form-control", @id = "countryDropList", @required = "required" })
+                                    @Html.DropDownList("CountryId", null, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -147,7 +151,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.ListBoxFor(model => model.SelectedBands, (IEnumerable<SelectListItem>)ViewBag.Bands, htmlAttributes: new { @class = "form-control", @id = "bands", multiple = "multiple" })
+                                    @Html.ListBoxFor(model => model.SelectedBands, (IEnumerable<SelectListItem>)ViewBag.Bands, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.SelectedBands, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -165,14 +169,7 @@
             </div>
 
         </div>
-        @section scripts{
-            <script>
-                $(document).ready(function () {
-                    $("#BirthDate").datepicker();
-                    $('select').niceSelect('update');
-                });
-            </script>
-        }
+      
     }
 
 }
