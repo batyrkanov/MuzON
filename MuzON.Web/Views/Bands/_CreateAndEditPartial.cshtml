@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.CreatedDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.EditorFor(model => model.CreatedDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control datepicker" } })
                                     @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.CreatedDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.EditorFor(model => model.CreatedDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control datepicker" } })
                                     @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -152,23 +152,13 @@
                         </div>
                         <div class="modal-footer">
                             <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <input type="submit" class="btn btn-primary" value="Save" />
-                                </div>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-primary" value="Save" />
                             </div>
                         </div>
                     </div>
                 }
             </div>
         </div>
-        @section scripts{
-            <script>
-                $(document).ready(function () {
-                    $("#CreatedDate").datepicker();
-                });
-
-            </script>
-        }
     }
 }

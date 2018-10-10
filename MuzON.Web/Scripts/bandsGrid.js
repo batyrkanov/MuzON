@@ -60,6 +60,7 @@ $("#btnCreateBand").on("click", function () {
         $('#createBandContainer').html(data);
 
         $('#createBandModal').modal('show');
+        
         $('.chosen-select').chosen({}).change(function (obj, result) {
             console.debug("changed: %o", arguments);
 
