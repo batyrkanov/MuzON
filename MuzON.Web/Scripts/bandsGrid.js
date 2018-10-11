@@ -113,18 +113,32 @@ $("#tableBandsGrid").on("click", "#btnDeleteBand", function () {
 
 function DeleteBandSuccess(data) {
 
-    if (data != "success") {
-        $('#deleteBandContainer').html(data);
+    if (data.data != "success") {
+        $('#deleteBandContainer').html(data.data);
         return;
     }
+    $.notify({
+        // options
+        icon: 'fa fa-check-circle',
+        title: '<strong>Success</strong>: ',
+        message: 'Deleted!'
+    }, {
+            type: 'success',
+            z_index: 1051,
+            animate: {
+                enter: 'animated bounceIn',
+                exit: 'animated bounceOut'
+            }
+        });
     $('#deleteBandModal').modal('hide');
     $('#deleteBandContainer').html("");
 }
 
 function CreateBandSuccess(data) {
-
-    if (data != "success") {
-        $('#createBandContainer').html(data);
+    console.log(data);
+    if (data.data != "success") {
+        $('#createBandContainer').html(data.data);
+        ErrorNotify(data);
         return;
     }
     $('#createBandModal').modal('hide');
@@ -133,11 +147,32 @@ function CreateBandSuccess(data) {
 
 function UpdateBandSuccess(data) {
 
-    if (data != "success") {
-        $('#editBandContainer').html(data);
+    if (data.data != "success") {
+        $('#editBandContainer').html(data.data);
+        ErrorNotify(data);
         return;
     }
     $('#editBandModal').modal('hide');
     $('#editBandContainer').html("");
 
+}
+
+function ErrorNotify(data) {
+    if (data.errorMessage.length >= 1) {
+        data.errorMessage.forEach(function (item) {
+            $.notify({
+                // options
+                icon: 'fa fa-warning',
+                title: '<strong>Warning</strong>: ',
+                message: item
+            }, {
+                    type: 'warning',
+                    z_index: 1051,
+                    animate: {
+                        enter: 'animated bounceIn',
+                        exit: 'animated bounceOut'
+                    }
+                });
+        });
+    }
 }

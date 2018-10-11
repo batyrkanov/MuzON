@@ -27,23 +27,29 @@
                 {
                     foreach (MuzON.Web.Models.ArtistDetailsViewModel a in ViewBag.Artists)
                     {
-                        <div class="single-portfolio col-sm-4 all artist">
-                            <div class="relative">
-                                <div class="thumb">
-                                    @*<div class="overlay overlay-bg"></div>*@
-                                    <img class="image img-fluid" src="data:image/jpeg;base64,@a.Image" alt="">
-                                </div>
-                                @*<a href="@a.Image" class="img-pop-up">
-                                        <div class="middle">
-                                            <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
-                                        </div>
-                                    </a>*@
-                            </div>
-                            <div class="p-inner">
-                                <h4>@a.FullName</h4>
-                                <div class="cat">@a.CountryName</div>
-                            </div>
+                <div class="single-portfolio col-sm-4 all artist">
+                    <div class="relative">
+                        <div class="thumb">
+                            <div class="overlay overlay-bg"></div>
+                            <img class="image img-fluid" src="data:image/jpeg;base64,@a.Image" alt="">
                         </div>
+                        <a href="@Url.Action("MoreAboutArtist","Artists", new { id = a.Id})" class="img-pop-up">
+                            <div class="middle" style="left: 35%;">
+                                <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
+                            </div>
+                        </a>
+                        <a href="data:image/jpeg;base64,@a.Image" class="see-img">
+                            <div class="middle" style="left: 65%;">
+                                <div class="text align-self-center d-flex"><i class="fa fa-file-image-o"></i></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="p-inner">
+                        <h4>@a.FullName</h4>
+                        <div class="cat">@a.CountryName</div>
+                    </div>
+                </div>
+                       
                     }
                 }
                 @if (ViewBag.Bands != null)
@@ -53,9 +59,19 @@
                         <div class="single-portfolio col-sm-4 all band">
                             <div class="relative">
                                 <div class="thumb">
-                                    @*<div class="overlay overlay-bg"></div>*@
+                                    <div class="overlay overlay-bg"></div>
                                     <img class="image img-fluid" src="data:image/jpeg;base64,@b.Image" alt="">
                                 </div>
+                                <a href="@Url.Action("MoreAboutBand","Bands", new { id = b.Id})" class="img-pop-up">
+                                    <div class="middle" style="left: 35%;">
+                                        <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
+                                    </div>
+                                </a>
+                                <a href="data:image/jpeg;base64,@b.Image" class="see-img">
+                                    <div class="middle" style="left: 65%;">
+                                        <div class="text align-self-center d-flex"><i class="fa fa-file-image-o"></i></div>
+                                    </div>
+                                </a>
                             </div>
                             <div class="p-inner">
                                 <h4>@b.Name</h4>

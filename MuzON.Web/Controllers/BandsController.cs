@@ -24,7 +24,7 @@ namespace MuzON.Web.Controllers
             return View();
         }
         
-        public ActionResult GetList()
+        public JsonResult GetList()
         {
             var bandsDTO = bandService.GetBands();
             var bands = Mapper.Map<IEnumerable<BandIndexViewModel>>(bandsDTO);
@@ -43,6 +43,13 @@ namespace MuzON.Web.Controllers
             var bandDTO = bandService.GetBandById(id);
             var band = Mapper.Map<BandDetailsViewModel>(bandDTO);
             return PartialView("_DetailsPartial", band);
+        }
+
+        public ActionResult MoreAboutBand(Guid id)
+        {
+            var bandDTO = bandService.GetBandById(id);
+            var band = Mapper.Map<BandDetailsViewModel>(bandDTO);
+            return PartialView("_Partial", band);
         }
 
         [Authorize(Roles = "admin")]
@@ -65,7 +72,7 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BandViewModel bandViewModel, Guid[] SelectedArtists, HttpPostedFileBase uploadImage)
+        public JsonResult Create(BandViewModel bandViewModel, Guid[] SelectedArtists, HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid)
             {
@@ -76,11 +83,11 @@ namespace MuzON.Web.Controllers
 
                 bandDTO.Country = countryService.GetCountryById(bandViewModel.CountryId);
                 bandService.AddBand(bandDTO, SelectedArtists);
-                return RedirectToAction("Index");
+                return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists());
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
-            return PartialView("_CreateAndEditPartial", bandViewModel);
+            return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "admin")]
@@ -115,7 +122,7 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BandViewModel bandViewModel, Guid[] SelectedArtists, HttpPostedFileBase uploadImage, string image)
+        public JsonResult Edit(BandViewModel bandViewModel, Guid[] SelectedArtists, HttpPostedFileBase uploadImage, string image)
         {
 
             if (ModelState.IsValid)
@@ -125,11 +132,11 @@ namespace MuzON.Web.Controllers
                 bandDTO.Image = util.SetImage(uploadImage, bandDTO.Image, image);
                 bandDTO.Country = countryService.GetCountryById(bandViewModel.CountryId);
                 bandService.UpdateBand(bandDTO, SelectedArtists);
-                return RedirectToAction("Index");
+                return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists(), bandViewModel.SelectedArtists);
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
-            return PartialView("_CreateAndEditPartial", bandViewModel);
+            return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "admin")]
@@ -147,11 +154,11 @@ namespace MuzON.Web.Controllers
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public JsonResult DeleteConfirmed(Guid id)
         {
             var bandDTO = bandService.GetBandById(id);
             bandService.DeleteBand(bandDTO);
-            return RedirectToAction("Index");
+            return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

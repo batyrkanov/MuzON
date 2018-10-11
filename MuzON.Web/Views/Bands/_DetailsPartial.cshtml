@@ -45,7 +45,7 @@
                 <dt>
                     <label>Artists</label>
                 </dt>
-                @if (Model.Artists != null)
+                @if (Model.Artists.Count >= 1)
                 {
                     foreach (var item in Model.Artists)
                     {

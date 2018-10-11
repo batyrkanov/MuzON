@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using MuzON.BLL.DTO;
-using MuzON.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,9 +19,11 @@ namespace MuzON.Web.Utility
                     image = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
             }
-            else if(uploadImage == null && existingImage == null)
+            else if (uploadImage == null && existingImage == null)
             {
-                image = null;
+                var path = "~/Content/images/nophoto.jpg";
+                var defaultPhoto = System.IO.File.ReadAllBytes(HttpContext.Current.Server.MapPath(path));
+                image = defaultPhoto;
             }
             else
                 image = Convert.FromBase64String(existingImage);
@@ -43,11 +43,36 @@ namespace MuzON.Web.Utility
         {
             var DTOs = service;
             IEnumerable<D> dataList = Mapper.Map<IEnumerable<D>>(DTOs);
-            if(service is IEnumerable<ArtistDTO>)
+            if (service is IEnumerable<ArtistDTO>)
             {
                 return new MultiSelectList(dataList, "Id", "FullName", selectedItems);
             }
             return new MultiSelectList(dataList, "Id", "Name", selectedItems);
+        }
+
+        public MultiSelectList GetMultiSelectListArtists<S, D>(IEnumerable<S> service, List<Guid> selectedItems = null)
+        {
+            var DTOs = service;
+            IEnumerable<D> dataList = Mapper.Map<IEnumerable<D>>(DTOs);
+
+            return new MultiSelectList(dataList, "Id", "FullName", selectedItems);
+
+        }
+
+        public List<string> GetErrorList(ICollection<ModelState> values)
+        {
+            var errorList = new List<string>();
+            foreach (var value in values)
+            {
+                if (value.Errors != null)
+                {
+                    foreach (var item in value.Errors)
+                    {
+                        errorList.Add(item.ErrorMessage);
+                    }
+                }
+            }
+            return errorList;
         }
     }
 }

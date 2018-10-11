@@ -8,6 +8,7 @@ namespace MuzON.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string FileName { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Genre> Genres { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

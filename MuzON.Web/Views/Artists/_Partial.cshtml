@@ -1,0 +1,58 @@
+﻿@model MuzON.Web.Models.ArtistDetailsViewModel
+@{
+    Layout = null;
+}
+
+<div class="container" id="small-dialog">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3><strong>Artist details page</strong></h3>
+            <hr />
+        </div>
+        @* Image *@
+        <div class="col-md-4 imageClass">
+            <h3><strong>Photo</strong></h3>
+            <a href="data:image/jpeg;base64,@Model.Image" class="see-img">
+                <img class="image img-fluid" src="data:image/jpeg;base64,@Model.Image" style="width: auto; display: inline-block;" />
+            </a>
+        </div>
+        <br />
+        @* Info *@
+        <div class="col-md-4">
+            <h3><strong>Info</strong></h3>
+            <ul class="unordered-list">
+                <li><strong>Artist full name:</strong> @Html.DisplayFor(model => model.FullName)</li>
+                <li><strong>Country name:</strong> @Html.DisplayFor(model => model.CountryName)</li>
+                <li><strong>Birth date:</strong> @Html.DisplayFor(model => model.BirthDate)</li>
+
+            </ul>
+        </div>
+        @* Bands *@
+        <div class="col-md-4">
+            <h3><strong>Bands</strong></h3>
+            <ul class="unordered-list">
+                @if (Model.Bands.Count > 0)
+                {
+                    foreach (var band in Model.Bands)
+                    {
+                        <li>@band.Name</li>
+                    }
+                }
+                else
+                {
+                    <li>No bands</li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-12"><br /><hr></div>
+        @* Songs *@
+        <div class="col-md-12 text-center">
+            <p>Here will be songs.</p>
+        </div>
+        <div class="col-md-12"><hr></div>
+        @* Comments *@
+        <div class="col-md-12 text-center">
+            <p>Here will be comments.</p>
+        </div>
+    </div>
+</div>

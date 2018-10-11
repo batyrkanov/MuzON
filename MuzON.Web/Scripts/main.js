@@ -17,6 +17,26 @@ $(document).ready(function() {
     //------- Lightbox  js --------//  
 
     $('.img-pop-up').magnificPopup({
+        //type: 'image',
+        //gallery: {
+        //    enabled: true
+        //}
+        type: 'ajax'
+
+        //fixedContentPos: false,
+        //fixedBgPos: true,
+
+        //overflowY: 'auto',
+
+        //closeBtnInside: true,
+        //preloader: false,
+
+        //midClick: true,
+        //removalDelay: 300,
+        //mainClass: 'my-mfp-slide-bottom'
+    });
+
+    $('.see-img').magnificPopup({
         type: 'image',
         gallery: {
             enabled: true

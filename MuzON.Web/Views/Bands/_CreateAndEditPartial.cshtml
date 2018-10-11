@@ -17,53 +17,47 @@
                     new AjaxOptions
                     {
                         HttpMethod = "Post",
-                        OnSuccess = "CreateBandSuccess"
+                        OnSuccess = "CreateBandSuccess(data)"
                     },
                     new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="modal-body">
                         <div class="form-horizontal">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control"} })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
                                     @Html.EditorFor(model => model.CreatedDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control datepicker" } })
-                                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
                                     <div class="editor-field">
                                         <input type="file" class="form-control" name="uploadImage" accept="image/x-png,image/gif,image/jpeg" />
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger", @accept = "image/x-png,image/gif,image/jpeg" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select country", @required = "required" })
-                                    @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                                @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "chosen-select country", @tabindex = "-1", @placeholder = "Select country"})
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.Label("Artists", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.Label("Artists", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
                                     @Html.ListBoxFor(model => model.SelectedArtists, (IEnumerable<SelectListItem>)ViewBag.Artists, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select artists", multiple = "multiple" })
-                                    @Html.ValidationMessageFor(model => model.SelectedArtists, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -77,14 +71,6 @@
                 }
             </div>
         </div>
-        @section scripts{
-            <script>
-                $(document).ready(function () {
-                    $("#CreatedDate").datepicker();
-                });
-
-            </script>
-        }
     }
     else
     {
@@ -98,55 +84,49 @@
                     new AjaxOptions
                     {
                         HttpMethod = "Post",
-                        OnSuccess = "EditBandSuccess"
+                        OnSuccess = "UpdateBandSuccess(data)"
                     },
                     new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="modal-body">
                         <div class="form-horizontal">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
                                     @Html.EditorFor(model => model.CreatedDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control datepicker" } })
-                                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
                                     <div class="editor-field">
                                         <img id="imageSize" src="data:image/jpeg;base64,@Model.Image" />
                                         <input type="hidden" name="image" value="@Model.Image" />
                                         <input type="file" class="form-control" name="uploadImage" />
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger", @accept = "image/x-png,image/gif,image/jpeg" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownList("CountryId", null, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @required = "required" })
-                                    @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                                @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.DropDownList("CountryId", null, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.Label("Artists", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.Label("Artists", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
                                     @Html.ListBoxFor(model => model.SelectedArtists, (IEnumerable<SelectListItem>)ViewBag.Artists, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", multiple = "multiple" })
-                                    @Html.ValidationMessageFor(model => model.SelectedArtists, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
