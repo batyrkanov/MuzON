@@ -40,6 +40,9 @@ namespace MuzON.Web.MappingProfiles
 
             CreateMap<CountryDTO, CountryViewModel>(MemberList.None).ReverseMap();
 
+            CreateMap<SongDTO, SongViewModel>(MemberList.None).ReverseMap();
+            CreateMap<BandSongDTO, BandSongViewModel>(MemberList.None).ReverseMap();
+
             CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
         }
     }

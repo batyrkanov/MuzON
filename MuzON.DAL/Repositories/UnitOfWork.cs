@@ -15,6 +15,7 @@ namespace MuzON.DAL.Repositories
     {
         private BaseRepository<Artist> artistRepository;
         private BaseRepository<Band> bandRepository;
+        private BaseRepository<BandSong> bandSongRepository;
         private BaseRepository<Comment> commentRepository;
         private BaseRepository<Country> countryRepository;
         private BaseRepository<Genre> genreRepository;
@@ -57,6 +58,17 @@ namespace MuzON.DAL.Repositories
                 return bandRepository;
             }
         }
+
+        public IRepository<BandSong> BandSongs
+        {
+            get
+            {
+                if (bandSongRepository == null)
+                    bandSongRepository = new BaseRepository<BandSong>(context);
+                return bandSongRepository;
+            }
+        }
+
         public IRepository<Comment> Comments
         {
             get

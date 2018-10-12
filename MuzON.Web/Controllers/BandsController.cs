@@ -15,8 +15,9 @@ namespace MuzON.Web.Controllers
     {
         public BandsController(IBandService artistServ, 
                                 ICountryService countryServ, 
-                                IArtistService bandServ)
-            : base(artistServ, countryServ, bandServ) { }
+                                IArtistService bandServ,
+                                ISongService songServ)
+            : base(artistServ, countryServ, bandServ, songServ) { }
 
         // GET: Bands
         public ActionResult Index()
@@ -62,7 +63,7 @@ namespace MuzON.Web.Controllers
 
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
 
-            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists());
+            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
             
             // viewbag for post
             ViewBag.Action = "create";
@@ -85,7 +86,7 @@ namespace MuzON.Web.Controllers
                 bandService.AddBand(bandDTO, SelectedArtists);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists());
+            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
             return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
@@ -111,7 +112,7 @@ namespace MuzON.Web.Controllers
                 }
             }
 
-            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists(), bandViewModel.SelectedArtists);
+            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists(), bandViewModel.SelectedArtists);
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
 
             // viewbag for post
@@ -134,7 +135,7 @@ namespace MuzON.Web.Controllers
                 bandService.UpdateBand(bandDTO, SelectedArtists);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.Artists = util.GetMultiSelectListItems<ArtistDTO, ArtistViewModel>(artistService.GetArtists(), bandViewModel.SelectedArtists);
+            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists(), bandViewModel.SelectedArtists);
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
             return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }

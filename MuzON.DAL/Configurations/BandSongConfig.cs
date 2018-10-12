@@ -23,7 +23,7 @@ namespace MuzON.DAL.Configurations
                 .HasForeignKey(e => e.BandId);
 
             HasOptional(e => e.Artist)
-                 .WithMany(e => e.BandSongs)
+                 .WithMany(e => e.Songs)
                  .HasForeignKey(e => e.ArtistId);
         }
     }

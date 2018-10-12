@@ -26,6 +26,7 @@ namespace MuzON.Web.Models
         public Guid CountryId { get; set; }
         [Display(Name = "Bands")]
         public List<Guid> SelectedBands { get; set; }
+        public ICollection<BandSongViewModel> Songs { get; set; }
     }
 
     public class ArtistIndexViewModel

@@ -132,6 +132,7 @@ function DeleteBandSuccess(data) {
         });
     $('#deleteBandModal').modal('hide');
     $('#deleteBandContainer').html("");
+    $('#tableBandsGrid').DataTable().ajax.reload();
 }
 
 function CreateBandSuccess(data) {
@@ -143,6 +144,7 @@ function CreateBandSuccess(data) {
     }
     $('#createBandModal').modal('hide');
     $('#createBandContainer').html("");
+    $('#tableBandsGrid').DataTable().ajax.reload();
 }
 
 function UpdateBandSuccess(data) {
@@ -154,7 +156,7 @@ function UpdateBandSuccess(data) {
     }
     $('#editBandModal').modal('hide');
     $('#editBandContainer').html("");
-
+    $('#tableBandsGrid').DataTable().ajax.reload();
 }
 
 function ErrorNotify(data) {

@@ -12,6 +12,7 @@ namespace MuzON.Domain.Interfaces
     {
         IRepository<Artist> Artists { get; }
         IRepository<Band> Bands { get; }
+        IRepository<BandSong> BandSongs { get; }
         IRepository<Comment> Comments { get; }
         IRepository<Rating> Ratings { get; }
         IRepository<Country> Countries { get; }

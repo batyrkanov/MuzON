@@ -49,6 +49,7 @@ namespace MuzON.Web
             container.RegisterType<IBandService, BandService>(new PerRequestLifetimeManager());
             container.RegisterType<ICountryService, CountryService>(new PerRequestLifetimeManager());
             container.RegisterType<IUserService, UserService>(new PerRequestLifetimeManager());
+            container.RegisterType<ISongService, SongService>(new PerRequestLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager(), new InjectionConstructor("DefaultConnection"));
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();

@@ -9,6 +9,10 @@ namespace MuzON.Domain.Entities
 {
     public class BandSong
     {
+        public BandSong()
+        {
+            Id = Guid.NewGuid();
+        }
         public Guid Id { get; set; }
         public Guid? BandId { get; set; }
         public Guid? ArtistId { get; set; }

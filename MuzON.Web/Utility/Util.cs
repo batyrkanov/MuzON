@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MuzON.BLL.DTO;
+using MuzON.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,22 +39,25 @@ namespace MuzON.Web.Utility
             return new SelectList(dataList, "Id", "Name", selectedItem);
         }
 
+        public SelectList GetSelectListArtistItems(IEnumerable<ArtistDTO> service, Guid? selectedItem = null)
+        {
+            var DTOs = service;
+            IEnumerable<ArtistViewModel> dataList = Mapper.Map<IEnumerable<ArtistViewModel>>(DTOs);
+            return new SelectList(dataList, "Id", "FullName", selectedItem);
+        }
+
         // generic method with mapping from S - Source to D - Destination
         public MultiSelectList GetMultiSelectListItems<S, D>(IEnumerable<S> service, List<Guid> selectedItems = null)
         {
             var DTOs = service;
             IEnumerable<D> dataList = Mapper.Map<IEnumerable<D>>(DTOs);
-            if (service is IEnumerable<ArtistDTO>)
-            {
-                return new MultiSelectList(dataList, "Id", "FullName", selectedItems);
-            }
             return new MultiSelectList(dataList, "Id", "Name", selectedItems);
         }
 
-        public MultiSelectList GetMultiSelectListArtists<S, D>(IEnumerable<S> service, List<Guid> selectedItems = null)
+        public MultiSelectList GetMultiSelectListArtists(IEnumerable<ArtistDTO> service, List<Guid> selectedItems = null)
         {
             var DTOs = service;
-            IEnumerable<D> dataList = Mapper.Map<IEnumerable<D>>(DTOs);
+            IEnumerable<ArtistViewModel> dataList = Mapper.Map<IEnumerable<ArtistViewModel>>(DTOs);
 
             return new MultiSelectList(dataList, "Id", "FullName", selectedItems);
 
@@ -73,6 +77,17 @@ namespace MuzON.Web.Utility
                 }
             }
             return errorList;
+        }
+
+        public List<HttpPostedFileBase> GetSongsFromRequest(HttpFileCollectionBase files)
+        {
+            List<HttpPostedFileBase> songs = new List<HttpPostedFileBase>();
+            foreach (string fileName in files)
+            {
+                if (fileName == "Songs")
+                    songs.Add(files[fileName]);
+            }
+            return songs;
         }
     }
 }

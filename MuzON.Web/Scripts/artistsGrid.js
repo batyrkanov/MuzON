@@ -130,6 +130,7 @@ function DeleteArtistSuccess(data) {
         });
     $('#deleteArtistModal').modal('hide');
     $('#deleteArtistContainer').html("");
+    $('#tableArtistsGrid').DataTable().ajax.reload();
 }
 
 function CreateArtistSuccess(data) {
@@ -141,6 +142,7 @@ function CreateArtistSuccess(data) {
     }
     $('#createArtistModal').modal('hide');
     $('#createArtistContainer').html("");
+    $('#tableArtistsGrid').DataTable().ajax.reload();
 }
 
 function UpdateArtistSuccess(data) {
@@ -152,7 +154,7 @@ function UpdateArtistSuccess(data) {
     }
     $('#editArtistModal').modal('hide');
     $('#editArtistContainer').html("");
-
+    $('#tableArtistsGrid').DataTable().ajax.reload();
 }
 
 function ErrorNotify(data) {

@@ -26,10 +26,10 @@ namespace MuzON.Web
                 LoginPath = new PathString("/Account/Login"),
                 
             });
-            //createRolesandUsers();
+            createRolesandUsers();
 
         }
-        /*
+        
          private void createRolesandUsers()
          {
              MuzONContext context = new MuzONContext("DefaultConnection");
@@ -59,6 +59,6 @@ namespace MuzON.Web
 
                  }
              }
-         }*/
+         }
     }
 }
