@@ -17,6 +17,5 @@ namespace MuzON.BLL.DTO
         public byte[] Image { get; set; }
         public CountryDTO Country { get; set; }
         public List<Guid> SelectedBands { get; set; }
-        public ICollection<BandSongDTO> Songs { get; set; }
     }
 }

@@ -48,7 +48,29 @@
         <div class="col-md-12"><br /><hr></div>
         @* Songs *@
         <div class="col-md-12 text-center">
-            <p>Here will be songs.</p>
+            <h3><strong>Songs</strong></h3>
+            <ul>
+                @if (ViewBag.Songs != null && ViewBag.Songs.Count > 0)
+                {
+                    foreach (var song in ViewBag.Songs)
+                    {
+                        <li>
+                            <hr />
+                            <p>@song.Song.Name</p>
+                            <audio controls>
+                                <source src="@Url.Content("/songs/"+ song.SongId +"/" + song.Song.FileName)" type="audio/mp3">
+                            </audio>
+                        </li>
+
+                    }
+                }
+                else
+                {
+                    <li>
+                        No songs
+                    </li>
+                }
+            </ul>
         </div>
         <div class="col-md-12"><hr></div>
         @* Comments *@

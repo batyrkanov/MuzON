@@ -14,7 +14,7 @@ namespace MuzON.BLL.DTO
         public Guid? ArtistId { get; set; }
         public Guid SongId { get; set; }
         public BandDTO Band { get; set; }
-        public ArtistDTO Artist { get; set; }
         public SongDTO Song { get; set; }
+        public ArtistDTO Artist { get; set; }
     }
 }

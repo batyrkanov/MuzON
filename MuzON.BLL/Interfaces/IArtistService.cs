@@ -12,7 +12,8 @@ namespace MuzON.BLL.Interfaces
     {
         IEnumerable<ArtistDTO> GetArtists();
         ArtistDTO GetArtistById(Guid Id);
-        void AddArtist(ArtistDTO artistDTO, List<HttpPostedFileBase> songs);
+        ArtistDetailsDTO GetArtistByIdDetails(Guid Id);
+        void AddArtist(ArtistDTO artistDTO);
         IEnumerable<SongDTO> GetSongs();
         void DeleteArtist(ArtistDTO artistDTO);
         void UpdateArtist(ArtistDTO artistDTO, Guid[] selectedBands);

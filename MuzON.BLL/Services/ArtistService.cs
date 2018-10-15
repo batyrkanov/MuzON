@@ -20,7 +20,7 @@ namespace MuzON.BLL.Services
             _unitOfWork = uow;
         }
 
-        public void AddArtist(ArtistDTO artistDTO, List<HttpPostedFileBase> songs)
+        public void AddArtist(ArtistDTO artistDTO)
         {
 
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
@@ -36,45 +36,13 @@ namespace MuzON.BLL.Services
                     artist.Bands.Add(c);
                 }
             }
-
-            if (songs != null)
-            {
-                artist.Songs = new List<BandSong>();
-                foreach (var song in AddSong(songs, artist))
-                {
-                    artist.Songs.Add(song);
-                }
-            }
+            
             artist.CountryId = artistDTO.Country.Id;
             artist.Country = country;
             _unitOfWork.Artists.Create(artist);
             _unitOfWork.Save();
         }
-
-        public List<BandSong> AddSong(List<HttpPostedFileBase> songs, Artist artist)
-        {
-            List<BandSong> bandSongs = new List<BandSong>();
-            
-                foreach (var songItem in songs)
-                {
-                    BandSong bandSong = new BandSong();
-                    Song song = new Song()
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = Path.GetFileName(songItem.FileName),
-                        FileName = songItem.FileName
-                    };
-                    bandSong.Song = song;
-                    bandSong.SongId = song.Id;
-                    bandSong.Artist = artist;
-                    bandSong.ArtistId = artist.Id;
-
-                    bandSongs.Add(bandSong);
-                }
-            
-            return bandSongs;
-        }
-
+        
         public void DeleteArtist(ArtistDTO artistDTO)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
@@ -91,6 +59,12 @@ namespace MuzON.BLL.Services
         {
             Artist artist = _unitOfWork.Artists.Get(Id);
             return Mapper.Map<Artist, ArtistDTO>(artist);
+        }
+
+        public ArtistDetailsDTO GetArtistByIdDetails(Guid Id)
+        {
+            Artist artist = _unitOfWork.Artists.Get(Id);
+            return Mapper.Map<ArtistDetailsDTO>(artist);
         }
 
         public IEnumerable<ArtistDTO> GetArtists()

@@ -50,7 +50,8 @@ namespace MuzON.Web.Controllers
         {
             var bandDTO = bandService.GetBandById(id);
             var band = Mapper.Map<BandDetailsViewModel>(bandDTO);
-            return PartialView("_Partial", band);
+            ViewBag.Songs = Mapper.Map<IEnumerable<BandSongViewModel>>(songService.GetBandRepertoire(band.Id));
+            return PartialView("_Partial", band); 
         }
 
         [Authorize(Roles = "admin")]

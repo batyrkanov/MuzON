@@ -7,27 +7,42 @@
         },
         "columns": [
             { "data": "Name" },
-            { "data": "FileName" },
             {
-                "data": "Id",
+                'render': function (row, type, data) {
+                    return `<audio controls>  
+                                <source src="/songs/` + data.Id + `/` + data.FileName + `" type="audio/mp3">  
+                            </audio>`;
+                },
+                'orderable': false,
+                'className': 'dt-right',
+                'targets': [4]
+            },
+            {
                 "searchable": false,
                 "sortable": false,
                 "orderable": false,
-                "render": function (Id) {
+                "render": function (row, type, data) {
                     return `<div class="btn-group" role="group">
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Edit/` + Id + `" id="btnEditSong">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Edit/` + data.BandSongId + `" id="btnEditSong">
                                     <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                                 </button>
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Details/` + Id + `" id="btnDetailsSong">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Details/` + data.BandSongId + `" id="btnDetailsSong">
                                     <span class="fa fa-eye" aria-hidden="true"></span> Details
                                 </button>
-                                <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Songs/Delete/` + Id + `" id="btnDeleteSong">
+                                <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Songs/Delete/` + data.BandSongId + `" id="btnDeleteSong">
                                     <span class="fa fa-trash" aria-hidden="true"></span> Delete
                                 </button>
                             </div>`;
-                }
+                },
+                'className': 'dt-right',
+                'targets': [4]
             }
         ]
+    });
+    $("audio").on("play", function () {
+        $("audio").not(this).each(function (index, audio) {
+            audio.pause();
+        });
     });
 });
 
@@ -65,11 +80,7 @@ $("#tableSongsGrid").on("click", "#btnEditSong", function () {
         $('#editSongContainer').html(data);
 
         $('#editSongModal').modal('show');
-        $('.chosen-select').chosen({}).change(function (obj, result) {
-            console.debug("changed: %o", arguments);
-
-            console.log("selected: " + result.selected);
-        });
+        $('select').niceSelect();
     });
 
 });

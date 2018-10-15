@@ -42,7 +42,7 @@ namespace MuzON.Web.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Details(Guid id)
         {
-            var artistDTO = artistService.GetArtistById(id);
+            var artistDTO = artistService.GetArtistByIdDetails(id);
             var artist = Mapper.Map<ArtistDetailsViewModel>(artistDTO);
 
             return PartialView("_DetailsPartial", artist);
@@ -50,9 +50,9 @@ namespace MuzON.Web.Controllers
 
         public ActionResult MoreAboutArtist(Guid id)
         {
-            var artistDTO = artistService.GetArtistById(id);
+            var artistDTO = artistService.GetArtistByIdDetails(id);
             var artist = Mapper.Map<ArtistDetailsViewModel>(artistDTO);
-
+            ViewBag.Songs = Mapper.Map<IEnumerable<BandSongViewModel>>(songService.GetArtistRepertoire(artist.Id));
             return PartialView("_Partial", artist);
         }
         
@@ -84,8 +84,7 @@ namespace MuzON.Web.Controllers
                 var artistDTO = Mapper.Map<ArtistViewModel, ArtistDTO>(artistViewModel);
                 artistDTO.Id = Guid.NewGuid();
                 artistDTO.Image = util.SetImage(Request.Files["uploadImage"], artistDTO.Image);
-                artistService.AddArtist(artistDTO, songs);
-                SaveSongs(songs, artistDTO.FullName);
+                artistService.AddArtist(artistDTO);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands());

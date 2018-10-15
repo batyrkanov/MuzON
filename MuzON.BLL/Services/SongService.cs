@@ -32,11 +32,6 @@ namespace MuzON.BLL.Services
             _unitOfWork.Save();
         }
 
-        public void AddSong(SongDTO songDTO)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteSong(SongDTO songDTO)
         {
             Song song = Mapper.Map<Song>(songDTO);
@@ -51,6 +46,24 @@ namespace MuzON.BLL.Services
             _unitOfWork.Dispose();
         }
 
+        public BandSongDTO GetBandSongById(Guid id)
+        {
+            var bandSong = _unitOfWork.BandSongs.Get(id);
+            return Mapper.Map<BandSongDTO>(bandSong);
+        }
+
+        public BandSongDTO GetBandSongBySongId(Guid id)
+        {
+            var bandSong = _unitOfWork.BandSongs.SearchFor(x => x.SongId == id).FirstOrDefault();
+            return Mapper.Map<BandSongDTO>(bandSong);
+        }
+
+        public IEnumerable<BandSongDTO> GetArtistRepertoire(Guid id)
+        {
+            var songs = _unitOfWork.BandSongs.SearchFor(x=>x.ArtistId==id).ToList();
+            return Mapper.Map<IEnumerable<BandSongDTO>>(songs);
+        }
+
         public SongDTO GetSongById(Guid id)
         {
             return Mapper.Map<SongDTO>(_unitOfWork.Songs.Get(id));
@@ -60,5 +73,46 @@ namespace MuzON.BLL.Services
         {
             return Mapper.Map<IEnumerable<SongDTO>>(_unitOfWork.Songs.GetAll().ToList());
         }
+
+        public void UpdateSong(BandSongDTO bandSongDTO)
+        {
+            var bandSong = _unitOfWork.BandSongs.Get(bandSongDTO.Id);
+            //var song = _unitOfWork.Songs.Get(bandSong.SongId);
+
+            Mapper.Map(bandSongDTO, bandSong);
+           // Mapper.Map(bandSongDTO.Song, song);
+            _unitOfWork.BandSongs.Update(bandSong);
+            _unitOfWork.Save(); 
+        }
+
+        public IEnumerable<BandSongDTO> GetBandRepertoire(Guid id)
+        {
+            var songs = _unitOfWork.BandSongs.SearchFor(x => x.BandId == id).ToList();
+            return Mapper.Map<IEnumerable<BandSongDTO>>(songs);
+        }
+
+        //public List<BandSong> AddSong(List<HttpPostedFileBase> songs, Artist artist)
+        //{
+        //    List<BandSong> bandSongs = new List<BandSong>();
+
+        //    foreach (var songItem in songs)
+        //    {
+        //        BandSong bandSong = new BandSong();
+        //        Song song = new Song()
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            Name = Path.GetFileName(songItem.FileName),
+        //            FileName = songItem.FileName
+        //        };
+        //        bandSong.Song = song;
+        //        bandSong.SongId = song.Id;
+        //        bandSong.Artist = artist;
+        //        bandSong.ArtistId = artist.Id;
+
+        //        bandSongs.Add(bandSong);
+        //    }
+
+        //    return bandSongs;
+        //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using MuzON.BLL.Interfaces;
+﻿using MuzON.BLL.DTO;
+using MuzON.BLL.Interfaces;
 using MuzON.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace MuzON.Web.Controllers
             userService = userServ;
         }
 
-        public void SaveSongs(List<HttpPostedFileBase> songs, string Name)
+        public void SaveSongs(List<HttpPostedFileBase> songs)
         {
             foreach (var song in songs)
             {
@@ -55,11 +56,11 @@ namespace MuzON.Web.Controllers
                 {
                     if (song.FileName == artistSong.FileName)
                     {
-                        if (!Directory.Exists(Server.MapPath($"~/songs/{Name}/{artistSong.Id}")))
+                        if (!Directory.Exists(Server.MapPath($"~/songs/{artistSong.Id}")))
                         {
-                            Directory.CreateDirectory(Server.MapPath($"~/songs/{Name}/{artistSong.Id}"));
+                            Directory.CreateDirectory(Server.MapPath($"~/songs/{artistSong.Id}"));
                         }
-                        var path = Path.Combine(Server.MapPath($"~/songs/{Name}/{artistSong.Id}"), song.FileName);
+                        var path = Path.Combine(Server.MapPath($"~/songs/{artistSong.Id}"), song.FileName);
                         song.SaveAs(path);
                     }
                 }
@@ -67,6 +68,7 @@ namespace MuzON.Web.Controllers
             }
         }
 
+        //don't used yet
         public List<BandSongViewModel> AddSongToArtist(List<HttpPostedFileBase> songs, string name)
         {
             List<BandSongViewModel> bandSongs = new List<BandSongViewModel>();
@@ -80,14 +82,36 @@ namespace MuzON.Web.Controllers
                     FileName = songItem.FileName
                 };
                 ArtistViewModel artist = new ArtistViewModel();
-                bandSong.Song = song;
                 bandSong.SongId = song.Id;
-                bandSong.Artist = artist;
                 bandSong.ArtistId = artist.Id;
 
                 bandSongs.Add(bandSong);
             }
             return bandSongs;
+        }
+
+        public SongDTO SongToUpdate(SongDTO song)
+        {
+            song.Name = Request.Form["Song.Name"] != song.Name ? Request.Form["Song.Name"] : song.Name;
+            if (Request.Files.Count > 0)
+            {
+                song.FileName = Request.Files["Songs"].FileName != song.FileName ? Request.Files["Songs"].FileName : song.FileName;
+            }
+            return song;
+            
+        }
+
+        public BandSongDTO SetArtistAndBandId(BandSongDTO bandSongDTO)
+        {
+            if (Request.Form["Artists"] != "")
+            {
+                bandSongDTO.ArtistId = Guid.Parse(Request.Form["Artists"]);
+            }
+            if (Request.Form["Bands"] != "")
+            {
+                bandSongDTO.BandId = Guid.Parse(Request.Form["Bands"]);
+            }
+            return bandSongDTO;
         }
 
         protected override void Dispose(bool disposing)
