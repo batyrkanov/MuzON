@@ -27,13 +27,8 @@ namespace MuzON.Web.Controllers
         
         public JsonResult GetList()
         {
-            var bandsDTO = bandService.GetBands();
-            var bands = Mapper.Map<IEnumerable<BandIndexViewModel>>(bandsDTO);
-
-            foreach (var item in bands)
-            {
-                item.CountryName = bandService.GetBandById(item.Id).Country.Name;
-            }
+            var bands = Mapper.Map<IEnumerable<BandIndexViewModel>>(
+                                                bandService.GetBandsWithCountryName());
 
             return Json(new { data = bands }, JsonRequestBehavior.AllowGet);
         }

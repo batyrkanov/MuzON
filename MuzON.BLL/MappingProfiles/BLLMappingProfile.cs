@@ -13,27 +13,24 @@ namespace MuzON.BLL.MappingProfiles
     {
         public BLLMappingProfile()
         {
-            CreateMap<Artist, ArtistDTO>(MemberList.None);
-            CreateMap<ArtistDTO, Artist>(MemberList.None);
+            CreateMap<Artist, ArtistDTO>(MemberList.None).ReverseMap();
             CreateMap<Artist, ArtistDetailsDTO>(MemberList.None).ReverseMap();
+            CreateMap<Artist, ArtistIndexDTO>(MemberList.None).ReverseMap();
 
-            CreateMap<Band, BandDTO>(MemberList.None);
-            CreateMap<BandDTO, Band>(MemberList.None);
+            CreateMap<Band, BandDTO>(MemberList.None).ReverseMap();
+            CreateMap<Band, BandIndexDTO>(MemberList.None).ReverseMap();
 
-            CreateMap<Song, SongDTO>(MemberList.None);
-            CreateMap<SongDTO, Song>(MemberList.None);
+            CreateMap<Song, SongDTO>(MemberList.None).ReverseMap();
+            CreateMap<Song, SongToIndexDTO>(MemberList.None).ReverseMap();
+            CreateMap<Song, SongDetailsDTO>(MemberList.None).ReverseMap();
 
-            CreateMap<Country, CountryDTO>(MemberList.None);
-            CreateMap<CountryDTO, Country>(MemberList.None);
+            CreateMap<Country, CountryDTO>(MemberList.None).ReverseMap();
 
-            CreateMap<Comment, CommentDTO>(MemberList.None);
-            CreateMap<CommentDTO, Comment>(MemberList.None);
+            CreateMap<Comment, CommentDTO>(MemberList.None).ReverseMap();
 
-            CreateMap<Rating, RatingDTO>(MemberList.None);
-            CreateMap<RatingDTO, Rating>(MemberList.None);
+            CreateMap<Rating, RatingDTO>(MemberList.None).ReverseMap();
 
-            CreateMap<Playlist, PlaylistDTO>(MemberList.None);
-            CreateMap<PlaylistDTO, Playlist>(MemberList.None);
+            CreateMap<Playlist, PlaylistDTO>(MemberList.None).ReverseMap();
 
             CreateMap<BandSong, BandSongDTO>(MemberList.None).ReverseMap();
         }

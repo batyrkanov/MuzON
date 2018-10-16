@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MuzON.BLL.Services
 {
@@ -27,7 +28,10 @@ namespace MuzON.BLL.Services
                 bandSong.Artist = _unitOfWork.Artists.Get(bandSong.ArtistId);
             if (bandSong.BandId != null)
                 bandSong.Band = _unitOfWork.Bands.Get(bandSong.BandId);
-            _unitOfWork.Songs.Create(bandSong.Song);
+            if (_unitOfWork.Songs.Get(bandSong.SongId) == null)
+                _unitOfWork.Songs.Create(bandSong.Song);
+            else
+                bandSong.Song = _unitOfWork.Songs.Get(bandSong.SongId);
             _unitOfWork.BandSongs.Create(bandSong);
             _unitOfWork.Save();
         }
@@ -89,6 +93,41 @@ namespace MuzON.BLL.Services
         {
             var songs = _unitOfWork.BandSongs.SearchFor(x => x.BandId == id).ToList();
             return Mapper.Map<IEnumerable<BandSongDTO>>(songs);
+        }
+
+        public IEnumerable<SongToIndexDTO> GetSongsToIndex()
+        {
+            var songs = Mapper.Map<IEnumerable<SongToIndexDTO>>(_unitOfWork.Songs.GetAll());
+            var bandSongs = _unitOfWork.BandSongs.GetAll().ToList();
+            foreach (var bandSong in bandSongs)
+            {
+                foreach (var song in songs)
+                {
+                    if (bandSong.SongId == song.Id)
+                        song.BandSongId = bandSong.Id;
+                }
+            }
+            return songs;
+        }
+
+        public SongDetailsDTO GetDetailSong(Guid id)
+        {
+            var song = _unitOfWork.Songs.Get(id);
+            var bandSongs = _unitOfWork.BandSongs.SearchFor(x => x.SongId == song.Id).ToList();
+            List<Artist> artists = new List<Artist>();
+            List<Band> bands = new List<Band>();
+            foreach (var bandSong in bandSongs)
+            {
+                if(bandSong.Artist != null)
+                    artists.Add(bandSong.Artist);
+                if(bandSong.Band != null)
+                    bands.Add(bandSong.Band);
+            }
+            var songDetails = Mapper.Map<SongDetailsDTO>(song);
+            songDetails.Artists = Mapper.Map<List<ArtistDTO>>(artists);
+            songDetails.Bands = Mapper.Map<List<BandDTO>>(bands);
+            return songDetails;
+
         }
 
         //public List<BandSong> AddSong(List<HttpPostedFileBase> songs, Artist artist)

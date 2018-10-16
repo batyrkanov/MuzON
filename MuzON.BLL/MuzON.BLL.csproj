@@ -64,7 +64,10 @@
   <ItemGroup>
     <Compile Include="DTO\ArtistDetailsDTO.cs" />
     <Compile Include="DTO\ArtistDTO.cs" />
+    <Compile Include="DTO\ArtistIndexDTO.cs" />
     <Compile Include="DTO\BandDTO.cs" />
+    <Compile Include="DTO\BandIndexDTO.cs" />
+    <Compile Include="DTO\SongDetailsDTO.cs" />
     <Compile Include="DTO\BandSongDTO.cs" />
     <Compile Include="DTO\CommentDTO.cs" />
     <Compile Include="DTO\CountryDTO.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="DTO\PlaylistSongDTO.cs" />
     <Compile Include="DTO\RatingDTO.cs" />
     <Compile Include="DTO\SongDTO.cs" />
+    <Compile Include="DTO\SongToIndexDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Interfaces\IArtistService.cs" />

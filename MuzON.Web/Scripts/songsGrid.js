@@ -26,7 +26,7 @@
                                 <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Edit/` + data.BandSongId + `" id="btnEditSong">
                                     <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                                 </button>
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Details/` + data.BandSongId + `" id="btnDetailsSong">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Details/` + data.Id + `" id="btnDetailsSong">
                                     <span class="fa fa-eye" aria-hidden="true"></span> Details
                                 </button>
                                 <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Songs/Delete/` + data.BandSongId + `" id="btnDeleteSong">
@@ -55,7 +55,9 @@ $("#btnCreateSong").on("click", function () {
 
         $('#createSongModal').modal('show');
 
-        $('select').niceSelect();
+        $('.chosen-select').chosen({}).change(function (obj, result) {
+            console.debug("changed: %o", arguments);
+        });
     });
 
 });
@@ -80,7 +82,9 @@ $("#tableSongsGrid").on("click", "#btnEditSong", function () {
         $('#editSongContainer').html(data);
 
         $('#editSongModal').modal('show');
-        $('select').niceSelect();
+        $('.chosen-select').chosen({}).change(function (obj, result) {
+            console.debug("changed: %o", arguments);
+        });
     });
 
 });

@@ -5,9 +5,7 @@ using MuzON.Domain.Entities;
 using MuzON.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
 
 namespace MuzON.BLL.Services
 {
@@ -36,13 +34,13 @@ namespace MuzON.BLL.Services
                     artist.Bands.Add(c);
                 }
             }
-            
+
             artist.CountryId = artistDTO.Country.Id;
             artist.Country = country;
             _unitOfWork.Artists.Create(artist);
             _unitOfWork.Save();
         }
-        
+
         public void DeleteArtist(ArtistDTO artistDTO)
         {
             Artist artist = Mapper.Map<ArtistDTO, Artist>(artistDTO);
@@ -73,10 +71,19 @@ namespace MuzON.BLL.Services
             return Mapper.Map<IEnumerable<Artist>, IEnumerable<ArtistDTO>>(artists);
         }
 
-        public IEnumerable<SongDTO> GetSongs()
+        public IEnumerable<ArtistIndexDTO> GetArtistsWithCountryName()
         {
-            var songs = _unitOfWork.Songs.GetAll().ToList();
-            return Mapper.Map<IEnumerable<SongDTO>>(songs);
+            var artistDTOs = GetArtists();
+            var artists = Mapper.Map<IEnumerable<ArtistIndexDTO>>(artistDTOs);
+            foreach (var artistDto in artistDTOs)
+            {
+                foreach (var artist in artists)
+                {
+                    if (artistDto.Id == artist.Id)
+                        artist.CountryName = artistDto.Country.Name;
+                }
+            }
+            return artists;
         }
 
         public void UpdateArtist(ArtistDTO artistDTO, Guid[] selectedBands)

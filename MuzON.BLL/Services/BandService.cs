@@ -63,6 +63,21 @@ namespace MuzON.BLL.Services
             return Mapper.Map<IEnumerable<BandDTO>>(bandsDTO);
         }
 
+        public IEnumerable<BandIndexDTO> GetBandsWithCountryName()
+        {
+            var bandDTOs = GetBands();
+            var bands = Mapper.Map<IEnumerable<BandIndexDTO>>(bandDTOs);
+            foreach (var bandDTO in bandDTOs)
+            {
+                foreach (var band in bands)
+                {
+                    if (bandDTO.Id == band.Id)
+                        band.CountryName = bandDTO.Country.Name;
+                }
+            }
+            return bands;
+        }
+
         public void UpdateBand(BandDTO bandDTO, Guid[] selectedArtists)
         {
             var band = _unitOfWork.Bands.Get(bandDTO.Id);

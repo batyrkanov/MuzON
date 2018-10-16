@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using AutoMapper;
+﻿using AutoMapper;
 using MuzON.BLL.DTO;
 using MuzON.BLL.Interfaces;
 using MuzON.Web.Models;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Mvc;
 
 namespace MuzON.Web.Controllers
 {
     public class SongsController : BaseController
     {
-        public SongsController(IBandService bandServ, 
-            ICountryService countryServ, 
-            IArtistService artistServ, 
-            ISongService songServ) 
-            : base(bandServ, countryServ, artistServ, songServ)  { }
+        public SongsController(IBandService bandServ,
+            ICountryService countryServ,
+            IArtistService artistServ,
+            ISongService songServ)
+            : base(bandServ, countryServ, artistServ, songServ) { }
 
         // GET: Songs
         public ActionResult Index()
@@ -27,61 +26,54 @@ namespace MuzON.Web.Controllers
         public JsonResult GetList()
         {
             var songs = Mapper.Map<IEnumerable<SongViewModel>>(songService.GetSongs());
-            foreach (var song in songs)
-            {
-                song.BandSongId = songService.GetBandSongBySongId(song.Id).Id;
-            }
+
             return Json(new { data = songs }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "admin")]
         public ActionResult Details(Guid id)
         {
-            var bandSongDTO = songService.GetBandSongById(id);
-            var bandSong = Mapper.Map<BandSongViewModel>(bandSongDTO);
-            bandSong.Artist = Mapper.Map<ArtistViewModel>(artistService.GetArtistById(bandSongDTO.ArtistId.Value));
-            return PartialView("_DetailsPartial", bandSong);
+            var songDTO = songService.GetDetailSong(id);
+            var song = Mapper.Map<SongDetailsViewModel>(songDTO);
+            return PartialView("_DetailsPartial", song);
         }
 
         public ActionResult Create()
         {
             var song = new BandSongViewModel();
-            ViewBag.Artists = util.GetSelectListArtistItems(artistService.GetArtists());
-            ViewBag.Bands = util.GetSelectListItems<BandDTO, BandViewModel>(bandService.GetBands());
+            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
+            ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands());
             ViewBag.Action = "create";
             return PartialView("_CreateAndEditPartial", song);
         }
 
         [HttpPost]
-        public JsonResult Create(BandSongViewModel bandSongViewModel)
+        public JsonResult Create(BandSongViewModel bandSongViewModel, List<Guid> Artists, List<Guid> Bands)
         {
             if (ModelState.IsValid)
             {
                 List<HttpPostedFileBase> songs = util.GetSongsFromRequest(Request.Files);
-                var song = new SongViewModel
-                {
-                    Name = Request.Form["Name"],
-                    FileName = Request.Files["Songs"].FileName,
-                    Id = Guid.NewGuid()
-                };
-                var bandSongDTO = Mapper.Map<BandSongDTO>(bandSongViewModel);
-                bandSongDTO.Id = Guid.NewGuid();
-                bandSongDTO.Song = Mapper.Map<SongDTO>(song);
-                bandSongDTO.SongId = song.Id;
-                bandSongDTO = SetArtistAndBandId(bandSongDTO);
-                songService.AddBandSong(bandSongDTO);
+                //var song = new SongViewModel
+                //{
+                //    Name = Request.Form["Name"],
+                //    FileName = Request.Files["Songs"].FileName,
+                //    Id = Guid.NewGuid()
+                //};
+                SaveBandSong(bandSongViewModel, Artists, Bands);
                 SaveSongs(songs);
                 return Json(new { data = "success" });
             }
+            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
+            ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands());
             return Json(new { bandSongViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(Guid id)
         {
             var song = Mapper.Map<BandSongViewModel>(songService.GetBandSongById(id));
-            
-            ViewBag.Artists = util.GetSelectListArtistItems(artistService.GetArtists(), song.ArtistId);
-            ViewBag.Bands = util.GetSelectListItems<BandDTO, BandViewModel>(bandService.GetBands(), song.BandId);
+
+            //ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists(), song.ArtistId);
+            //ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands(), song.BandId);
             ViewBag.Action = "edit";
             return PartialView("_CreateAndEditPartial", song);
         }
@@ -96,12 +88,14 @@ namespace MuzON.Web.Controllers
                 var bandSongDTO = Mapper.Map<BandSongDTO>(bandSongViewModel);
                 bandSongDTO.Song = SongToUpdate(song);
 
-                bandSongDTO = SetArtistAndBandId(bandSongDTO);
-               
+                //bandSongDTO = SetArtistAndBandId(bandSongDTO);
+
                 songService.UpdateSong(bandSongDTO);
                 SaveSongs(songs);
                 return Json(new { data = "success" });
             }
+            //ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists(), bandSongViewModel.ArtistId);
+            //ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands(), bandSongViewModel.BandId);
             return Json(new { bandSongViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 

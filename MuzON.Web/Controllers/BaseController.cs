@@ -1,4 +1,5 @@
-﻿using MuzON.BLL.DTO;
+﻿using AutoMapper;
+using MuzON.BLL.DTO;
 using MuzON.BLL.Interfaces;
 using MuzON.Web.Models;
 using System;
@@ -101,17 +102,38 @@ namespace MuzON.Web.Controllers
             
         }
 
-        public BandSongDTO SetArtistAndBandId(BandSongDTO bandSongDTO)
+        public void SetAddingData(int count, BandSongViewModel bandSongViewModel, List<Guid> Artists, List<Guid> Bands, SongViewModel song)
         {
-            if (Request.Form["Artists"] != "")
+            for (int i = 0; i < count; i++)
             {
-                bandSongDTO.ArtistId = Guid.Parse(Request.Form["Artists"]);
+                var bandSongDTO = Mapper.Map<BandSongDTO>(bandSongViewModel);
+                bandSongDTO.Id = Guid.NewGuid();
+                bandSongDTO.Song = Mapper.Map<SongDTO>(song);
+                bandSongDTO.SongId = song.Id;
+                if (Artists.Count > i && Artists[i] != null)
+                    bandSongDTO.ArtistId = Artists[i];
+                if (Bands.Count > i && Bands[i] != null)
+                    bandSongDTO.BandId = Bands[i];
+                songService.AddBandSong(bandSongDTO);
             }
-            if (Request.Form["Bands"] != "")
+        }
+
+        public void SaveBandSong(BandSongViewModel bandSongViewModel, List<Guid> Artists, List<Guid> Bands)
+        {
+            var song = new SongViewModel
             {
-                bandSongDTO.BandId = Guid.Parse(Request.Form["Bands"]);
+                Name = Request.Form["Name"],
+                FileName = Request.Files["Songs"].FileName,
+                Id = Guid.NewGuid()
+            };
+            if (Artists != null)
+            {
+                SetAddingData(Artists.Count, bandSongViewModel, Artists, Bands, song);
             }
-            return bandSongDTO;
+            else
+            {
+                SetAddingData(Bands.Count, bandSongViewModel, Artists, Bands, song);
+            }
         }
 
         protected override void Dispose(bool disposing)

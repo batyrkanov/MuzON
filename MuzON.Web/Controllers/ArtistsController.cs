@@ -28,13 +28,8 @@ namespace MuzON.Web.Controllers
         [Authorize(Roles = "admin")]
         public JsonResult GetList()
         {
-            var artistDTOs = artistService.GetArtists();
-            var artists = Mapper.Map<IEnumerable<ArtistIndexViewModel>>(artistDTOs);
-
-            foreach (var item in artists)
-            {
-                item.CountryName = artistService.GetArtistById(item.Id).Country.Name;
-            }
+            var artists = Mapper.Map<IEnumerable<ArtistIndexViewModel>>(
+                                        artistService.GetArtistsWithCountryName());
 
             return Json(new { data = artists }, JsonRequestBehavior.AllowGet);
         }

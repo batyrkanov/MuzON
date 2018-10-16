@@ -10,14 +10,16 @@ namespace MuzON.BLL.Interfaces
     public interface ISongService
     {
         IEnumerable<BandSongDTO> GetArtistRepertoire(Guid id);
-        void AddBandSong(BandSongDTO bandSongDTO);
+        IEnumerable<BandSongDTO> GetBandRepertoire(Guid id);
         IEnumerable<SongDTO> GetSongs();
-        void DeleteSong(SongDTO songDTO);
-        void Dispose();
+        IEnumerable<SongToIndexDTO> GetSongsToIndex();
         SongDTO GetSongById(Guid id);
         BandSongDTO GetBandSongById(Guid id);
         BandSongDTO GetBandSongBySongId(Guid id);
+        SongDetailsDTO GetDetailSong(Guid id);
+        void DeleteSong(SongDTO songDTO);
+        void AddBandSong(BandSongDTO bandSongDTO);
         void UpdateSong(BandSongDTO bandSongDTO);
-        IEnumerable<BandSongDTO> GetBandRepertoire(Guid id);
+        void Dispose();
     }
 }

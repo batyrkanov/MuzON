@@ -33,14 +33,14 @@
                             <div class="form-group">
                                 <label class = "control-label col-md-12">Artist</label>
                                 <div class="col-md-12">
-                                    @Html.DropDownList("Artists", null, "Select artist", htmlAttributes: new { @class = "form-select", @id = "default-select2",  @placeholder = "Select artist" })
+                                    @Html.ListBox("Artists", null, htmlAttributes: new { @class = "chosen-select",  @placeholder = "Select artist" })
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-md-12">Bands</label>
                                 <div class="col-md-12">
-                                    @Html.DropDownList("Bands", null, "Select band", htmlAttributes: new { @class = "form-select", @id = "default-select2", @placeholder = "Select band" })
+                                    @Html.ListBox("Bands", null, htmlAttributes: new { @class = "chosen-select", @placeholder = "Select band" })
                                 </div>
                             </div>
                             
@@ -95,14 +95,14 @@
                           <div class="form-group">
                               <label class="control-label col-md-12">Artist</label>
                               <div class="col-md-12">
-                                  @Html.DropDownList("Artists", null, "Select artist", htmlAttributes: new { @class = "form-select", @id = "default-select2", @placeholder = "Select artist" })
+                                  @Html.ListBox("Artists", null, htmlAttributes: new { @class = "chosen-select", @placeholder = "Select artist" })
                               </div>
                           </div>
 
                           <div class="form-group">
                               <label class="control-label col-md-12">Bands</label>
                               <div class="col-md-12">
-                                  @Html.DropDownList("Bands", null, "Select band", htmlAttributes: new { @class = "form-select", @id = "default-select2", @placeholder = "Select band" })
+                                  @Html.ListBox("Bands", null, htmlAttributes: new { @class = "chosen-select", @placeholder = "Select band" })
                               </div>
                           </div>
 
