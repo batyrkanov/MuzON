@@ -110,22 +110,16 @@ namespace MuzON.Web.Controllers
                 bandSongDTO.Id = Guid.NewGuid();
                 bandSongDTO.Song = Mapper.Map<SongDTO>(song);
                 bandSongDTO.SongId = song.Id;
-                if (Artists.Count > i && Artists[i] != null)
+                if (Artists.Count > i)
                     bandSongDTO.ArtistId = Artists[i];
-                if (Bands.Count > i && Bands[i] != null)
+                if (Bands.Count > i)
                     bandSongDTO.BandId = Bands[i];
                 songService.AddBandSong(bandSongDTO);
             }
         }
 
-        public void SaveBandSong(BandSongViewModel bandSongViewModel, List<Guid> Artists, List<Guid> Bands)
+        public void SaveBandSong(BandSongViewModel bandSongViewModel, List<Guid> Artists, List<Guid> Bands, SongViewModel song)
         {
-            var song = new SongViewModel
-            {
-                Name = Request.Form["Name"],
-                FileName = Request.Files["Songs"].FileName,
-                Id = Guid.NewGuid()
-            };
             if (Artists != null)
             {
                 SetAddingData(Artists.Count, bandSongViewModel, Artists, Bands, song);

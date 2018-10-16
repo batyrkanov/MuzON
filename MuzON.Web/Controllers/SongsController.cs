@@ -53,13 +53,17 @@ namespace MuzON.Web.Controllers
             if (ModelState.IsValid)
             {
                 List<HttpPostedFileBase> songs = util.GetSongsFromRequest(Request.Files);
-                //var song = new SongViewModel
-                //{
-                //    Name = Request.Form["Name"],
-                //    FileName = Request.Files["Songs"].FileName,
-                //    Id = Guid.NewGuid()
-                //};
-                SaveBandSong(bandSongViewModel, Artists, Bands);
+                foreach (var song in songs)
+                {
+                    var songViewModel = new SongViewModel
+                    {
+                        Name = Request.Form["Name"],
+                        FileName = song.FileName,
+                        Id = Guid.NewGuid()
+                    };
+                    SaveBandSong(bandSongViewModel, Artists, Bands, songViewModel);
+                }
+                
                 SaveSongs(songs);
                 return Json(new { data = "success" });
             }
