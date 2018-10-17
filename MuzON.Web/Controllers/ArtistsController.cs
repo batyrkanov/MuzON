@@ -96,6 +96,7 @@ namespace MuzON.Web.Controllers
                 return HttpNotFound();
             }
             ArtistViewModel artistViewModel = Mapper.Map<ArtistViewModel>(artist);
+            artistViewModel.SelectedBands = artistService.GetSelectedBands(artistViewModel.Id);
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), artistViewModel.CountryId);
            
             ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands(), artistViewModel.SelectedBands);

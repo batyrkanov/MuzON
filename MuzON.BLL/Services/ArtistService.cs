@@ -86,6 +86,18 @@ namespace MuzON.BLL.Services
             return artists;
         }
 
+        public List<Guid> GetSelectedBands(Guid artistId)
+        {
+            List<Guid> guids = new List<Guid>();
+            var artist = _unitOfWork.Artists.Get(artistId);
+            if(artist.Bands.Count >0)
+            {
+                foreach (var band in artist.Bands)
+                    guids.Add(band.Id);
+            }
+            return guids;
+        }
+
         public void UpdateArtist(ArtistDTO artistDTO, Guid[] selectedBands)
         {
             Artist artist = _unitOfWork.Artists.Get(artistDTO.Id);

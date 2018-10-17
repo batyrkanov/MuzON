@@ -233,6 +233,7 @@
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\bootstrap-notify\bootstrap-notify.js" />
     <Content Include="Content\bootstrap-notify\bootstrap-notify.min.js" />
     <Content Include="Content\bootstrap-notify\Gruntfile.js" />
@@ -571,6 +572,7 @@
     <Content Include="Content\login\vendor\bootstrap\css\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.map" />
     <Content Include="Content\main.map" />
+    <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

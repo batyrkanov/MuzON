@@ -11,10 +11,11 @@ namespace MuzON.BLL.Interfaces
     public interface IArtistService
     {
         IEnumerable<ArtistDTO> GetArtists();
+        IEnumerable<ArtistIndexDTO> GetArtistsWithCountryName();
+        List<Guid> GetSelectedBands(Guid artistId);
         ArtistDTO GetArtistById(Guid Id);
         ArtistDetailsDTO GetArtistByIdDetails(Guid Id);
         void AddArtist(ArtistDTO artistDTO);
-        IEnumerable<ArtistIndexDTO> GetArtistsWithCountryName();
         void DeleteArtist(ArtistDTO artistDTO);
         void UpdateArtist(ArtistDTO artistDTO, Guid[] selectedBands);
         void Dispose();

@@ -29,7 +29,7 @@
     <link href="/Content/main.css" rel="stylesheet" />
     <link href="/Content/DataTables/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="/Content/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet" />
-    <script src="/Scripts/jquery-3.3.1.js"></script>
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
     <script src="/Scripts/jquery.dataTables.min.js"></script>
     <script src="/Scripts/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -72,8 +72,11 @@
         </div>
     </footer>
     <!-- End footer Area -->
-    <script src="/Scripts/popper.min.js"></script>
+
+    <script src="/Scripts/umd/popper.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <link href="~/Content/bootstrap-multiselect.css" />
     <script src="/Scripts/easing.min.js"></script>
     <script src="/Scripts/hoverIntent.js"></script>
     <script src="/Scripts/superfish.min.js"></script>
@@ -82,13 +85,14 @@
     <script src="/Scripts/jquery.tabs.min.js"></script>
     <script src="/Scripts/jquery.nice-select.min.js"></script>
     <script src="/Scripts/isotope.pkgd.min.js"></script>
-    <script src="/Scripts/waypoints.min.js"></script>
     <script src="/Scripts/jquery.counterup.min.js"></script>
     <script src="/Scripts/simple-skillbar.js"></script>
     <script src="/Scripts/owl.carousel.min.js"></script>
     <script src="/Scripts/main.js"></script>
     <script src="/Content/chosen/chosen.jquery.js" type="text/javascript"></script>
     <script src="~/Content/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

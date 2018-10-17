@@ -41,7 +41,7 @@ namespace MuzON.Web.Models
         [Required(ErrorMessage = "You must select artists!")]
         [Display(Name = "Artists")]
         public List<Guid> SelectedArtists { get; set; }
-        
+        public bool Selected { get; set; }
     }
 
     public class BandDetailsViewModel

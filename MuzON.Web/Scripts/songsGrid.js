@@ -18,24 +18,23 @@
                 'targets': [4]
             },
             {
+                "data": "Id",
                 "searchable": false,
                 "sortable": false,
                 "orderable": false,
-                "render": function (row, type, data) {
+                "render": function (Id) {
                     return `<div class="btn-group" role="group">
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Edit/` + data.BandSongId + `" id="btnEditSong">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Edit/` + Id + `" id="btnEditSong">
                                     <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                                 </button>
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Details/` + data.Id + `" id="btnDetailsSong">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Songs/Details/` + Id + `" id="btnDetailsSong">
                                     <span class="fa fa-eye" aria-hidden="true"></span> Details
                                 </button>
-                                <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Songs/Delete/` + data.BandSongId + `" id="btnDeleteSong">
+                                <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Songs/Delete/` + Id + `" id="btnDeleteSong">
                                     <span class="fa fa-trash" aria-hidden="true"></span> Delete
                                 </button>
                             </div>`;
-                },
-                'className': 'dt-right',
-                'targets': [4]
+                }
             }
         ]
     });
@@ -55,7 +54,14 @@ $("#btnCreateSong").on("click", function () {
 
         $('#createSongModal').modal('show');
 
-        $('.chosen-select').chosen({}).change(function (obj, result) {
+        //$('#artists').multiselect({
+        //    enableClickableOptGroups: true
+        //});
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select some option",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
             console.debug("changed: %o", arguments);
         });
     });
@@ -82,7 +88,10 @@ $("#tableSongsGrid").on("click", "#btnEditSong", function () {
         $('#editSongContainer').html(data);
 
         $('#editSongModal').modal('show');
-        $('.chosen-select').chosen({}).change(function (obj, result) {
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select some option"
+        }).on('change', function (obj, result) {
             console.debug("changed: %o", arguments);
         });
     });

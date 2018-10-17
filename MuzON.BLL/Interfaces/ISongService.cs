@@ -12,14 +12,13 @@ namespace MuzON.BLL.Interfaces
         IEnumerable<BandSongDTO> GetArtistRepertoire(Guid id);
         IEnumerable<BandSongDTO> GetBandRepertoire(Guid id);
         IEnumerable<SongDTO> GetSongs();
-        IEnumerable<SongToIndexDTO> GetSongsToIndex();
+        List<Guid> GetSelectedBands(Guid songId);
+        List<Guid> GetSelectedArtists(Guid songId);
         SongDTO GetSongById(Guid id);
         BandSongDTO GetBandSongById(Guid id);
-        BandSongDTO GetBandSongBySongId(Guid id);
-        SongDetailsDTO GetDetailSong(Guid id);
         void DeleteSong(SongDTO songDTO);
-        void AddBandSong(BandSongDTO bandSongDTO);
-        void UpdateSong(BandSongDTO bandSongDTO);
+        void AddSong(SongDTO songDTO);
+        void UpdateSong(SongDTO songDTO);
         void Dispose();
     }
 }

@@ -46,6 +46,19 @@ namespace MuzON.Web.Utility
             return new SelectList(dataList, "Id", "FullName", selectedItem);
         }
 
+        internal List<Guid> GetGuidsFromRequest(string[] guidValues)
+        {
+            List<Guid> guids = new List<Guid>();
+            if(guidValues != null)
+            {
+                foreach (var guid in guidValues)
+                {
+                    guids.Add(Guid.Parse(guid));
+                }
+            }
+            return guids;
+        }
+
         // generic method with mapping from S - Source to D - Destination
         public MultiSelectList GetMultiSelectListItems<S, D>(IEnumerable<S> service, List<Guid> selectedItems = null)
         {

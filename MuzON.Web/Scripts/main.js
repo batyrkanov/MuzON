@@ -128,26 +128,26 @@ $(document).ready(function() {
 
     //------- Accordian Js --------//  
 
-    var allPanels = $(".accordion > dd").hide();
-    allPanels.first().slideDown("easeOutExpo");
-    $(".accordion").each(function() {
-        $(this).find("dt > a").first().addClass("active").parent().next().css({
-            display: "block"
-        });
-    });
+    //var allPanels = $(".accordion > dd").hide();
+    //allPanels.first().slideDown("easeOutExpo");
+    //$(".accordion").each(function() {
+    //    $(this).find("dt > a").first().addClass("active").parent().next().css({
+    //        display: "block"
+    //    });
+    //});
 
 
-     $(document).on('click', '.accordion > dt > a', function(e) {
+    // $(document).on('click', '.accordion > dt > a', function(e) {
 
-        var current = $(this).parent().next("dd");
-        $(this).parents(".accordion").find("dt > a").removeClass("active");
-        $(this).addClass("active");
-        $(this).parents(".accordion").find("dd").slideUp("easeInExpo");
-        $(this).parent().next().slideDown("easeOutExpo");
+    //    var current = $(this).parent().next("dd");
+    //    $(this).parents(".accordion").find("dt > a").removeClass("active");
+    //    $(this).addClass("active");
+    //    $(this).parents(".accordion").find("dd").slideUp("easeInExpo");
+    //    $(this).parent().next().slideDown("easeOutExpo");
 
-        return false;
+    //    return false;
 
-    });
+    //});
 
     //------- Tabs Js --------//  
     if (document.getElementById("horizontalTab")) {
