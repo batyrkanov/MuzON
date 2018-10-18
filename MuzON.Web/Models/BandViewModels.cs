@@ -37,11 +37,14 @@ namespace MuzON.Web.Models
         [Required(ErrorMessage = "Country cannot be null!")]
         [Display(Name = "Country")]
         public Guid CountryId { get; set; }
+        public CountryViewModel Country { get; set; }
 
         [Required(ErrorMessage = "You must select artists!")]
         [Display(Name = "Artists")]
         public List<Guid> SelectedArtists { get; set; }
         public bool Selected { get; set; }
+        public ICollection<ArtistViewModel> Artists { get; set; }
+        public ICollection<SongViewModel> Songs { get; set; }
     }
 
     public class BandDetailsViewModel

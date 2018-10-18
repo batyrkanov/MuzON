@@ -1,4 +1,4 @@
-﻿@model MuzON.Web.Models.ArtistDetailsViewModel
+﻿@model MuzON.Web.Models.ArtistViewModel
 @{
     Layout = null;
 }
@@ -22,7 +22,7 @@
             <h3><strong>Info</strong></h3>
             <ul class="unordered-list">
                 <li><strong>Artist full name:</strong> @Html.DisplayFor(model => model.FullName)</li>
-                <li><strong>Country name:</strong> @Html.DisplayFor(model => model.CountryName)</li>
+                <li><strong>Country name:</strong> @Html.DisplayFor(model => model.Country.Name)</li>
                 <li><strong>Birth date:</strong> @Html.DisplayFor(model => model.BirthDate)</li>
 
             </ul>
@@ -31,7 +31,7 @@
         <div class="col-md-4">
             <h3><strong>Bands</strong></h3>
             <ul class="unordered-list">
-                @if ( Model.Bands != null && Model.Bands.Count > 0)
+                @if (Model.Bands != null && Model.Bands.Count > 0)
                 {
                     foreach (var band in Model.Bands)
                     {
@@ -49,15 +49,15 @@
         <div class="col-md-12 text-center">
             <h3><strong>Songs</strong></h3>
             <ul>
-                @if (ViewBag.Songs != null && ViewBag.Songs.Count > 0)
+                @if (Model.Songs != null && Model.Songs.Count > 0)
                 {
-                    foreach (var song in ViewBag.Songs)
+                    foreach (var song in Model.Songs)
                     {
                 <li>
                     <hr />
-                    <p>@song.Song.Name</p>
+                    <p>@song.Name</p>
                     <audio controls>
-                        <source src="@Url.Content("/songs/"+ song.SongId +"/" + song.Song.FileName)" type="audio/mp3">
+                        <source src="@Url.Content("/songs/"+ song.Id +"/" + song.FileName)" type="audio/mp3">
                     </audio>
                 </li>
                 

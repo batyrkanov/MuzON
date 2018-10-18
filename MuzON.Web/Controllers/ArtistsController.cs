@@ -37,20 +37,19 @@ namespace MuzON.Web.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Details(Guid id)
         {
-            var artistDTO = artistService.GetArtistByIdDetails(id);
-            var artist = Mapper.Map<ArtistDetailsViewModel>(artistDTO);
+            var artistDTO = artistService.GetArtistById(id);
+            var artist = Mapper.Map<ArtistViewModel>(artistDTO);
 
             return PartialView("_DetailsPartial", artist);
         }
 
         public ActionResult MoreAboutArtist(Guid id)
         {
-            var artistDTO = artistService.GetArtistByIdDetails(id);
-            var artist = Mapper.Map<ArtistDetailsViewModel>(artistDTO);
-            ViewBag.Songs = Mapper.Map<IEnumerable<BandSongViewModel>>(songService.GetArtistRepertoire(artist.Id));
+            var artistDTO = artistService.GetArtistById(id);
+            var artist = Mapper.Map<ArtistViewModel>(artistDTO);
             return PartialView("_Partial", artist);
         }
-        
+
 
         [Authorize(Roles = "admin")]
         public ActionResult Create()

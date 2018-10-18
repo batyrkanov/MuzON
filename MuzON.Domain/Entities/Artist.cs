@@ -16,12 +16,12 @@ namespace MuzON.Domain.Entities
         public byte[] Image { get; set; }
         public Guid CountryId { get; set; }
         public virtual Country Country { get; set; }
-        public virtual ICollection<BandSong> BandSongs { get; set; }
+        public virtual ICollection<Song> Songs { get; set; }
         public virtual ICollection<Band> Bands { get; set; }
 
         public Artist()
         {
-            BandSongs = new List<BandSong>();
+            Songs = new List<Song>();
             Bands = new List<Band>();
         }
     }

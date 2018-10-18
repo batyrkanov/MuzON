@@ -16,8 +16,8 @@ namespace MuzON.DAL.EF
             Genre rockGenre = new Genre { Id = Guid.NewGuid(), Name = "Rock" };
             Genre jRockGenre = new Genre { Id = Guid.NewGuid(), Name = "J-Rock" };
 
-            Country country = new Country { Id = Guid.NewGuid(), Name = "Bishkek" };
-            Country berlin = new Country { Id = Guid.NewGuid(), Name = "Berlin" };
+            Country country = new Country { Id = Guid.NewGuid(), Name = "Japan" };
+            Country berlin = new Country { Id = Guid.NewGuid(), Name = "Germany" };
             
             db.Genres.Add(rockGenre);
             db.Genres.Add(jRockGenre);

@@ -70,7 +70,7 @@ namespace MuzON.Web.Controllers
                     SaveSong(song, songDTO.Id);
                 }
 
-                
+
                 return Json(new { data = "success" });
             }
             ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
@@ -82,8 +82,8 @@ namespace MuzON.Web.Controllers
         {
             var songDTO = songService.GetSongById(id);
             var song = Mapper.Map<SongViewModel>(songDTO);
-            song.Artists = GetAllArtists(songDTO.Artists.Select(x=>x.Id));
-            song.Bands = GetAllBands(songDTO.Bands.Select(x=>x.Id));
+            song.Artists = GetAllArtists(songDTO.Artists.Select(x => x.Id));
+            song.Bands = GetAllBands(songDTO.Bands.Select(x => x.Id));
             ViewBag.Action = "edit";
             return PartialView("_CreateAndEditPartial", song);
         }
@@ -97,12 +97,12 @@ namespace MuzON.Web.Controllers
                 List<HttpPostedFileBase> songs = util.GetSongsFromRequest(Request.Files);
                 songViewModel.Artists = GetSelectedArtists(songViewModel.SelectedArtists);
                 songViewModel.Bands = GetSelectedBands(songViewModel.SelectedBands);
-                var song = Mapper.Map<SongDTO>(songViewModel);
-
-                songService.UpdateSong(song);
-
-                // UpdateSong(songEditViewModel);
-                // SaveSongs(songs);
+                var songDTO = Mapper.Map<SongDTO>(songViewModel);
+                songService.UpdateSong(songDTO);
+                foreach (var song in songs)
+                {
+                    SaveSong(song, songDTO.Id);
+                }
                 return Json(new { data = "success" });
             }
             return Json(new { songViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
@@ -207,5 +207,6 @@ namespace MuzON.Web.Controllers
 
             return artists;
         }
+
     }
 }

@@ -12,11 +12,11 @@ namespace MuzON.Domain.Entities
         public string Name { get; set; }
         public byte[] Image { get; set; }
         public int Index { get; set; }
-        public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; }
+        public virtual ICollection<Song> Songs { get; set; }
 
         public Playlist()
         {
-            PlaylistSongs = new List<PlaylistSong>();
+            Songs = new List<Song>();
         }
     }
 }

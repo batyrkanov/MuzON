@@ -16,5 +16,6 @@ namespace MuzON.BLL.DTO
         public CountryDTO Country { get; set; }
         public ICollection<ArtistDTO> Artists { get; set; }
         public bool Selected { get; set; }
+        public ICollection<SongDTO> Songs { get; set; }
     }
 }

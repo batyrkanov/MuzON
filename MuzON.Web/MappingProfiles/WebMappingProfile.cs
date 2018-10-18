@@ -55,9 +55,6 @@ namespace MuzON.Web.MappingProfiles
                 .ForMember(trg => trg.Bands, opt => opt.MapFrom(x => x.Bands.Where(f => f.Selected)))
                 .ForMember(trg => trg.SelectedArtists, f => f.Ignore())
                 .ForMember(trg => trg.SelectedBands, f => f.Ignore()).ReverseMap();
-            
-           
-            CreateMap<BandSongDTO, BandSongViewModel>(MemberList.None).ReverseMap();
 
             CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
         }

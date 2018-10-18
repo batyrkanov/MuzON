@@ -12,13 +12,15 @@ namespace MuzON.Domain.Entities
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Genre> Genres { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<BandSong> BandSongs { get; set; }
-        public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; }
+        public virtual ICollection<Artist> Artists { get; set; }
+        public virtual ICollection<Band> Bands { get; set; }
+        public virtual ICollection<Playlist> Playlists { get; set; }
 
         public Song()
         {
-            PlaylistSongs = new List<PlaylistSong>();
-            BandSongs = new List<BandSong>();
+            Playlists = new List<Playlist>();
+            Artists = new List<Artist>();
+            Bands = new List<Band>();
             Comments = new List<Comment>();
             Genres = new List<Genre>();
             Ratings = new List<Rating>();

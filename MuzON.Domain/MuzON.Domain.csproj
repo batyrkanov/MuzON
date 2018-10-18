@@ -57,13 +57,11 @@
     <Compile Include="Identity\User.cs" />
     <Compile Include="Entities\Artist.cs" />
     <Compile Include="Entities\Band.cs" />
-    <Compile Include="Entities\BandSong.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Genre.cs" />
     <Compile Include="Entities\Playlist.cs" />
     <Compile Include="Entities\Rating.cs" />
-    <Compile Include="Entities\PlaylistSong.cs" />
     <Compile Include="Entities\Song.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />

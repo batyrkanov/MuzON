@@ -54,19 +54,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurations\BandSongConfig.cs" />
     <Compile Include="Configurations\SongConfig.cs" />
     <Compile Include="EF\DbInitializer.cs" />
     <Compile Include="EF\MuzONContext.cs" />
     <Compile Include="Identity\RoleStore.cs" />
     <Compile Include="Identity\UserStore.cs" />
-    <Compile Include="Migrations\201810050549250_Initial-Migration.cs" />
-    <Compile Include="Migrations\201810050549250_Initial-Migration.Designer.cs">
-      <DependentUpon>201810050549250_Initial-Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810111037185_Added-FileName-Field.cs" />
-    <Compile Include="Migrations\201810111037185_Added-FileName-Field.Designer.cs">
-      <DependentUpon>201810111037185_Added-FileName-Field.cs</DependentUpon>
+    <Compile Include="Migrations\201810180822398_Init.cs" />
+    <Compile Include="Migrations\201810180822398_Init.Designer.cs">
+      <DependentUpon>201810180822398_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,11 +79,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810050549250_Initial-Migration.resx">
-      <DependentUpon>201810050549250_Initial-Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810111037185_Added-FileName-Field.resx">
-      <DependentUpon>201810111037185_Added-FileName-Field.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810180822398_Init.resx">
+      <DependentUpon>201810180822398_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

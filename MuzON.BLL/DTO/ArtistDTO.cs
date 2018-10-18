@@ -18,5 +18,7 @@ namespace MuzON.BLL.DTO
         public CountryDTO Country { get; set; }
         public List<Guid> SelectedBands { get; set; }
         public bool Selected { get; set; }
+        public ICollection<BandDTO> Bands { get; set; }
+        public ICollection<SongDTO> Songs { get; set; }
     }
 }

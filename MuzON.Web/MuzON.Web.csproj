@@ -220,7 +220,6 @@
     </Compile>
     <Compile Include="MappingProfiles\WebMappingProfile.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
-    <Compile Include="Models\BandSongViewModel.cs" />
     <Compile Include="Models\BandViewModels.cs" />
     <Compile Include="Models\CountryViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />

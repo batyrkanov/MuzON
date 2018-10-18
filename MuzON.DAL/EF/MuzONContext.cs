@@ -22,8 +22,6 @@ namespace MuzON.DAL.EF
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<BandSong> BandSongs { get; set; }
-        public DbSet<PlaylistSong> PlaylistSongs { get; set; }
 
         static MuzONContext() { Database.SetInitializer<MuzONContext>(new DbInitializer());  }
 
@@ -33,9 +31,6 @@ namespace MuzON.DAL.EF
         {
             // modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             base.OnModelCreating(modelBuilder);
-            
-            // BandSongs Configuarations
-            modelBuilder.Configurations.Add(new BandSongConfig());
 
             // Song Configuration
             modelBuilder.Configurations.Add(new SongConfig());

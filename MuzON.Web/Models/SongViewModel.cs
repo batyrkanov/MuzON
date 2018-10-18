@@ -17,14 +17,4 @@ namespace MuzON.Web.Models
         public ICollection<ArtistViewModel> Artists { get; set; }
         public ICollection<BandViewModel> Bands { get; set; }
     }
-    
-    public class SongEditViewModel
-    {
-        public Guid Id { get; set; }
-        [Required(ErrorMessage = "Song name cannot be null")]
-        public string Name { get; set; }
-        public string FileName { get; set; }
-        public List<Guid> Artists { get; set; }
-        public List<Guid> Bands { get; set; }
-    }
 }

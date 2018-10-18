@@ -41,13 +41,13 @@ namespace MuzON.Web.Controllers
             return PartialView("_DetailsPartial", band);
         }
 
-        public ActionResult MoreAboutBand(Guid id)
-        {
-            var bandDTO = bandService.GetBandById(id);
-            var band = Mapper.Map<BandDetailsViewModel>(bandDTO);
-            ViewBag.Songs = Mapper.Map<IEnumerable<BandSongViewModel>>(songService.GetBandRepertoire(band.Id));
-            return PartialView("_Partial", band); 
-        }
+        //public ActionResult MoreAboutBand(Guid id)
+        //{
+        //    var bandDTO = bandService.GetBandById(id);
+        //    var band = Mapper.Map<BandDetailsViewModel>(bandDTO);
+        //    ViewBag.Songs = Mapper.Map<IEnumerable<SongViewModel>>(songService.GetBandRepertoire(band.Id));
+        //    return PartialView("_Partial", band); 
+        //}
 
         [Authorize(Roles = "admin")]
         public ActionResult Create()

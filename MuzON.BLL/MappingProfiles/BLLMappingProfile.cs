@@ -29,8 +29,6 @@ namespace MuzON.BLL.MappingProfiles
             CreateMap<Rating, RatingDTO>(MemberList.None).ReverseMap();
 
             CreateMap<Playlist, PlaylistDTO>(MemberList.None).ReverseMap();
-
-            CreateMap<BandSong, BandSongDTO>(MemberList.None).ReverseMap();
         }
     }
 }
