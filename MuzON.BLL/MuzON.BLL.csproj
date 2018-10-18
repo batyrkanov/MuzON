@@ -62,9 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\ArtistDetailsDTO.cs" />
     <Compile Include="DTO\ArtistDTO.cs" />
-    <Compile Include="DTO\ArtistIndexDTO.cs" />
     <Compile Include="DTO\BandDTO.cs" />
     <Compile Include="DTO\BandIndexDTO.cs" />
     <Compile Include="DTO\CommentDTO.cs" />

@@ -14,8 +14,6 @@ namespace MuzON.BLL.MappingProfiles
         public BLLMappingProfile()
         {
             CreateMap<Artist, ArtistDTO>(MemberList.None).ReverseMap();
-            CreateMap<Artist, ArtistDetailsDTO>(MemberList.None).ReverseMap();
-            CreateMap<Artist, ArtistIndexDTO>(MemberList.None).ReverseMap();
 
             CreateMap<Band, BandDTO>(MemberList.None).ReverseMap();
             CreateMap<Band, BandIndexDTO>(MemberList.None).ReverseMap();

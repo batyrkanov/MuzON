@@ -7,7 +7,13 @@
         },
         "columns": [
             { "data": "FullName" },
-            { "data": "CountryName" },
+            {
+                'render': function (row, type, data) {
+                    return data.Country.Name;
+                },
+                'className': 'dt-right',
+                'targets': [4]
+            },
             {
                 "data": "BirthDate", "className": "datetime",
                 "render": function (BirthDate) {

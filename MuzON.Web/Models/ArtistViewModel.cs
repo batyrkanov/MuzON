@@ -34,33 +34,9 @@ namespace MuzON.Web.Models
         public List<Guid> SelectedBands { get; set; }
 
         public bool Selected { get; set; }
-
+        [JsonIgnore]
         public ICollection<BandViewModel> Bands { get; set; }
 
         public ICollection<SongViewModel> Songs { get; set; }
-    }
-
-    public class ArtistIndexViewModel
-    {
-        public Guid Id { get; set; }
-        public string FullName { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime BirthDate { get; set; }
-        public string Image { get; set; }
-        public string CountryName { get; set; }
-    }
-
-    public class ArtistDetailsViewModel
-    {
-        public Guid Id { get; set; }
-        [Display(Name = "Artist full name")]
-        public string FullName { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime BirthDate { get; set; }
-        public string Image { get; set; }
-        public string CountryName { get; set; }
-        public ICollection<BandDetailsViewModel> Bands { get; set; }
     }
 }

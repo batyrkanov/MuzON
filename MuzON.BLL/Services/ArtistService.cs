@@ -59,31 +59,10 @@ namespace MuzON.BLL.Services
             return Mapper.Map<Artist, ArtistDTO>(artist);
         }
 
-        public ArtistDetailsDTO GetArtistByIdDetails(Guid Id)
-        {
-            Artist artist = _unitOfWork.Artists.Get(Id);
-            return Mapper.Map<ArtistDetailsDTO>(artist);
-        }
-
         public IEnumerable<ArtistDTO> GetArtists()
         {
             var artists = _unitOfWork.Artists.GetAll().ToList();
             return Mapper.Map<IEnumerable<Artist>, IEnumerable<ArtistDTO>>(artists);
-        }
-
-        public IEnumerable<ArtistIndexDTO> GetArtistsWithCountryName()
-        {
-            var artistDTOs = GetArtists();
-            var artists = Mapper.Map<IEnumerable<ArtistIndexDTO>>(artistDTOs);
-            foreach (var artistDto in artistDTOs)
-            {
-                foreach (var artist in artists)
-                {
-                    if (artistDto.Id == artist.Id)
-                        artist.CountryName = artistDto.Country.Name;
-                }
-            }
-            return artists;
         }
 
         public List<Guid> GetSelectedBands(Guid artistId)

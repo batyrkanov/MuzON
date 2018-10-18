@@ -25,7 +25,7 @@
             <div class="row grid">
                 @if (ViewBag.Artists != null)
                 {
-                    foreach (MuzON.Web.Models.ArtistDetailsViewModel a in ViewBag.Artists)
+                    foreach (MuzON.Web.Models.ArtistViewModel a in ViewBag.Artists)
                     {
                 <div class="single-portfolio col-sm-4 all artist">
                     <div class="relative">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="p-inner">
                         <h4>@a.FullName</h4>
-                        <div class="cat">@a.CountryName</div>
+                        <div class="cat">@a.Country.Name</div>
                     </div>
                 </div>
                        
@@ -54,7 +54,7 @@
                 }
                 @if (ViewBag.Bands != null)
                 {
-                    foreach (MuzON.Web.Models.BandDetailsViewModel b in ViewBag.Bands)
+                    foreach (MuzON.Web.Models.BandViewModel b in ViewBag.Bands)
                     {
                         <div class="single-portfolio col-sm-4 all band">
                             <div class="relative">
@@ -75,7 +75,7 @@
                             </div>
                             <div class="p-inner">
                                 <h4>@b.Name</h4>
-                                <div class="cat">@b.CountryName</div>
+                                <div class="cat">@b.Country.Name</div>
                             </div>
                         </div>
                     }

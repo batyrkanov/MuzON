@@ -20,10 +20,10 @@ namespace MuzON.Web.Controllers
         {
             var artistDTOs = artistService.GetArtists();
 
-            ViewBag.Artists = Mapper.Map<IEnumerable<ArtistDetailsViewModel>>(artistDTOs);
+            ViewBag.Artists = Mapper.Map<IEnumerable<ArtistViewModel>>(artistDTOs);
 
             var bandDTOs = bandService.GetBands();
-            ViewBag.Bands = Mapper.Map<IEnumerable<BandDetailsViewModel>>(bandDTOs);
+            ViewBag.Bands = Mapper.Map<IEnumerable<BandViewModel>>(bandDTOs);
             return View();
         }
 

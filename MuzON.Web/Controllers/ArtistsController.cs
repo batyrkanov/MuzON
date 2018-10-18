@@ -2,6 +2,7 @@
 using MuzON.BLL.DTO;
 using MuzON.BLL.Interfaces;
 using MuzON.Web.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,10 +29,13 @@ namespace MuzON.Web.Controllers
         [Authorize(Roles = "admin")]
         public JsonResult GetList()
         {
-            var artists = Mapper.Map<IEnumerable<ArtistIndexViewModel>>(
-                                        artistService.GetArtistsWithCountryName());
-
-            return Json(new { data = artists }, JsonRequestBehavior.AllowGet);
+            var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(
+                                        artistService.GetArtists());
+            foreach (var artist in artists)
+            {
+                artist.Bands = null;
+            }
+            return Json(new { data = artists },JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "admin")]
