@@ -155,6 +155,7 @@ namespace MuzON.BLL.Services
             song.BandSongs = new List<BandSong>();
             _unitOfWork.Songs.Update(song);
 
+            // value for loop need if we added new artists or bands, and their count is bigger than currently bandsongs count sum is less
             int valueForLoop = bandSongs.Count > maxItemInList ? bandSongs.Count : maxItemInList;
             for (int i = 0; i < valueForLoop; i++)
             {
@@ -186,6 +187,7 @@ namespace MuzON.BLL.Services
                 if (bandSong.BandId != null)
                     bandSong.Band = _unitOfWork.Bands.Get(bandSong.BandId);
                 bandSong.Song = _unitOfWork.Songs.Get(bandSong.SongId);
+                // if currently bandsongs list not contain bansong then it wil be create
                 if(!bandSongs.Contains(bandSong))
                     _unitOfWork.BandSongs.Create(bandSong);
                 else
