@@ -62,7 +62,6 @@ namespace MuzON.BLL.Services
             Song song = Mapper.Map<Song>(songDTO);
             List<BandSong> bandSongs = Mapper.Map<List<BandSong>>(GetBandSongDTOs(songDTO, maxItemsInList));
             _unitOfWork.Songs.Create(song);
-            _unitOfWork.Save();
             foreach (var bandSong in bandSongs)
             {
                 if (bandSong.ArtistId != null)
@@ -72,9 +71,9 @@ namespace MuzON.BLL.Services
                 if (bandSong.SongId != null)
                     bandSong.Song = _unitOfWork.Songs.Get(bandSong.SongId);
                 _unitOfWork.BandSongs.Create(bandSong);
-                _unitOfWork.Save();
+                
             }
-            
+            _unitOfWork.Save();
         }
 
         public void DeleteSong(SongDTO songDTO)
@@ -192,8 +191,8 @@ namespace MuzON.BLL.Services
                     _unitOfWork.BandSongs.Create(bandSong);
                 else
                     _unitOfWork.BandSongs.Update(bandSong);
-                _unitOfWork.Save();
             }
+            _unitOfWork.Save();
         }
 
         public IEnumerable<BandSongDTO> GetBandRepertoire(Guid id)

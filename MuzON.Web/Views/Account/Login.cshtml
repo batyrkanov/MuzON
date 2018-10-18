@@ -42,7 +42,7 @@
                 <span class="login100-form-title p-b-37">
                     Sign In
                 </span>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-danger", @style = "display: none;" })
                 <div class="wrap-input100 validate-input m-b-20">
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", @placeholder = "Enter email", @required = "required" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
@@ -54,7 +54,7 @@
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     <span class="focus-input100"></span>
                 </div>
-
+                
                 <div class="container-login100-form-btn">
                     <button type="submit" class="login100-form-btn">Sign In</button>
                 </div>
@@ -85,6 +85,7 @@
     <!--===============================================================================================-->
     <script src="~/Content/login/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
+    <script src="/Content/bootstrap-notify/bootstrap-notify.min.js"></script>
     <script src="~/Content/login/js/main.js"></script>
 
 </body>

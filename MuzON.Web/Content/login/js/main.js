@@ -1,4 +1,21 @@
-
+$(document).ready(function () {
+    var textDanger = $('.validation-summary-errors').text();
+    if (textDanger != "") {
+        $.notify({
+            // options
+            icon: 'fa fa-warning',
+            title: '<strong>Warning</strong>: ',
+            message: textDanger
+        }, {
+                type: 'warning',
+                z_index: 1051,
+                animate: {
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
+                }
+            });
+    }
+});
 (function ($) {
     "use strict";
 

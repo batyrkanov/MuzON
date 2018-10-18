@@ -61,10 +61,13 @@ $("#btnCreateArtist").on("click", function () {
 
         $('#createArtistModal').modal('show');
 
-        $('.chosen-select').chosen({}).change(function (obj, result) {
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select bands",
+            placeholder_text_single: "Please, select country",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
             console.debug("changed: %o", arguments);
-
-            console.log("selected: " + result.selected);
         });
     });
 
@@ -79,7 +82,13 @@ $("#tableArtistsGrid").on("click", "#btnEditArtist", function () {
         $('#editArtistContainer').html(data);
 
         $('#editArtistModal').modal('show');
-        $('.chosen-select').chosen({}).change(function (obj, result) {
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select bands",
+            placeholder_text_single: "Please, select country",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
+            console.debug("changed: %o", arguments);
         });
     });
 

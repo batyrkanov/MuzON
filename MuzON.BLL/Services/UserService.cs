@@ -51,7 +51,7 @@ namespace MuzON.BLL.Services
             }
             else
             {
-                return new OperationDetails(false, "User with this name already exists", "Email");
+                return new OperationDetails(false, "User with this Email already exists, please enter other Email", "Email");
             }
         }
 

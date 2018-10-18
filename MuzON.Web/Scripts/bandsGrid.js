@@ -61,10 +61,13 @@ $("#btnCreateBand").on("click", function () {
 
         $('#createBandModal').modal('show');
         
-        $('.chosen-select').chosen({}).change(function (obj, result) {
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select artists",
+            placeholder_text_single: "Please, select country",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
             console.debug("changed: %o", arguments);
-
-            console.log("selected: " + result.selected);
         });
     });
 
@@ -90,10 +93,13 @@ $("#tableBandsGrid").on("click", "#btnEditBand", function () {
         $('#editBandContainer').html(data);
 
         $('#editBandModal').modal('show');
-        $('.chosen-select').chosen({}).change(function (obj, result) {
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select artists",
+            placeholder_text_single: "Please, select country",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
             console.debug("changed: %o", arguments);
-
-            console.log("selected: " + result.selected);
         });
     });
 
