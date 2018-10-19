@@ -56,7 +56,7 @@
                 <li>
                     <hr />
                     <p>@song.Name</p>
-                    <audio controls>
+                    <audio controls preload="metadata">
                         <source src="@Url.Content("/songs/"+ song.Id +"/" + song.FileName)" type="audio/mp3">
                     </audio>
                 </li>
@@ -78,3 +78,10 @@
         </div>
     </div>
 </div>
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $('audio').mediaelementplayer();
+    });
+</script>    
+}

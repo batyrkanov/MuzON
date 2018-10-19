@@ -1,7 +1,7 @@
 $(document).ready(function() {
     "use strict";
 
-
+    
     //------- Niceselect  js --------//  
 
     //if (document.getElementById("default-select")) {

@@ -9,7 +9,7 @@
             { "data": "Name" },
             {
                 'render': function (row, type, data) {
-                    return `<audio controls>  
+                    return `<audio controls preload="metadata">  
                                 <source src="/songs/` + data.Id + `/` + data.FileName + `" type="audio/mp3">  
                             </audio>`;
                 },
