@@ -765,8 +765,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Artists\_Partial.cshtml" />
-    <Content Include="Views\Bands\_Partial.cshtml" />
+    <Content Include="Views\Home\_PartialArtist.cshtml" />
+    <Content Include="Views\Home\_PartialBand.cshtml" />
     <Content Include="Views\Songs\Index.cshtml" />
     <Content Include="Views\Songs\_DeletePartial.cshtml" />
     <Content Include="Views\Songs\_CreateAndEditPartial.cshtml" />
@@ -774,6 +774,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AcminBase\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

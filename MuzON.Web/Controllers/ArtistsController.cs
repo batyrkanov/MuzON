@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace MuzON.Web.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ArtistsController : BaseController
     {
         public ArtistsController(IArtistService artistServ,
@@ -20,14 +21,13 @@ namespace MuzON.Web.Controllers
                                 ISongService songServ)
             : base(bandServ, countryServ, artistServ, songServ) { }
 
-        [Authorize(Roles = "admin")]
+        
         // GET: Artists
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
         public JsonResult GetList()
         {
             var artists = Mapper.Map<IEnumerable<ArtistViewModel>>(
@@ -39,7 +39,6 @@ namespace MuzON.Web.Controllers
             return Json(new { data = artists },JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Details(Guid id)
         {
             var artistDTO = artistService.GetArtistById(id);
@@ -48,15 +47,6 @@ namespace MuzON.Web.Controllers
             return PartialView("_DetailsPartial", artist);
         }
 
-        public ActionResult MoreAboutArtist(Guid id)
-        {
-            var artistDTO = artistService.GetArtistById(id);
-            var artist = Mapper.Map<ArtistViewModel>(artistDTO);
-            return PartialView("_Partial", artist);
-        }
-
-
-        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             var model = new ArtistViewModel
@@ -72,8 +62,7 @@ namespace MuzON.Web.Controllers
             return PartialView("_CreateAndEditPartial", model);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "admin")]
+        [HttpPost]        
         [ValidateAntiForgeryToken]
         public JsonResult Create(ArtistViewModel artistViewModel)
         {
@@ -90,7 +79,6 @@ namespace MuzON.Web.Controllers
             return Json(new { artistViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Edit(Guid id)
         {
             var artist = artistService.GetArtistById(id);
@@ -107,8 +95,7 @@ namespace MuzON.Web.Controllers
             return PartialView("_CreateAndEditPartial", artistViewModel);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "admin")]
+        [HttpPost]        
         [ValidateAntiForgeryToken]
         public JsonResult Edit(ArtistViewModel artistViewModel)
         {
@@ -125,7 +112,6 @@ namespace MuzON.Web.Controllers
             return Json(new { artistViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Delete(Guid id)
         {
             var artist = artistService.GetArtistById(id);
@@ -137,8 +123,7 @@ namespace MuzON.Web.Controllers
             return PartialView("_DeletePartial", artistViewModel);
         }
 
-        [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "admin")]
+        [HttpPost, ActionName("Delete")]        
         [ValidateAntiForgeryToken]
         public JsonResult DeleteConfirmed(Guid id)
         {

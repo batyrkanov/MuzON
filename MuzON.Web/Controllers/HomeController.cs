@@ -27,6 +27,20 @@ namespace MuzON.Web.Controllers
             return View();
         }
 
+        public ActionResult MoreAboutArtist(Guid id)
+        {
+            var artistDTO = artistService.GetArtistById(id);
+            var artist = Mapper.Map<ArtistViewModel>(artistDTO);
+            return PartialView("_PartialArtist", artist);
+        }
+
+        public ActionResult MoreAboutBand(Guid id)
+        {
+            var bandDTO = bandService.GetBandById(id);
+            var band = Mapper.Map<BandViewModel>(bandDTO);
+            return PartialView("_PartialBand", band);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

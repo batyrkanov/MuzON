@@ -33,7 +33,7 @@
                             <div class="overlay overlay-bg"></div>
                             <img class="image img-fluid" src="data:image/jpeg;base64,@a.Image" alt="">
                         </div>
-                        <a href="@Url.Action("MoreAboutArtist","Artists", new { id = a.Id})" class="img-pop-up">
+                        <a href="@Url.Action("MoreAboutArtist","Home", new { id = a.Id})" class="img-pop-up">
                             <div class="middle" style="left: 35%;">
                                 <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
                             </div>
@@ -62,7 +62,7 @@
                                     <div class="overlay overlay-bg"></div>
                                     <img class="image img-fluid" src="data:image/jpeg;base64,@b.Image" alt="">
                                 </div>
-                                <a href="@Url.Action("MoreAboutBand","Bands", new { id = b.Id})" class="img-pop-up">
+                                <a href="@Url.Action("MoreAboutBand","Home", new { id = b.Id})" class="img-pop-up">
                                     <div class="middle" style="left: 35%;">
                                         <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
                                     </div>

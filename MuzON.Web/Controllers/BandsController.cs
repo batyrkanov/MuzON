@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MuzON.Web.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class BandsController : BaseController
     {
         public BandsController(IBandService artistServ, 
@@ -36,22 +37,13 @@ namespace MuzON.Web.Controllers
             return Json(new { data = bands }, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Details(Guid id)
         {
             var bandDTO = bandService.GetBandById(id);
             var band = Mapper.Map<BandViewModel>(bandDTO);
             return PartialView("_DetailsPartial", band);
         }
-
-        public ActionResult MoreAboutBand(Guid id)
-        {
-            var bandDTO = bandService.GetBandById(id);
-            var band = Mapper.Map<BandViewModel>(bandDTO);
-            return PartialView("_Partial", band);
-        }
-
-        [Authorize(Roles = "admin")]
+        
         public ActionResult Create()
         {
             var model = new BandViewModel
@@ -67,8 +59,7 @@ namespace MuzON.Web.Controllers
             return PartialView("_CreateAndEditPartial", model);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "admin")]
+        [HttpPost]        
         [ValidateAntiForgeryToken]
         public JsonResult Create(BandViewModel bandViewModel)
         {
@@ -85,7 +76,6 @@ namespace MuzON.Web.Controllers
             return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Edit(Guid id)
         {
             var band = bandService.GetBandById(id);
@@ -104,8 +94,7 @@ namespace MuzON.Web.Controllers
             return PartialView("_CreateAndEditPartial", bandViewModel);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "admin")]
+        [HttpPost]        
         [ValidateAntiForgeryToken]
         public JsonResult Edit(BandViewModel bandViewModel)
         {
@@ -121,7 +110,6 @@ namespace MuzON.Web.Controllers
             return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Delete(Guid id)
         {
             var band = bandService.GetBandById(id);
@@ -133,8 +121,7 @@ namespace MuzON.Web.Controllers
             return PartialView("_DeletePartial", bandViewModel);
         }
 
-        [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "admin")]
+        [HttpPost, ActionName("Delete")]        
         [ValidateAntiForgeryToken]
         public JsonResult DeleteConfirmed(Guid id)
         {

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace MuzON.Web.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class SongsController : BaseController
     {
         public SongsController(IBandService bandServ,
@@ -32,7 +33,6 @@ namespace MuzON.Web.Controllers
             return Json(new { data = songs }, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Details(Guid id)
         {
             var songDTO = songService.GetSongById(id);
@@ -111,8 +111,7 @@ namespace MuzON.Web.Controllers
             }
             return Json(new { songViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
-
-        [Authorize(Roles = "admin")]
+        
         public ActionResult Delete(Guid id)
         {
             var song = songService.GetSongById(id);
@@ -124,8 +123,7 @@ namespace MuzON.Web.Controllers
             return PartialView("_DeletePartial", songViewModel);
         }
 
-        [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "admin")]
+        [HttpPost, ActionName("Delete")]        
         [ValidateAntiForgeryToken]
         public JsonResult DeleteConfirmed(Guid id)
         {
