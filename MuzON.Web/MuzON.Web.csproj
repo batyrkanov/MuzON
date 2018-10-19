@@ -223,7 +223,7 @@
     <Compile Include="Models\BandViewModels.cs" />
     <Compile Include="Models\CountryViewModel.cs" />
     <Compile Include="Models\GenreViewModel.cs" />
-    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\IdentityViewModels.cs" />
     <Compile Include="Models\SongViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -771,10 +771,11 @@
     <Content Include="Views\Songs\_DeletePartial.cshtml" />
     <Content Include="Views\Songs\_CreateAndEditPartial.cshtml" />
     <Content Include="Views\Songs\_DetailsPartial.cshtml" />
+    <Content Include="Views\Account\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\_RegisterPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\AcminBase\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -39,6 +39,16 @@ namespace MuzON.BLL.Services
             User user = await _unitOfWork.ApplicationUserManager.FindByEmailAsync(userDTO.Email);
             if (user == null)
             {
+                // if role "user" wasn't find in the table Roles, then create this
+                Role role = await _unitOfWork.ApplicationRoleManager.FindByNameAsync(userDTO.Role);
+                if(role == null)
+                {
+                    role = new Role { Id = Guid.NewGuid(), Name = userDTO.Role };
+                    var roleAddResult =
+                        await _unitOfWork.ApplicationRoleManager.CreateAsync(role);
+                    if (roleAddResult.Errors.Count() > 0)
+                        return new OperationDetails(false, roleAddResult.Errors.FirstOrDefault(), "");
+                }
                 user = new User { Email = userDTO.Email, UserName = userDTO.Email };
                 var result =
                     await _unitOfWork.ApplicationUserManager.CreateAsync(user, userDTO.Password);

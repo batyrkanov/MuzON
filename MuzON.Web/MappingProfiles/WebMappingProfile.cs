@@ -31,6 +31,7 @@ namespace MuzON.Web.MappingProfiles
                 .ForMember(trg => trg.SelectedBands, f => f.Ignore()).ReverseMap();
 
             CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
+            CreateMap<UserDTO, RegisterViewModel>(MemberList.None).ReverseMap();
 
             CreateMap<GenreDTO, GenreViewModel>(MemberList.None).ReverseMap();
         }

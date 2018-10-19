@@ -1,0 +1,42 @@
+﻿@model MuzON.Web.Models.RegisterViewModel
+@{
+    Layout = null;
+}
+
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" id="small-dialog">
+        @using (Ajax.BeginForm("Register", "Account", null,
+            new AjaxOptions
+            {
+                HttpMethod = "Post",
+                OnSuccess = "Register(data)"
+            },
+        new { @class = "login100-form validate-form" }))
+        {
+            @Html.AntiForgeryToken()
+            <span class="login100-form-title p-b-37">
+                Sign Up
+            </span>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger", @style = "display: none;" })
+            <div class="wrap-input100 validate-input m-b-20">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", @placeholder = "Enter email", @type = "email", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-25">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input100", @placeholder = "Enter password", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-25">
+                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "input100", @placeholder = "Confirm password", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="container-login100-form-btn">
+                <button type="submit" class="login100-form-btn">Sign Up</button>
+            </div>
+        }
+    </div>

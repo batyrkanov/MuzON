@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $('.signup').magnificPopup({
+        type: 'ajax'
+    });
     var textDanger = $('.validation-summary-errors').text();
     if (textDanger != "") {
         $.notify({
@@ -16,9 +19,29 @@ $(document).ready(function () {
             });
     }
 });
+function Register(data) {
+    if (data.errorMessage.length >= 1) {
+        data.errorMessage.forEach(function (item) {
+            $.notify({
+                // options
+                icon: 'fa fa-warning',
+                title: '<strong>Warning</strong>: ',
+                message: item
+            }, {
+                    type: 'warning',
+                    z_index: 1051,
+                    animate: {
+                        enter: 'animated bounceIn',
+                        exit: 'animated bounceOut'
+                    }
+                });
+        });
+    }
+    return;
+}
 (function ($) {
     "use strict";
-
+   
     /*==================================================================
     [ Validate after type ]*/
     $('.validate-input .input100').each(function(){

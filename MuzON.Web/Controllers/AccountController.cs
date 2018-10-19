@@ -1,5 +1,7 @@
-﻿using Microsoft.Owin.Security;
+﻿using AutoMapper;
+using Microsoft.Owin.Security;
 using MuzON.BLL.DTO;
+using MuzON.BLL.Infrastructure;
 using MuzON.BLL.Interfaces;
 using MuzON.Web.Models;
 using System;
@@ -62,6 +64,36 @@ namespace MuzON.Web.Controllers
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult Register()
+        {
+            return PartialView("_Registerpartial");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var errorList = new List<string>();
+                var userDto = Mapper.Map<RegisterViewModel, UserDTO>(model);
+                userDto.Role = "user";
+
+                OperationDetails operationDetails = await userService.Create(userDto);
+                if (operationDetails.Succedeed)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    errorList.Add(operationDetails.Message);
+                    return Json(new { model, errorMessage = errorList, JsonRequestBehavior.AllowGet });
+                }
+                    
+            }
+            return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values), JsonRequestBehavior.AllowGet });
         }
     }
 }
