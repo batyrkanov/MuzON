@@ -13,6 +13,27 @@
         <div class="modal-body">
             <dl class="dl-horizontal">
                 <dt>
+                    <label class="col-md-12"><strong>Genres</strong></label>
+                </dt>
+                <ul class="unordered-list">
+                    @if (Model.Genres.Count > 0)
+                    {
+                        foreach (var genre in Model.Genres)
+                        {
+                            <li>
+                                @genre.Name
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            No genres
+                        </li>
+                    }
+                </ul>
+
+                <dt>
                     <label class="col-md-12"><strong>Artists</strong></label>
                 </dt>
                 <ul class="unordered-list">

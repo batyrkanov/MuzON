@@ -31,13 +31,23 @@ namespace MuzON.BLL.Services
                 }
             }
 
-            if(songDTO.Bands.Count > 0)
+            if (songDTO.Bands.Count > 0)
             {
                 song.Bands = new List<Band>();
                 foreach (var band in _unitOfWork.Bands.SearchFor(
                                         b => songDTO.Bands.Select(x => x.Id).ToList().Contains(b.Id)))
                 {
                     song.Bands.Add(band);
+                }
+            }
+
+            if (songDTO.Genres.Count > 0)
+            {
+                song.Genres = new List<Genre>();
+                foreach (var genre in _unitOfWork.Genres.SearchFor(
+                                        b => songDTO.Genres.Select(x => x.Id).ToList().Contains(b.Id)))
+                {
+                    song.Genres.Add(genre);
                 }
             }
             _unitOfWork.Songs.Create(song);
@@ -107,46 +117,22 @@ namespace MuzON.BLL.Services
                     song.Bands.Add(band);
                 }
             }
+
+            if (songDTO.Genres.Count > 0)
+            {
+                if (song.Genres == null)
+                    song.Genres = new List<Genre>();
+                song.Genres.Clear();
+                foreach (var genre in _unitOfWork.Genres.SearchFor(
+                                        a => songDTO.Genres.Select(x => x.Id).ToList().Contains(a.Id)))
+                {
+                    song.Genres.Add(genre);
+                }
+            }
             _unitOfWork.Songs.Update(song);
             _unitOfWork.Save();
         }
-
-        //public IEnumerable<SongDTO> GetBandRepertoire(Guid id)
-        //{
-        //    var songs = _unitOfWork.BandSongs.SearchFor(x => x.BandId == id).ToList();
-        //    return Mapper.Map<IEnumerable<BandSongDTO>>(songs);
-        //}
-
-        //public IEnumerable<SongDTO> GetArtistRepertoire(Guid id)
-        //{
-        //    var songs = _unitOfWork.Songs.GetAll().Where(x => x.Artists.Where(y => y.Id == id)).ToList();
-        //    return Mapper.Map<IEnumerable<BandSongDTO>>(songs);
-        //}
-
-        //public List<Guid> GetSelectedArtists(Guid songId)
-        //{
-        //    List<Guid> artistGuids = new List<Guid>();
-        //    var song = _unitOfWork.Songs.SearchFor(x => x.Id == songId).FirstOrDefault();
-        //    foreach (var bandSong in song.BandSongs)
-        //    {
-        //        if (bandSong.ArtistId != null)
-        //            artistGuids.Add(bandSong.ArtistId.Value);
-        //    }
-        //    return artistGuids;
-        //}
-
-        //public List<Guid> GetSelectedBands(Guid songId)
-        //{
-        //    List<Guid> bandGuids = new List<Guid>();
-        //    var song = _unitOfWork.Songs.SearchFor(x => x.Id == songId).FirstOrDefault();
-        //    foreach (var bandSong in song.BandSongs)
-        //    {
-        //        if (bandSong.BandId != null)
-        //            bandGuids.Add(bandSong.BandId.Value);
-        //    }
-        //    return bandGuids;
-        //}
-
+        
         public void Dispose()
         {
             _unitOfWork.Dispose();

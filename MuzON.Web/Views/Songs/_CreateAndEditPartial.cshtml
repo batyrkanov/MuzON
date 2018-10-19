@@ -31,6 +31,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="control-label col-md-12">Genres</label>
+                                <div class="col-md-12">
+                                    @Html.ListBoxFor(model => model.SelectedGenres,
+                                           new MultiSelectList(Model.Genres, "Id", "Name"),
+                                           htmlAttributes: new { @class = "chosen-select", @placeholder = "Select band" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="control-label col-md-12">Artist</label>
                                 <div class="col-md-12">
                                     @Html.ListBoxFor(model => model.SelectedArtists,
@@ -42,8 +51,8 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12">Bands</label>
                                 <div class="col-md-12">
-                                    @Html.ListBoxFor(model => model.SelectedBands, 
-                                           new MultiSelectList(Model.Bands, "Id", "Name"), 
+                                    @Html.ListBoxFor(model => model.SelectedBands,
+                                           new MultiSelectList(Model.Bands, "Id", "Name"),
                                            htmlAttributes: new { @class = "chosen-select", @placeholder = "Select band" })
                                 </div>
                             </div>
@@ -52,7 +61,7 @@
                                 <label class="control-label col-md-12">Songs</label>
                                 <div class="col-md-12">
                                     <div class="editor-field">
-                                        <input class="form-control" type="file" id="Songs" multiple name="Songs" accept=".mp3" />
+                                        <input class="form-control" type="file" id="Songs" multiple name="Songs" accept=".mp3" required />
                                     </div>
                                 </div>
                             </div>
@@ -98,10 +107,19 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="control-label col-md-12">Genres</label>
+                                <div class="col-md-12">
+                                    @Html.ListBoxFor(model => model.SelectedGenres,
+                                           new MultiSelectList(Model.Genres, "Id", "Name", Model.Genres.Where(x=>x.IsSelected).Select(i=>i.Id)),
+                                           htmlAttributes: new { @class = "chosen-select", @placeholder = "Select band" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="control-label col-md-12">Artist</label>
                                 <div class="col-md-12">
                                     @Html.ListBoxFor(model => model.SelectedArtists,
-                                           new MultiSelectList(Model.Artists, "Id", "FullName", Model.Artists.Where(x => x.Selected == true).Select(x=>x.Id).ToList()),
+                                           new MultiSelectList(Model.Artists, "Id", "FullName", Model.Artists.Where(x => x.IsSelected).Select(x=>x.Id).ToList()),
                                            htmlAttributes: new { @class = "chosen-select", @placeholder = "Select artist", @id = "artists" })
                                 </div>
                             </div>
@@ -110,7 +128,7 @@
                                 <label class="control-label col-md-12">Bands</label>
                                 <div class="col-md-12">
                                     @Html.ListBoxFor(model => model.SelectedBands,
-                                           new MultiSelectList(Model.Bands, "Id", "Name", Model.Bands.Where(x=>x.Selected == true).Select(x=>x.Id).ToList()),
+                                           new MultiSelectList(Model.Bands, "Id", "Name", Model.Bands.Where(x=>x.IsSelected).Select(x=>x.Id).ToList()),
                                            htmlAttributes: new { @class = "chosen-select", @placeholder = "Select band" })
                                 </div>
                             </div>

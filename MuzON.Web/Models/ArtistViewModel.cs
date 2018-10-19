@@ -33,7 +33,7 @@ namespace MuzON.Web.Models
         [Display(Name = "Bands")]
         public List<Guid> SelectedBands { get; set; }
 
-        public bool Selected { get; set; }
+        public bool IsSelected { get; set; }
         [JsonIgnore]
         public ICollection<BandViewModel> Bands { get; set; }
 

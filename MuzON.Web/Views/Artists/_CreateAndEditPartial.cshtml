@@ -56,7 +56,9 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-12">
-                                    @Html.ListBoxFor(model => model.SelectedBands, (IEnumerable<SelectListItem>)ViewBag.Bands, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select bands", multiple = "multiple" })
+                                    @Html.ListBoxFor(model => model.SelectedBands,
+                                           new MultiSelectList(Model.Bands, "Id", "Name"),
+                                           htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select bands", multiple = "multiple" })
                                 </div>
                             </div>
                         </div>
@@ -129,7 +131,9 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-12">
-                                    @Html.ListBoxFor(model => model.SelectedBands, (IEnumerable<SelectListItem>)ViewBag.Bands, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", multiple = "multiple" })
+                                    @Html.ListBoxFor(model => model.SelectedBands, 
+                                           new MultiSelectList(Model.Bands, "Id", "Name", Model.Bands.Where(x=>x.IsSelected).Select(i=>i.Id)),
+                                           htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", multiple = "multiple" })
                                 </div>
                             </div>
 

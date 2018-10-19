@@ -14,6 +14,8 @@ namespace MuzON.Web.Controllers
         public IUserService userService;
         public IBandService bandService;
         public ISongService songService;
+        public IGenreService genreService;
+
         public Utility.Util util = new Utility.Util();
 
         // Artists and Bands controller constructor
@@ -26,6 +28,20 @@ namespace MuzON.Web.Controllers
             bandService = bandServ;
             countryService = countryServ;
             songService = songServ;
+        }
+
+        // Songs controller constructor
+        public BaseController(IBandService bandServ,
+                              ICountryService countryServ,
+                              IArtistService artistServ,
+                              ISongService songServ,
+                              IGenreService genreServ)
+        {
+            artistService = artistServ;
+            bandService = bandServ;
+            countryService = countryServ;
+            songService = songServ;
+            genreService = genreServ;
         }
 
         // Home controller constructor

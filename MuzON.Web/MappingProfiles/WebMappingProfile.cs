@@ -23,12 +23,16 @@ namespace MuzON.Web.MappingProfiles
             CreateMap<CountryDTO, CountryViewModel>(MemberList.None).ReverseMap();
 
             CreateMap<SongDTO, SongViewModel>()
-                .ForMember(trg => trg.Artists, opt => opt.MapFrom(x => x.Artists.Where(f => f.Selected)))
-                .ForMember(trg => trg.Bands, opt => opt.MapFrom(x => x.Bands.Where(f => f.Selected)))
+                .ForMember(trg => trg.Artists, opt => opt.MapFrom(x => x.Artists.Where(f => f.IsSelected)))
+                .ForMember(trg => trg.Bands, opt => opt.MapFrom(x => x.Bands.Where(f => f.IsSelected)))
+                .ForMember(trg => trg.Genres, opt => opt.MapFrom(x => x.Genres.Where(f => f.IsSelected)))
                 .ForMember(trg => trg.SelectedArtists, f => f.Ignore())
+                .ForMember(trg => trg.SelectedGenres, f => f.Ignore())
                 .ForMember(trg => trg.SelectedBands, f => f.Ignore()).ReverseMap();
 
             CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
+
+            CreateMap<GenreDTO, GenreViewModel>(MemberList.None).ReverseMap();
         }
     }
 }

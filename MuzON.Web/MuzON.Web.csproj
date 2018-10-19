@@ -222,6 +222,7 @@
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\BandViewModels.cs" />
     <Compile Include="Models\CountryViewModel.cs" />
+    <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\SongViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

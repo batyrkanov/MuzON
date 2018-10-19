@@ -15,7 +15,7 @@ namespace MuzON.BLL.DTO
         public byte[] Image { get; set; }
         public CountryDTO Country { get; set; }
         public List<Guid> SelectedArtists { get; set; }
-        public bool Selected { get; set; }
+        public bool IsSelected { get; set; }
         public ICollection<ArtistDTO> Artists { get; set; }
         public ICollection<SongDTO> Songs { get; set; }
     }

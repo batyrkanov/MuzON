@@ -19,6 +19,8 @@ namespace MuzON.BLL.MappingProfiles
 
             CreateMap<Song, SongDTO>(MemberList.None).ReverseMap();
 
+            CreateMap<Genre, GenreDTO>(MemberList.None).ReverseMap();
+
             CreateMap<Country, CountryDTO>(MemberList.None).ReverseMap();
 
             CreateMap<Comment, CommentDTO>(MemberList.None).ReverseMap();

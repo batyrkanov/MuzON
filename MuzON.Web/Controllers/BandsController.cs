@@ -60,8 +60,7 @@ namespace MuzON.Web.Controllers
             };
 
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
-
-            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
+            model.Artists = GetAllArtists();
             
             // viewbag for post
             ViewBag.Action = "create";
@@ -71,18 +70,17 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public JsonResult Create(BandViewModel bandViewModel, Guid[] SelectedArtists, HttpPostedFileBase uploadImage)
+        public JsonResult Create(BandViewModel bandViewModel)
         {
             if (ModelState.IsValid)
             {
                 var bandDTO = Mapper.Map<BandDTO>(bandViewModel);
                 bandDTO.Id = Guid.NewGuid();
 
-                bandDTO.Image = util.SetImage(uploadImage, bandDTO.Image);
+                bandDTO.Image = util.SetImage(Request.Files["uploadImage"], bandDTO.Image);
                 bandService.AddBand(bandDTO);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
             return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
@@ -98,17 +96,7 @@ namespace MuzON.Web.Controllers
             }
 
             BandViewModel bandViewModel = Mapper.Map<BandViewModel>(band);
-            
-            if (band.Artists != null)
-            {
-                bandViewModel.SelectedArtists = new List<Guid>();
-                foreach (var item in band.Artists)
-                {
-                    bandViewModel.SelectedArtists.Add(item.Id);
-                }
-            }
-
-            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists(), bandViewModel.SelectedArtists);
+            bandViewModel.Artists = GetAllArtists(band.Artists.Select(x=>x.Id));
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
 
             // viewbag for post
@@ -119,17 +107,16 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public JsonResult Edit(BandViewModel bandViewModel, HttpPostedFileBase uploadImage, string image)
+        public JsonResult Edit(BandViewModel bandViewModel)
         {
 
             if (ModelState.IsValid)
             {
                 var bandDTO = Mapper.Map<BandViewModel, BandDTO>(bandViewModel);
-                bandDTO.Image = util.SetImage(uploadImage, bandDTO.Image, image);
+                bandDTO.Image = util.SetImage(Request.Files["uploadImage"], bandDTO.Image, Request.Form["image"]);
                 bandService.UpdateBand(bandDTO);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists(), bandViewModel.SelectedArtists);
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
             return Json(new { bandViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
@@ -154,6 +141,23 @@ namespace MuzON.Web.Controllers
             var bandDTO = bandService.GetBandById(id);
             bandService.DeleteBand(bandDTO);
             return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
+        }
+
+        protected List<ArtistViewModel> GetAllArtists(IEnumerable<Guid> selectedIds = null)
+        {
+            IEnumerable<ArtistDTO> artistDTOs = artistService.GetArtists();
+
+            IEnumerable<ArtistViewModel> artistModels = Mapper.Map<IEnumerable<ArtistViewModel>>(artistDTOs);
+
+            if (selectedIds != null)
+            {
+                foreach (ArtistViewModel model in artistModels)
+                {
+                    model.IsSelected = selectedIds.Contains(model.Id);
+                }
+            }
+
+            return artistModels.OrderBy(x => x.FullName).ToList();
         }
     }
 }

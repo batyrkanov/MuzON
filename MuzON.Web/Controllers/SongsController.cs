@@ -15,8 +15,9 @@ namespace MuzON.Web.Controllers
         public SongsController(IBandService bandServ,
             ICountryService countryServ,
             IArtistService artistServ,
-            ISongService songServ)
-            : base(bandServ, countryServ, artistServ, songServ) { }
+            ISongService songServ,
+            IGenreService genreServ)
+            : base(bandServ, countryServ, artistServ, songServ, genreServ) { }
 
         // GET: Songs
         public ActionResult Index()
@@ -36,8 +37,9 @@ namespace MuzON.Web.Controllers
         {
             var songDTO = songService.GetSongById(id);
             var song = Mapper.Map<SongViewModel>(songDTO);
-            song.Artists = GetSelectedArtists(songDTO.Artists.Select(x => x.Id));
-            song.Bands = GetSelectedBands(songDTO.Bands.Select(x => x.Id));
+            song.Artists = GetAllArtists(songDTO.Artists.Select(x => x.Id)).Where(x => x.IsSelected).ToList();
+            song.Bands = GetAllBands(songDTO.Bands.Select(x => x.Id)).Where(x => x.IsSelected).ToList();
+            song.Genres = GetAllGenres(songDTO.Genres.Select(x => x.Id)).Where(x=>x.IsSelected).ToList();
             return PartialView("_DetailsPartial", song);
         }
 
@@ -46,7 +48,8 @@ namespace MuzON.Web.Controllers
             var song = new SongViewModel
             {
                 Artists = GetAllArtists(),
-                Bands = GetAllBands()
+                Bands = GetAllBands(),
+                Genres = GetAllGenres()
             };
             ViewBag.Action = "create";
             return PartialView("_CreateAndEditPartial", song);
@@ -58,8 +61,9 @@ namespace MuzON.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                songViewModel.Artists = GetSelectedArtists(songViewModel.SelectedArtists);
-                songViewModel.Bands = GetSelectedBands(songViewModel.SelectedBands);
+                songViewModel.Artists = GetAllArtists(songViewModel.SelectedArtists).Where(x=>x.IsSelected).ToList();
+                songViewModel.Bands = GetAllBands(songViewModel.SelectedBands).Where(x => x.IsSelected).ToList();
+                songViewModel.Genres = GetAllGenres(songViewModel.SelectedGenres).Where(x => x.IsSelected).ToList();
                 List<HttpPostedFileBase> songs = util.GetSongsFromRequest(Request.Files);
                 foreach (var song in songs)
                 {
@@ -73,8 +77,6 @@ namespace MuzON.Web.Controllers
 
                 return Json(new { data = "success" });
             }
-            ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
-            ViewBag.Bands = util.GetMultiSelectListItems<BandDTO, BandViewModel>(bandService.GetBands());
             return Json(new { songViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
@@ -84,6 +86,7 @@ namespace MuzON.Web.Controllers
             var song = Mapper.Map<SongViewModel>(songDTO);
             song.Artists = GetAllArtists(songDTO.Artists.Select(x => x.Id));
             song.Bands = GetAllBands(songDTO.Bands.Select(x => x.Id));
+            song.Genres = GetAllGenres(songDTO.Genres.Select(x => x.Id));
             ViewBag.Action = "edit";
             return PartialView("_CreateAndEditPartial", song);
         }
@@ -95,8 +98,9 @@ namespace MuzON.Web.Controllers
             if (ModelState.IsValid)
             {
                 List<HttpPostedFileBase> songs = util.GetSongsFromRequest(Request.Files);
-                songViewModel.Artists = GetSelectedArtists(songViewModel.SelectedArtists);
-                songViewModel.Bands = GetSelectedBands(songViewModel.SelectedBands);
+                songViewModel.Artists = GetAllArtists(songViewModel.SelectedArtists).Where(x => x.IsSelected).ToList();
+                songViewModel.Bands = GetAllBands(songViewModel.SelectedBands).Where(x => x.IsSelected).ToList();
+                songViewModel.Genres = GetAllGenres(songViewModel.SelectedGenres).Where(x => x.IsSelected).ToList();
                 var songDTO = Mapper.Map<SongDTO>(songViewModel);
                 songService.UpdateSong(songDTO);
                 foreach (var song in songs)
@@ -140,7 +144,7 @@ namespace MuzON.Web.Controllers
             {
                 foreach (ArtistViewModel model in artistModels)
                 {
-                    model.Selected = selectedIds.Contains(model.Id);
+                    model.IsSelected = selectedIds.Contains(model.Id);
                 }
             }
 
@@ -157,56 +161,28 @@ namespace MuzON.Web.Controllers
             {
                 foreach (BandViewModel model in bandModels)
                 {
-                    model.Selected = selectedIds.Contains(model.Id);
+                    model.IsSelected = selectedIds.Contains(model.Id);
                 }
             }
 
             return bandModels.OrderBy(x => x.Name).ToList();
         }
 
-        protected List<BandViewModel> GetSelectedBands(IEnumerable<Guid> selectedIds = null)
+        protected List<GenreViewModel> GetAllGenres(IEnumerable<Guid> selectedIds = null)
         {
-            IEnumerable<BandDTO> bandDTOs = bandService.GetBands();
-            List<BandViewModel> bands = new List<BandViewModel>();
-            IEnumerable<BandViewModel> bandModels = Mapper.Map<IEnumerable<BandViewModel>>(bandDTOs);
+            IEnumerable<GenreDTO> genreDTOs = genreService.GetGenres();
+
+            IEnumerable<GenreViewModel> genreModels = Mapper.Map<IEnumerable<GenreViewModel>>(genreDTOs);
 
             if (selectedIds != null)
             {
-                foreach (BandViewModel model in bandModels)
+                foreach (GenreViewModel model in genreModels)
                 {
-                    model.Selected = selectedIds.Contains(model.Id);
-                    if (model.Selected)
-                    {
-                        bands.Add(model);
-
-                    }
+                    model.IsSelected = selectedIds.Contains(model.Id);
                 }
             }
 
-            return bands;
+            return genreModels.OrderBy(x => x.Name).ToList();
         }
-
-        protected List<ArtistViewModel> GetSelectedArtists(IEnumerable<Guid> selectedIds = null)
-        {
-            IEnumerable<ArtistDTO> artistDTOs = artistService.GetArtists();
-            List<ArtistViewModel> artists = new List<ArtistViewModel>();
-            IEnumerable<ArtistViewModel> artistModels = Mapper.Map<IEnumerable<ArtistViewModel>>(artistDTOs);
-
-            if (selectedIds != null)
-            {
-                foreach (ArtistViewModel model in artistModels)
-                {
-                    model.Selected = selectedIds.Contains(model.Id);
-                    if (model.Selected)
-                    {
-                        artists.Add(model);
-
-                    }
-                }
-            }
-
-            return artists;
-        }
-
     }
 }

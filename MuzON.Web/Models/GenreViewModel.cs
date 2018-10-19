@@ -1,13 +1,11 @@
-﻿using MuzON.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace MuzON.BLL.DTO
+namespace MuzON.Web.Models
 {
-    public class GenreDTO
+    public class GenreViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
