@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="DTO\ArtistDTO.cs" />
     <Compile Include="DTO\BandDTO.cs" />
-    <Compile Include="DTO\BandIndexDTO.cs" />
     <Compile Include="DTO\CommentDTO.cs" />
     <Compile Include="DTO\CountryDTO.cs" />
     <Compile Include="DTO\GenreDTO.cs" />

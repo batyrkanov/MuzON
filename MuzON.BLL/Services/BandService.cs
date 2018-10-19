@@ -20,15 +20,15 @@ namespace MuzON.BLL.Services
             _unitOfWork = uow;
         }
 
-        public void AddBand(BandDTO bandDTO, Guid[] selectedArtists)
+        public void AddBand(BandDTO bandDTO)
         {
             var band = Mapper.Map<Band>(bandDTO);
             Country country = _unitOfWork.Countries.SearchFor(x => x.Id == band.CountryId).First();
-            if (selectedArtists != null)
+            if (bandDTO.SelectedArtists != null)
             {
                 band.Artists = new List<Artist>();
 
-                foreach (var c in _unitOfWork.Artists.SearchFor(co => selectedArtists.Contains(co.Id)))
+                foreach (var c in _unitOfWork.Artists.SearchFor(co => bandDTO.SelectedArtists.Contains(co.Id)))
                 {
                     band.Artists.Add(c);
                 }
@@ -63,46 +63,34 @@ namespace MuzON.BLL.Services
             return Mapper.Map<IEnumerable<BandDTO>>(bandsDTO);
         }
 
-        public IEnumerable<BandIndexDTO> GetBandsWithCountryName()
-        {
-            var bandDTOs = GetBands();
-            var bands = Mapper.Map<IEnumerable<BandIndexDTO>>(bandDTOs);
-            foreach (var bandDTO in bandDTOs)
-            {
-                foreach (var band in bands)
-                {
-                    if (bandDTO.Id == band.Id)
-                        band.CountryName = bandDTO.Country.Name;
-                }
-            }
-            return bands;
-        }
-
-        public void UpdateBand(BandDTO bandDTO, Guid[] selectedArtists)
+        public void UpdateBand(BandDTO bandDTO)
         {
             var band = _unitOfWork.Bands.Get(bandDTO.Id);
-            var countryId = band.CountryId;
+            var countryId = band.CountryId == bandDTO.Country.Id ? band.CountryId : bandDTO.Country.Id;
+            List<Song> songs = new List<Song>();
+            foreach (var song in band.Songs)
+            {
+                songs.Add(song);
+            }
+            bandDTO.Country = null;
             Mapper.Map(bandDTO, band);
-            
-            if (selectedArtists != null)
+            Country country = _unitOfWork.Countries
+                    .SearchFor(x => x.Id == countryId).First();
+            band.Country = country;
+            band.CountryId = country.Id;
+
+            if (bandDTO.SelectedArtists.Count > 0)
             {
                 if (band.Artists == null)
                     band.Artists = new List<Artist>();
                 band.Artists.Clear();
                 foreach (var c in _unitOfWork.Artists
-                            .SearchFor(co => selectedArtists.Contains(co.Id)))
+                            .SearchFor(co => bandDTO.SelectedArtists.Contains(co.Id)))
                 {
                     band.Artists.Add(c);
                 }
             }
-
-            if(band.Id != countryId)
-            {
-                Country country = _unitOfWork.Countries
-                    .SearchFor(x => x.Id == band.CountryId).First();
-                band.Country = country;
-            }
-            
+            band.Songs = songs;
             _unitOfWork.Bands.Update(band);
             _unitOfWork.Save();
         }

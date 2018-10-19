@@ -59,14 +59,6 @@
                                     @Html.ListBoxFor(model => model.SelectedBands, (IEnumerable<SelectListItem>)ViewBag.Bands, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select bands", multiple = "multiple" })
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-12">Songs</label>
-                                <div class="col-md-12">
-                                    <div class="editor-field">
-                                        <input class="form-control" type="file" id="songs" multiple name="songs" accept=".mp3" />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <div class="form-group">

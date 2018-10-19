@@ -112,15 +112,14 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public JsonResult Edit(ArtistViewModel artistViewModel, HttpPostedFileBase uploadImage, string image, Guid[] selectedBands)
+        public JsonResult Edit(ArtistViewModel artistViewModel)
         {
 
             if (ModelState.IsValid)
             {
                 var artistDTO = Mapper.Map<ArtistViewModel, ArtistDTO>(artistViewModel);
-                artistDTO.Image = util.SetImage(uploadImage, artistDTO.Image, image);
-                artistDTO.Country = countryService.GetCountryById(artistViewModel.CountryId);
-                artistService.UpdateArtist(artistDTO, selectedBands);
+                artistDTO.Image = util.SetImage(Request.Files["uploadImage"], artistDTO.Image, Request.Form["image"]);
+                artistService.UpdateArtist(artistDTO);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
            

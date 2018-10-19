@@ -7,7 +7,13 @@
         },
         "columns": [
             { "data": "Name" },
-            { "data": "CountryName" },
+            {
+                'render': function (row, type, data) {
+                    return data.Country.Name;
+                },
+                'className': 'dt-right',
+                'targets': [4]
+            },
             {
                 "data": "CreatedDate", "className": "datetime",
                 "render": function (CreatedDate) {

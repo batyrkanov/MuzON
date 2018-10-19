@@ -27,9 +27,12 @@ namespace MuzON.Web.Controllers
         
         public JsonResult GetList()
         {
-            var bands = Mapper.Map<IEnumerable<BandIndexViewModel>>(
-                                                bandService.GetBandsWithCountryName());
-
+            var bands = Mapper.Map<IEnumerable<BandViewModel>>(
+                                                bandService.GetBands());
+            foreach (var band in bands)
+            {
+                band.Artists = null;
+            }
             return Json(new { data = bands }, JsonRequestBehavior.AllowGet);
         }
 
@@ -37,17 +40,16 @@ namespace MuzON.Web.Controllers
         public ActionResult Details(Guid id)
         {
             var bandDTO = bandService.GetBandById(id);
-            var band = Mapper.Map<BandDetailsViewModel>(bandDTO);
+            var band = Mapper.Map<BandViewModel>(bandDTO);
             return PartialView("_DetailsPartial", band);
         }
 
-        //public ActionResult MoreAboutBand(Guid id)
-        //{
-        //    var bandDTO = bandService.GetBandById(id);
-        //    var band = Mapper.Map<BandDetailsViewModel>(bandDTO);
-        //    ViewBag.Songs = Mapper.Map<IEnumerable<SongViewModel>>(songService.GetBandRepertoire(band.Id));
-        //    return PartialView("_Partial", band); 
-        //}
+        public ActionResult MoreAboutBand(Guid id)
+        {
+            var bandDTO = bandService.GetBandById(id);
+            var band = Mapper.Map<BandViewModel>(bandDTO);
+            return PartialView("_Partial", band);
+        }
 
         [Authorize(Roles = "admin")]
         public ActionResult Create()
@@ -77,9 +79,7 @@ namespace MuzON.Web.Controllers
                 bandDTO.Id = Guid.NewGuid();
 
                 bandDTO.Image = util.SetImage(uploadImage, bandDTO.Image);
-
-                bandDTO.Country = countryService.GetCountryById(bandViewModel.CountryId);
-                bandService.AddBand(bandDTO, SelectedArtists);
+                bandService.AddBand(bandDTO);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists());
@@ -119,16 +119,14 @@ namespace MuzON.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public JsonResult Edit(BandViewModel bandViewModel, Guid[] SelectedArtists, HttpPostedFileBase uploadImage, string image)
+        public JsonResult Edit(BandViewModel bandViewModel, HttpPostedFileBase uploadImage, string image)
         {
 
             if (ModelState.IsValid)
             {
                 var bandDTO = Mapper.Map<BandViewModel, BandDTO>(bandViewModel);
-                bandDTO.Artists = TempData["Artists"] as List<ArtistDTO>;
                 bandDTO.Image = util.SetImage(uploadImage, bandDTO.Image, image);
-                bandDTO.Country = countryService.GetCountryById(bandViewModel.CountryId);
-                bandService.UpdateBand(bandDTO, SelectedArtists);
+                bandService.UpdateBand(bandDTO);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.Artists = util.GetMultiSelectListArtists(artistService.GetArtists(), bandViewModel.SelectedArtists);

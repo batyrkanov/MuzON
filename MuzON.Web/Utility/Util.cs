@@ -13,6 +13,7 @@ namespace MuzON.Web.Utility
     {
         public byte[] SetImage(HttpPostedFileBase uploadImage, byte[] image, string existingImage = null)
         {
+            //HttpPostedFileBase uploadImage =
             if (uploadImage != null)
             {
                 using (var binaryReader = new BinaryReader(uploadImage.InputStream))

@@ -16,7 +16,6 @@ namespace MuzON.BLL.MappingProfiles
             CreateMap<Artist, ArtistDTO>(MemberList.None).ReverseMap();
 
             CreateMap<Band, BandDTO>(MemberList.None).ReverseMap();
-            CreateMap<Band, BandIndexDTO>(MemberList.None).ReverseMap();
 
             CreateMap<Song, SongDTO>(MemberList.None).ReverseMap();
 

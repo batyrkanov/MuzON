@@ -10,11 +10,10 @@ namespace MuzON.BLL.Interfaces
     public interface IBandService
     {
         IEnumerable<BandDTO> GetBands();
-        IEnumerable<BandIndexDTO> GetBandsWithCountryName();
         BandDTO GetBandById(Guid id);
-        void AddBand(BandDTO bandDTO, Guid[] selectedArtists);
+        void AddBand(BandDTO bandDTO);
         void DeleteBand(BandDTO bandDTO);
-        void UpdateBand(BandDTO bandDTO, Guid[] selectedArtists);
+        void UpdateBand(BandDTO bandDTO);
         void Dispose();
     }
 }
