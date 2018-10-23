@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 using MuzON.BLL.DTO;
 using MuzON.BLL.Infrastructure;
 using MuzON.BLL.Interfaces;
+using MuzON.DAL.EF;
+using MuzON.DAL.Identity;
 using MuzON.Domain.Identity;
 using MuzON.Domain.Interfaces;
 using System;
@@ -70,10 +74,27 @@ namespace MuzON.BLL.Services
             _unitOfWork.Dispose();
         }
 
+        public async Task<string> GeneratePasswordResetTokenAsync(Guid id)
+        {
+            return await _unitOfWork.ApplicationUserManager.GeneratePasswordResetTokenAsync(id);
+        }
+
         public User GetUserById(Guid id)
         {
             User user = _unitOfWork.ApplicationUserManager.FindById(id);
             return user;
+        }
+
+        public async Task<User> GetUserByNameAsync(string userName)
+        {
+            User user = await _unitOfWork.ApplicationUserManager.FindByNameAsync(userName);
+            return user;
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(Guid id, string code, string password)
+        {
+            var result = await _unitOfWork.ApplicationUserManager.ResetPasswordAsync(id, code, password);
+            return result;
         }
     }
 }

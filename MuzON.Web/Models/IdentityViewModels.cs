@@ -34,4 +34,31 @@ namespace MuzON.Web.Models
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class ForgotPasswordViewModel
+    {
+        [Required(ErrorMessage = "Email cannot be null!")]
+        [EmailAddress(ErrorMessage = "Please, enter correct email address!")]
+        public string Email { get; set; }
+    }
+
+    public class ResetPasswordViewModel
+    {
+        [Required(ErrorMessage = "Email cannot be null")]
+        [EmailAddress]
+        [Display(Name = "Email address")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Password cannot be null")]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "Password and confirmation doesn't match")]
+        public string ConfirmPassword { get; set; }
+
+        public string Code { get; set; }
+    }
 }

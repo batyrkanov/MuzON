@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
-using MuzON.Domain.Entities;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.DataProtection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace MuzON.Domain.Identity
@@ -12,6 +12,12 @@ namespace MuzON.Domain.Identity
     {
         public ApplicationUserManager(IUserStore<User, Guid> store)
             : base(store)
-        { }
+        {
+            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("ASP.NET IDENTITY");
+            this.UserTokenProvider = new DataProtectorTokenProvider<User, Guid>(provider.Create("Confirmation"))
+            {
+                TokenLifespan = TimeSpan.FromHours(24),
+            };
+        }
     }
 }

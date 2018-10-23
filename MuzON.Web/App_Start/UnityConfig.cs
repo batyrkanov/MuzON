@@ -1,6 +1,10 @@
+using Microsoft.AspNet.Identity;
 using MuzON.BLL.Interfaces;
 using MuzON.BLL.Services;
+using MuzON.DAL.EF;
+using MuzON.DAL.Identity;
 using MuzON.DAL.Repositories;
+using MuzON.Domain.Identity;
 using MuzON.Domain.Interfaces;
 using System;
 
@@ -52,6 +56,7 @@ namespace MuzON.Web
             container.RegisterType<ISongService, SongService>(new PerRequestLifetimeManager());
             container.RegisterType<IGenreService, GenreService>(new PerRequestLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager(), new InjectionConstructor("DefaultConnection"));
+            container.RegisterType<IUserStore<User, Guid>, UserStore>(new PerRequestLifetimeManager());
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
         }

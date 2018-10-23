@@ -19,6 +19,8 @@ $(document).ready(function () {
             });
     }
 });
+
+// notification on register
 function Register(data) {
     if (data.errorMessage.length >= 1) {
         data.errorMessage.forEach(function (item) {
@@ -39,6 +41,46 @@ function Register(data) {
     }
     return;
 }
+
+function ForgotPassword(data) {
+    if (data.data == "success") {
+        $.notify({
+            // options
+            icon: 'fa fa-check',
+            title: '<strong>Success</strong>: ',
+            message: "Please check your email, we send message. Click link in message to reset your password"
+        }, {
+                type: 'success',
+                z_index: 1051,
+                animate: {
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
+                }
+            });
+        $('.mfp-bg.mfp-ready').remove();
+        $(".mfp-wrap").remove();
+        return;
+    }
+    if (data.errorMessage.length >= 1) {
+        data.errorMessage.forEach(function (item) {
+            $.notify({
+                // options
+                icon: 'fa fa-warning',
+                title: '<strong>Warning</strong>: ',
+                message: item
+            }, {
+                    type: 'warning',
+                    z_index: 1051,
+                    animate: {
+                        enter: 'animated bounceIn',
+                        exit: 'animated bounceOut'
+                    }
+                });
+        });
+    }
+    return;
+}
+
 (function ($) {
     "use strict";
    

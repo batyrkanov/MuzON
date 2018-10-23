@@ -1,6 +1,58 @@
-$(document).ready(function() {
+function ResetPassword(data) {
+    console.log(data);
+    if (data.data == "userNotFound") {
+        $.notify({
+            // options
+            icon: 'fa fa-warning',
+            title: '<strong>Warning</strong>: ',
+            message: "User not found, please check and enter correct Email"
+        }, {
+                type: 'warning',
+                z_index: 1051,
+                animate: {
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
+                }
+            });
+        return;
+    }
+    if (data.data == "success") {
+        $.notify({
+            // options
+            icon: 'fa fa-success',
+            title: '<strong>Success</strong>: ',
+            message: "Password successfully changed, you will be redirected to login page!"
+        }, {
+                type: 'success',
+                z_index: 1051,
+                animate: {
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
+                }
+            });
+        return setTimeout(function () { window.location.href = "/Account/Login"; }, 5000);
+    }
+    if (data.errorMessage.length >= 1) {
+        data.errorMessage.forEach(function (item) {
+            $.notify({
+                // options
+                icon: 'fa fa-warning',
+                title: '<strong>Warning</strong>: ',
+                message: item
+            }, {
+                    type: 'warning',
+                    z_index: 1051,
+                    animate: {
+                        enter: 'animated bounceIn',
+                        exit: 'animated bounceOut'
+                    }
+                });
+        });
+    }
+    return;
+}
+$(document).ready(function () {
     "use strict";
-
     
     //------- Niceselect  js --------//  
 

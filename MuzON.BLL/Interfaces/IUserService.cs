@@ -1,4 +1,5 @@
-﻿using MuzON.BLL.DTO;
+﻿using Microsoft.AspNet.Identity;
+using MuzON.BLL.DTO;
 using MuzON.BLL.Infrastructure;
 using MuzON.Domain.Identity;
 using System;
@@ -14,6 +15,9 @@ namespace MuzON.BLL.Interfaces
     {
         Task<OperationDetails> Create(UserDTO userDTO);
         User GetUserById(Guid id);
+        Task<User> GetUserByNameAsync(string userName);
         Task<ClaimsIdentity> Authenticate(UserDTO userDTO);
+        Task<string> GeneratePasswordResetTokenAsync(Guid id);
+        Task<IdentityResult> ResetPasswordAsync(Guid id, string code, string password);
     }
 }

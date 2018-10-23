@@ -1,12 +1,10 @@
-﻿using MuzON.DAL.EF;
+﻿using Microsoft.AspNet.Identity.Owin;
+using MuzON.DAL.EF;
 using MuzON.DAL.Identity;
 using MuzON.Domain.Entities;
 using MuzON.Domain.Identity;
 using MuzON.Domain.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MuzON.DAL.Repositories
@@ -135,6 +133,7 @@ namespace MuzON.DAL.Repositories
 
         // Dispose
         private bool disposed = false;
+        private IdentityFactoryOptions<ApplicationUserManager> options;
 
         public virtual void Dispose(bool disposing)
         {

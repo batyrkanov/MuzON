@@ -1,8 +1,6 @@
 ﻿using MuzON.DAL.EF;
-using MuzON.Domain.Entities;
 using MuzON.Domain.Identity;
 using System;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MuzON.DAL.Identity
