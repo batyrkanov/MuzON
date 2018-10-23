@@ -45,6 +45,18 @@ namespace MuzON.Web.Controllers
             return View();
         }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public JsonResult GetUsers()
+        {
+            var userDTOs = userService.GetUsers();
+
+            return Json(new { data = Mapper.Map<IEnumerable<RegisterViewModel>>(userDTOs) }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model)
@@ -184,6 +196,22 @@ namespace MuzON.Web.Controllers
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
+        }
+        
+        public ActionResult Delete(Guid id)
+        {
+            var user = userService.GetUserById(id);
+            if (user == null)
+                return HttpNotFound();
+            return PartialView("_DeletePartial", Mapper.Map<RegisterViewModel>(user));
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public JsonResult DeleteConfirmed(Guid id)
+        {
+            userService.DeleteUser(id);
+            return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
         }
 
         private async Task<bool> SendEmail(string userEmail, string messageSubject, string messageBody)

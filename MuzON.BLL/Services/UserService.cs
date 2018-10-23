@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using MuzON.BLL.DTO;
@@ -79,10 +80,10 @@ namespace MuzON.BLL.Services
             return await _unitOfWork.ApplicationUserManager.GeneratePasswordResetTokenAsync(id);
         }
 
-        public User GetUserById(Guid id)
+        public UserDTO GetUserById(Guid id)
         {
             User user = _unitOfWork.ApplicationUserManager.FindById(id);
-            return user;
+            return Mapper.Map<UserDTO>(user);
         }
 
         public async Task<User> GetUserByNameAsync(string userName)
@@ -91,10 +92,22 @@ namespace MuzON.BLL.Services
             return user;
         }
 
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            return Mapper.Map<IEnumerable<UserDTO>>(_unitOfWork.ApplicationUserManager.Users.ToList());
+        }
+
         public async Task<IdentityResult> ResetPasswordAsync(Guid id, string code, string password)
         {
             var result = await _unitOfWork.ApplicationUserManager.ResetPasswordAsync(id, code, password);
             return result;
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            var user = _unitOfWork.ApplicationUserManager.FindById(id);
+            _unitOfWork.ApplicationUserManager.Delete(user);
+            _unitOfWork.Save();
         }
     }
 }

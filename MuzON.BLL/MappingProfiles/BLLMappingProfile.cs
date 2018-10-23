@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MuzON.BLL.DTO;
 using MuzON.Domain.Entities;
+using MuzON.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace MuzON.BLL.MappingProfiles
             CreateMap<Rating, RatingDTO>(MemberList.None).ReverseMap();
 
             CreateMap<Playlist, PlaylistDTO>(MemberList.None).ReverseMap();
+
+            CreateMap<User, UserDTO>(MemberList.None).ReverseMap();
         }
     }
 }

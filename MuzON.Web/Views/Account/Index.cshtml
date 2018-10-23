@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MuzON.Web.Models.RegisterViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="portfolio-area section-gap" id="portfolio">
+    <br />
+    <br />
+    <div class="container" id="addButton">
+        <h2>Users</h2>
+    </div>
+    <br />
+    <div class="container">
+
+        <table id="tableUsersGrid" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="container" id="addButton">
+            <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-url="@Url.Action("Create","Account")" id="btnCreateUser">
+                <span class="fa fa-plus-circle" aria-hidden="true"></span> Add User
+            </button>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="CreateUserModal" aria-hidden="true" data-backdrop="static">
+    <div id="createUserContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="CreateUserModal" aria-hidden="true" data-backdrop="static">
+    <div id="editUserContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="DeleteUserModal" aria-hidden="true" data-backdrop="static">
+    <div id="deleteUserContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="detailsUserModal" tabindex="-1" role="dialog" aria-labelledby="DetailsUserModal" aria-hidden="true" data-backdrop="static">
+    <div id="detailsUserContainer">
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/usersGrid.js"></script>
+}

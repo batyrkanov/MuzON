@@ -738,6 +738,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\usersGrid.js" />
     <Content Include="Scripts\waypoints.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -783,6 +784,8 @@
     <Content Include="Views\Account\_RegisterPartial.cshtml" />
     <Content Include="Views\Account\_ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\_DeletePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
