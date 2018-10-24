@@ -282,7 +282,7 @@ namespace MuzON.Web.Controllers
                 var credential = new NetworkCredential
                 {
                     UserName = "muzonfreemusik@gmail.com",  // replace with valid value
-                    Password = "muzon123123"  // replace with valid value
+                    Password = "password"  // replace with valid value
                 };
                 smtp.Credentials = credential;
                 smtp.Host = "smtp.gmail.com";
