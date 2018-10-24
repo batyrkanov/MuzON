@@ -5,7 +5,7 @@ using Microsoft.Owin.Security;
 using MuzON.BLL.DTO;
 using MuzON.BLL.Infrastructure;
 using MuzON.BLL.Interfaces;
-using MuzON.Domain.Identity;
+using MuzON.Web.App_Start;
 using MuzON.Domain.Interfaces;
 using MuzON.Web.Models;
 using System;
@@ -17,21 +17,34 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Unity;
+using Unity.AspNet.Mvc;
+using Unity.Attributes;
+using Unity.Injection;
+using MuzON.Domain.Identity;
 
 namespace MuzON.Web.Controllers
 {
     public class AccountController : BaseController
     {
-        private IUserService UserService
+        public AccountController(IUserService UserService) : base(UserService) { }
+
+        private App_Start.ApplicationUserManager UserManager
         {
             get
             {
-                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
+                return HttpContext.GetOwinContext().GetUserManager<App_Start.ApplicationUserManager>();
             }
         }
 
-        public AccountController(IUserService UserService) : base(UserService) { }
-        
+        private App_Start.ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<App_Start.ApplicationRoleManager>();
+            }
+        }
+
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -53,7 +66,7 @@ namespace MuzON.Web.Controllers
         public JsonResult GetUsers()
         {
             var userDTOs = userService.GetUsers();
-
+            
             return Json(new { data = Mapper.Map<IEnumerable<RegisterViewModel>>(userDTOs) }, JsonRequestBehavior.AllowGet);
         }
 
@@ -68,7 +81,7 @@ namespace MuzON.Web.Controllers
                     Email = model.Email,
                     Password = model.Password
                 };
-                ClaimsIdentity claim = await userService.Authenticate(userDto);
+                ClaimsIdentity claim = await Authenticate(userDto);
                 if (claim == null)
                 {
                     ModelState.AddModelError("", "Incorrect login or password");
@@ -107,14 +120,17 @@ namespace MuzON.Web.Controllers
                 var userDto = Mapper.Map<RegisterViewModel, UserDTO>(model);
                 userDto.Role = "user";
 
-                OperationDetails operationDetails = await userService.Create(userDto);
-                if (operationDetails.Succedeed)
+                var result = await CreateAsync(userDto);
+                if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return Json(new { data = "success" });
                 }
                 else
                 {
-                    errorList.Add(operationDetails.Message);
+                    foreach (var error in result.Errors)
+                    {
+                        errorList.Add(error);
+                    }
                     return Json(new { model, errorMessage = errorList, JsonRequestBehavior.AllowGet });
                 }
                     
@@ -135,13 +151,13 @@ namespace MuzON.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userService.GetUserByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
                     return View("ForgotPasswordConfirmation");
                 }
 
-                var code = await userService.GeneratePasswordResetTokenAsync(user.Id);
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account",
                                 new { UserId = user.Id, code }, protocol: Request.Url.Scheme);
                 var result = await SendEmail(user.Email, "Reset Password",
@@ -176,12 +192,12 @@ namespace MuzON.Web.Controllers
             {
                 return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values), JsonRequestBehavior.AllowGet });
             }
-            var user = await userService.GetUserByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 return Json(new { data = "userNotFound" });
             }
-            var result = await userService.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return Json(new { data = "success"});
@@ -197,7 +213,44 @@ namespace MuzON.Web.Controllers
         {
             return View();
         }
-        
+
+        // GET: /Account/ChangePassword
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
+            }
+            var result = await UserManager.ChangePasswordAsync(Guid.Parse(User.Identity.GetUserId()), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(Guid.Parse(User.Identity.GetUserId()));
+                if (user != null)
+                {
+                    AuthenticationManager.SignOut();
+                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    });
+                }
+                return Json(new { data = "success" });
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Delete(Guid id)
         {
             var user = userService.GetUserById(id);
@@ -229,7 +282,7 @@ namespace MuzON.Web.Controllers
                 var credential = new NetworkCredential
                 {
                     UserName = "muzonfreemusik@gmail.com",  // replace with valid value
-                    Password = "muzon123muzon"  // replace with valid value
+                    Password = "muzon123123"  // replace with valid value
                 };
                 smtp.Credentials = credential;
                 smtp.Host = "smtp.gmail.com";
@@ -239,6 +292,48 @@ namespace MuzON.Web.Controllers
                 sendState = true;
             }
             return sendState;
+        }
+
+        private async Task<IdentityResult> CreateAsync(UserDTO userDTO)
+        {
+            User user = await UserManager.FindByEmailAsync(userDTO.Email);
+            if (user == null)
+            {
+                // if role "user" wasn't find in the table Roles, then create this
+                Role role = await RoleManager.FindByNameAsync(userDTO.Role);
+                if (role == null)
+                {
+                    role = new Role { Id = Guid.NewGuid(), Name = userDTO.Role };
+                    var roleAddResult =
+                        await RoleManager.CreateAsync(role);
+                    if (roleAddResult.Errors.Count() > 0)
+                        return IdentityResult.Failed("System can't create role, please tell about this to admin");
+                }
+                user = new User { Email = userDTO.Email, UserName = userDTO.Email };
+                var result =
+                    await UserManager.CreateAsync(user, userDTO.Password);
+                if (result.Errors.Count() > 0)
+                    return IdentityResult.Failed("Something wrong, please check all fields");
+                //fill userRoles table
+                await UserManager.AddToRoleAsync(user.Id, userDTO.Role);
+                await userService.Save();
+                return IdentityResult.Success;
+            }
+            else
+            {
+                return IdentityResult.Failed("User with same Email exist");
+            }
+        }
+
+        public async Task<ClaimsIdentity> Authenticate(UserDTO userDTO)
+        {
+            ClaimsIdentity claim = null;
+            // find user 
+            User user = await UserManager.FindAsync(userDTO.Email, userDTO.Password);
+            // authorize him and return claims identity obj
+            if (user != null)
+                claim = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            return claim;
         }
     }
 }

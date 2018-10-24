@@ -1,18 +1,9 @@
-﻿
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.DataProtection;
 using MuzON.DAL.EF;
-using MuzON.DAL.Identity;
-using MuzON.Domain.Identity;
+using MuzON.Web.App_Start;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 [assembly: OwinStartup(typeof(MuzON.Web.Startup))]
 namespace MuzON.Web
@@ -27,8 +18,10 @@ namespace MuzON.Web
                 LoginPath = new PathString("/Account/Login"),
                 
             });
+            app.CreatePerOwinContext(MuzONContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
             //createRolesandUsers();
-
         }
 
         //private void createRolesandUsers()

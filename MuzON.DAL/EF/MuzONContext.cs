@@ -35,6 +35,10 @@ namespace MuzON.DAL.EF
             // Song Configuration
             modelBuilder.Configurations.Add(new SongConfig());
         }
+        public static MuzONContext Create()
+        {
+            return new MuzONContext("DefaultConnection");
+        }
     }
 
     public class ContextFactory : IDbContextFactory<MuzONContext>

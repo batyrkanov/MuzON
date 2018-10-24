@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using MuzON.BLL.Interfaces;
+using MuzON.Web.App_Start;
 using System;
 using System.IO;
 using System.Web;
@@ -59,6 +61,8 @@ namespace MuzON.Web.Controllers
         {
             userService = userServ;
         }
+
+
 
         public void SaveSong(HttpPostedFileBase song, Guid Id)
         {

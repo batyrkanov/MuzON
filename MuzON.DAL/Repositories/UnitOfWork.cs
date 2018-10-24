@@ -19,16 +19,14 @@ namespace MuzON.DAL.Repositories
         private BaseRepository<Playlist> playlistRepository;
         private BaseRepository<Rating> ratingRepository;
         private BaseRepository<Song> songRepository;
-        private ApplicationUserManager applicationUserManager;
-        private ApplicationRoleManager applicationRoleManager;
+        private BaseRepository<User> userRepository;
+        private BaseRepository<Role> roleRepository;
         private MuzONContext context;
 
         public UnitOfWork(string connectionString)
         {
             context = new MuzONContext(connectionString);
             context.Database.Log = Log;
-            applicationUserManager = new ApplicationUserManager(new UserStore(context));
-            applicationRoleManager = new ApplicationRoleManager(new RoleStore(context));
         }
 
         public void Log(string Message)
@@ -116,9 +114,25 @@ namespace MuzON.DAL.Repositories
             }
         }
 
-        public ApplicationUserManager ApplicationUserManager { get { return applicationUserManager; } }
+        public IRepository<User> Users
+        {
+            get
+            {
+                if (userRepository == null)
+                    userRepository = new BaseRepository<User>(context);
+                return userRepository;
+            }
+        }
 
-        public ApplicationRoleManager ApplicationRoleManager { get { return applicationRoleManager; } }
+        public IRepository<Role> Roles
+        {
+            get
+            {
+                if (roleRepository == null)
+                    roleRepository = new BaseRepository<Role>(context);
+                return roleRepository;
+            }
+        }
 
         // Save
         public void Save()
@@ -133,7 +147,6 @@ namespace MuzON.DAL.Repositories
 
         // Dispose
         private bool disposed = false;
-        private IdentityFactoryOptions<ApplicationUserManager> options;
 
         public virtual void Dispose(bool disposing)
         {

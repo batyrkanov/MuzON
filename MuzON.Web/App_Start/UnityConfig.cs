@@ -49,6 +49,7 @@ namespace MuzON.Web
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
+            container.RegisterType<MuzONContext>(new PerRequestLifetimeManager());
             container.RegisterType<IArtistService, ArtistService>(new PerRequestLifetimeManager());
             container.RegisterType<IBandService, BandService>(new PerRequestLifetimeManager());
             container.RegisterType<ICountryService, CountryService>(new PerRequestLifetimeManager());

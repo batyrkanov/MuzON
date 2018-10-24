@@ -15,9 +15,8 @@ namespace MuzON.Domain.Interfaces
         IRepository<Genre> Genres { get; }
         IRepository<Playlist> Playlists { get; }
         IRepository<Song> Songs { get; }
-
-        ApplicationUserManager ApplicationUserManager { get; }
-        ApplicationRoleManager ApplicationRoleManager { get; }
+        IRepository<User> Users { get; }
+        IRepository<Role> Roles { get; }
         Task SaveAsync();
         void Save();
     }

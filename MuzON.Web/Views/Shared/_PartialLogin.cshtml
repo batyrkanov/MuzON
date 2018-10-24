@@ -13,7 +13,7 @@
             <li><a href="@Url.Action("Index", "Account")">Users</a></li>
         }
         <li>
-            <a href="#">Hello @User.Identity.GetUserName()!</a>
+            <a href="@Url.Action("ChangePassword", "Account")">Hello @User.Identity.GetUserName()!</a>
         </li>
         <li>
             <a href="javascript:document.getElementById('logoutForm').submit()">

@@ -4499,7 +4499,7 @@ footer {
     width: 78px;
 }
 
-#tableArtistsGrid, #tableBandsGrid, #tableSongsGrid {
+#tableArtistsGrid, #tableBandsGrid, #tableSongsGrid, #tableUsersGrid {
     width: 100%;
     text-align: center;
 }

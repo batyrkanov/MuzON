@@ -14,12 +14,8 @@ namespace MuzON.BLL.Interfaces
     public interface IUserService
     {
         IEnumerable<UserDTO> GetUsers();
-        Task<OperationDetails> Create(UserDTO userDTO);
         UserDTO GetUserById(Guid id);
-        Task<User> GetUserByNameAsync(string userName);
-        Task<ClaimsIdentity> Authenticate(UserDTO userDTO);
-        Task<string> GeneratePasswordResetTokenAsync(Guid id);
-        Task<IdentityResult> ResetPasswordAsync(Guid id, string code, string password);
         void DeleteUser(Guid id);
+        Task Save();
     }
 }

@@ -22,6 +22,24 @@ $(document).ready(function () {
 
 // notification on register
 function Register(data) {
+    if (data.data == "success") {
+        $.notify({
+            // options
+            icon: 'fa fa-success',
+            title: '<strong>Success</strong>: ',
+            message: "Register is successfully, let's Sign In!"
+        }, {
+                type: 'success',
+                z_index: 1051,
+                animate: {
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
+                }
+            });
+        $('.mfp-bg.mfp-ready').remove();
+        $(".mfp-wrap").remove();
+        return;
+    }
     if (data.errorMessage.length >= 1) {
         data.errorMessage.forEach(function (item) {
             $.notify({

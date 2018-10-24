@@ -51,41 +51,51 @@ function ResetPassword(data) {
     }
     return;
 }
+
+function ChangePassword(data) {
+    if (data.data == "success") {
+        $.notify({
+            // options
+            icon: 'fa fa-success',
+            title: '<strong>Success</strong>: ',
+            message: "Password successfully changed, you will be redirected to login page!"
+        }, {
+                type: 'success',
+                z_index: 1051,
+                animate: {
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
+                }
+            });
+        return setTimeout(function () { window.location.href = "/Account/Login"; }, 3000);
+    }
+    if (data.errorMessage.length >= 1) {
+        data.errorMessage.forEach(function (item) {
+            $.notify({
+                // options
+                icon: 'fa fa-warning',
+                title: '<strong>Warning</strong>: ',
+                message: item
+            }, {
+                    type: 'warning',
+                    z_index: 1051,
+                    animate: {
+                        enter: 'animated bounceIn',
+                        exit: 'animated bounceOut'
+                    }
+                });
+        });
+    }
+    return;
+}
+
 $(document).ready(function () {
     "use strict";
     
-    //------- Niceselect  js --------//  
-
-    //if (document.getElementById("default-select")) {
-    //    $('select').niceSelect();
-    //};
-    //if (document.getElementById("default-select2")) {
-    //    $('select').niceSelect();
-    //};
-    //if (document.getElementById("service-select")) {
-    //    $('select').niceSelect();
-    //};    
-
     //------- Lightbox  js --------//  
 
     $('.img-pop-up').magnificPopup({
-        //type: 'image',
-        //gallery: {
-        //    enabled: true
-        //}
         type: 'ajax'
-
-        //fixedContentPos: false,
-        //fixedBgPos: true,
-
-        //overflowY: 'auto',
-
-        //closeBtnInside: true,
-        //preloader: false,
-
-        //midClick: true,
-        //removalDelay: 300,
-        //mainClass: 'my-mfp-slide-bottom'
     });
 
     $('.see-img').magnificPopup({
