@@ -95,11 +95,15 @@ namespace MuzON.Web.Utility
 
         public List<HttpPostedFileBase> GetSongsFromRequest(HttpFileCollectionBase files)
         {
+            int i = 0;
             List<HttpPostedFileBase> songs = new List<HttpPostedFileBase>();
             foreach (string fileName in files)
             {
                 if (fileName == "Songs")
-                    songs.Add(files[fileName]);
+                {
+                    songs.Add(files[i]);
+                    i++;
+                }
             }
             return songs;
         }

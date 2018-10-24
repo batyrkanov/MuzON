@@ -73,8 +73,6 @@ namespace MuzON.Web.Controllers
                     songService.AddSong(songDTO);
                     SaveSong(song, songDTO.Id);
                 }
-
-
                 return Json(new { data = "success" });
             }
             return Json(new { songViewModel, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
@@ -129,6 +127,7 @@ namespace MuzON.Web.Controllers
         {
             var songDTO = songService.GetSongById(id);
             songService.DeleteSong(songDTO);
+            DeleteSong(songDTO.Id);
             return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
         }
 

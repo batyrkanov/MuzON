@@ -7,6 +7,7 @@
         },
         "columns": [
             { "data": "Name" },
+            { "data": "FileName" },
             {
                 'render': function (row, type, data) {
                     return `<audio controls preload="metadata">  

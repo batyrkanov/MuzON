@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using MuzON.BLL.DTO;
 using MuzON.BLL.Interfaces;
-using MuzON.Domain.Identity;
-using MuzON.Domain.Interfaces;
 using System;
 using System.IO;
 using System.Web;
@@ -74,15 +70,24 @@ namespace MuzON.Web.Controllers
             song.SaveAs(path);
         }
 
-        //public void DeleteSong(HttpPostedFileBase song, Guid Id)
-        //{
-        //    if (!Directory.Exists(Server.MapPath($"~/songs/{Id}")))
-        //    {
-        //        Directory.CreateDirectory(Server.MapPath($"~/songs/{Id}"));
-        //    }
-        //    var path = Path.Combine(Server.MapPath($"~/songs/{Id}"), song.FileName);
-        //    song.SaveAs(path);
-        //}
+        public void DeleteSong(Guid Id)
+        {
+            System.IO.DirectoryInfo path = new System.IO.DirectoryInfo(Server.MapPath($"~/songs/{Id}"));
+            if (path.GetFiles().Length != 0)
+            {
+                System.IO.DirectoryInfo di = new DirectoryInfo(path.ToString());
+
+                //delete file
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+
+                //delete directory
+                di.Delete(true);
+
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {
