@@ -29,19 +29,19 @@ namespace MuzON.Web.Controllers
     {
         public AccountController(IUserService UserService) : base(UserService) { }
 
-        private App_Start.ApplicationUserManager UserManager
+        private ApplicationUserManager UserManager
         {
             get
             {
-                return HttpContext.GetOwinContext().GetUserManager<App_Start.ApplicationUserManager>();
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
 
-        private App_Start.ApplicationRoleManager RoleManager
+        private ApplicationRoleManager RoleManager
         {
             get
             {
-                return HttpContext.GetOwinContext().GetUserManager<App_Start.ApplicationRoleManager>();
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationRoleManager>();
             }
         }
 

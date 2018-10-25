@@ -77,19 +77,22 @@ namespace MuzON.Web.Controllers
         public void DeleteSong(Guid Id)
         {
             System.IO.DirectoryInfo path = new System.IO.DirectoryInfo(Server.MapPath($"~/songs/{Id}"));
-            if (path.GetFiles().Length != 0)
+            if (path.Exists)
             {
-                System.IO.DirectoryInfo di = new DirectoryInfo(path.ToString());
-
-                //delete file
-                foreach (FileInfo file in di.GetFiles())
+                if (path.GetFiles().Length != 0)
                 {
-                    file.Delete();
+                    System.IO.DirectoryInfo di = new DirectoryInfo(path.ToString());
+
+                    //delete file
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    //delete directory
+                    di.Delete(true);
+
                 }
-
-                //delete directory
-                di.Delete(true);
-
             }
         }
 

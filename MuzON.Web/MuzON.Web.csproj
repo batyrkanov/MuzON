@@ -798,6 +798,12 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MuzON.BLL\MuzON.BLL.csproj">
       <Project>{8a8261d9-9b2f-4d01-90cf-ed4306d8042c}</Project>
       <Name>MuzON.BLL</Name>
@@ -814,12 +820,6 @@
       <Project>{7b4f73c8-13a4-4b9b-8b20-9d02d3b0df26}</Project>
       <Name>MuzON.Domain</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
