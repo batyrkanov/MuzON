@@ -64,6 +64,14 @@ namespace MuzON.Web.Controllers
             return Json(new { data = Mapper.Map<IEnumerable<RegisterViewModel>>(userDTOs) }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Details(Guid id)
+        {
+            var userDto = userService.GetUserById(id);
+            var user = Mapper.Map<EditUserViewModel>(userDto);
+            ViewBag.Role = userDto.Role;
+            return PartialView("_Details", user);
+        }
+
         public ActionResult Edit(Guid id)
         {
             var userDTO = userService.GetUserById(id);

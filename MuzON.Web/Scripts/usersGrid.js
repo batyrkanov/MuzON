@@ -17,7 +17,7 @@
                                 <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Account/Edit/` + Id + `" id="btnEditUser">
                                     <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                                 </button>
-                                <button type="button" class="btn btn-warning btn-md" data-toggle="modal" data-url="/Account/UserDetails/` + Id + `" id="btnDetailsUser">
+                                <button type="button" class="btn btn-warning btn-md" data-toggle="modal" data-url="/Account/Details/` + Id + `" id="btnDetailsUser">
                                     <span class="fa fa-eye" aria-hidden="true"></span> Details
                                 </button>
                                 <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="/Account/Delete/` + Id + `" id="btnDeleteUser">
@@ -59,6 +59,18 @@ $("#tableUsersGrid").on("click", "#btnEditUser", function () {
             console.debug("changed: %o", arguments);
         });
     });
+});
+
+$("#tableUsersGrid").on("click", "#btnDetailsUser", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#detailsUserContainer').html(data);
+
+        $('#detailsUserModal').modal('show');
+    });
+
 });
 
 function EditUserSuccess(data) {
