@@ -40,7 +40,9 @@ namespace MuzON.BLL.Services
         public UserDTO GetUserById(Guid id)
         {
             User user = _unitOfWork.Users.Get(id);
-            return Mapper.Map<UserDTO>(user);
+            var userDTO = Mapper.Map<UserDTO>(user);
+            userDTO.Role = _unitOfWork.Roles.Get(user.Roles.Select(x=>x.RoleId).Single()).Name;
+            return userDTO;
         }
         
         public IEnumerable<UserDTO> GetUsers()
@@ -54,6 +56,12 @@ namespace MuzON.BLL.Services
             user.Roles.Clear();
             _unitOfWork.Users.Delete(user.Id);
             _unitOfWork.Save();
+        }
+
+        public IEnumerable<RoleDTO> GetRoles()
+        {
+            var roles = _unitOfWork.Roles.GetAll().ToList();
+            return Mapper.Map<IEnumerable<RoleDTO>>(roles);
         }
     }
 }

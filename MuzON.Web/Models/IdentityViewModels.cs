@@ -76,4 +76,14 @@ namespace MuzON.Web.Models
         [Compare("NewPassword", ErrorMessage = "Password and confirmation doesn't match")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class EditUserViewModel
+    {
+        [Key]
+        public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "Email cannot be null!")]
+        [EmailAddress(ErrorMessage = "Please, enter correct email address!")]
+        public string Email { get; set; }
+    }
 }

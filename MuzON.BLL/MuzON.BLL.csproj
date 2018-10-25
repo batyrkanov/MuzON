@@ -90,6 +90,7 @@
     <Compile Include="DTO\GenreDTO.cs" />
     <Compile Include="DTO\PlaylistDTO.cs" />
     <Compile Include="DTO\RatingDTO.cs" />
+    <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\SongDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />

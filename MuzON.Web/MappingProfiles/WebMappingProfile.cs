@@ -32,6 +32,7 @@ namespace MuzON.Web.MappingProfiles
 
             CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
             CreateMap<UserDTO, RegisterViewModel>(MemberList.None).ReverseMap();
+            CreateMap<UserDTO, EditUserViewModel>(MemberList.None).ReverseMap();
 
             CreateMap<GenreDTO, GenreViewModel>(MemberList.None).ReverseMap();
         }

@@ -31,6 +31,8 @@ namespace MuzON.BLL.MappingProfiles
             CreateMap<Playlist, PlaylistDTO>(MemberList.None).ReverseMap();
 
             CreateMap<User, UserDTO>(MemberList.None).ReverseMap();
+
+            CreateMap<Role, RoleDTO>(MemberList.None).ReverseMap();
         }
     }
 }

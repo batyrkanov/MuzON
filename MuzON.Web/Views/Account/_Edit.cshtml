@@ -1,0 +1,52 @@
+﻿
+@model MuzON.Web.Models.EditUserViewModel
+@{
+    /**/
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Edit user</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        @using (Ajax.BeginForm("Edit", null,
+            new AjaxOptions
+            {
+                HttpMethod = "Post",
+                OnSuccess = "EditUserSuccess(data)"
+            },
+            new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x=>x.Id)
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Email</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Roles", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownList("Roles", null, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" id="addAndEdit" class="btn btn-primary" value="Save" />
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+
+</div>
+

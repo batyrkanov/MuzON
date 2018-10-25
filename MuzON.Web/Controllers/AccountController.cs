@@ -3,10 +3,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MuzON.BLL.DTO;
-using MuzON.BLL.Infrastructure;
 using MuzON.BLL.Interfaces;
+using MuzON.Domain.Identity;
 using MuzON.Web.App_Start;
-using MuzON.Domain.Interfaces;
 using MuzON.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -17,11 +16,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Unity;
-using Unity.AspNet.Mvc;
-using Unity.Attributes;
-using Unity.Injection;
-using MuzON.Domain.Identity;
 
 namespace MuzON.Web.Controllers
 {
@@ -52,7 +46,7 @@ namespace MuzON.Web.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-        
+
         public ActionResult Login()
         {
             return View();
@@ -66,8 +60,47 @@ namespace MuzON.Web.Controllers
         public JsonResult GetUsers()
         {
             var userDTOs = userService.GetUsers();
-            
+
             return Json(new { data = Mapper.Map<IEnumerable<RegisterViewModel>>(userDTOs) }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Edit(Guid id)
+        {
+            var userDTO = userService.GetUserById(id);
+            if (userDTO == null)
+            {
+                return Json(new { data = "userNotFound" }, JsonRequestBehavior.AllowGet);
+            }
+            var user = Mapper.Map<EditUserViewModel>(userDTO);
+            ViewBag.Roles = new SelectList(RoleManager.Roles.ToList(), "Id", "Name", RoleManager.FindByName(userDTO.Role).Id);
+            return PartialView("_Edit", user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Edit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var errorList = new List<string>();
+                var userDto = Mapper.Map<EditUserViewModel, UserDTO>(model);
+                var role = Guid.Parse(Request.Form["Roles"]);
+                userDto.Role = RoleManager.FindById(role).Name;
+                var result = await UpdateAsync(userDto);
+                if (result.Succeeded)
+                {
+                    return Json(new { data = "success" });
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        errorList.Add(error);
+                    }
+                    return Json(new { model, errorMessage = errorList, JsonRequestBehavior.AllowGet });
+                }
+            }
+            return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values), JsonRequestBehavior.AllowGet });
         }
 
         [HttpPost]
@@ -133,7 +166,7 @@ namespace MuzON.Web.Controllers
                     }
                     return Json(new { model, errorMessage = errorList, JsonRequestBehavior.AllowGet });
                 }
-                    
+
             }
             return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values), JsonRequestBehavior.AllowGet });
         }
@@ -162,11 +195,11 @@ namespace MuzON.Web.Controllers
                                 new { UserId = user.Id, code }, protocol: Request.Url.Scheme);
                 var result = await SendEmail(user.Email, "Reset Password",
                                     "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-                if(result)
+                if (result)
                     return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
-            
-            return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values)}, JsonRequestBehavior.AllowGet);
+
+            return Json(new { model, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]
@@ -200,7 +233,7 @@ namespace MuzON.Web.Controllers
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return Json(new { data = "success"});
+                return Json(new { data = "success" });
             }
             ModelState.AddModelError("", result.Errors.First());
             return View();
@@ -323,6 +356,36 @@ namespace MuzON.Web.Controllers
             {
                 return IdentityResult.Failed("User with same Email exist");
             }
+        }
+
+        private async Task<IdentityResult> UpdateAsync(UserDTO userDTO)
+        {
+            User user = UserManager.FindByEmail(userDTO.Email);
+            var hash = user.PasswordHash;
+            Mapper.Map(userDTO, user);
+            user.PasswordHash = hash;
+            // if role "user" wasn't find in the table Roles, then create this
+            Role role = await RoleManager.FindByNameAsync(userDTO.Role);
+            if (role == null)
+            {
+                role = new Role { Id = Guid.NewGuid(), Name = userDTO.Role };
+                var roleAddResult =
+                    await RoleManager.CreateAsync(role);
+                if (roleAddResult.Errors.Count() > 0)
+                    return IdentityResult.Failed("System can't create role, please tell about this to admin");
+            }
+
+            var result =
+                await UserManager.UpdateAsync(user);
+            if (result.Errors.Count() > 0)
+                return IdentityResult.Failed("Something wrong, please check all fields");
+            //get role name
+            var existRoleId = UserManager.FindByEmail(user.Email).Roles.Select(x => x.RoleId).Single();
+            await UserManager.RemoveFromRoleAsync(user.Id, RoleManager.FindById(existRoleId).Name);
+            //fill userRoles table
+            await UserManager.AddToRoleAsync(user.Id, userDTO.Role);
+            await userService.Save();
+            return IdentityResult.Success;
         }
 
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDTO)

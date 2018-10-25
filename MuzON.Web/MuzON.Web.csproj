@@ -788,6 +788,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\_DeletePartial.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

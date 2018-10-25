@@ -14,7 +14,7 @@
                 "orderable": false,
                 "render": function (Id) {
                     return `<div class="btn-group" role="group">
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Account/UserEdit/` + Id + `" id="btnEditUser">
+                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="/Account/Edit/` + Id + `" id="btnEditUser">
                                     <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                                 </button>
                                 <button type="button" class="btn btn-warning btn-md" data-toggle="modal" data-url="/Account/UserDetails/` + Id + `" id="btnDetailsUser">
@@ -42,6 +42,37 @@ $("#tableUsersGrid").on("click", "#btnDeleteUser", function () {
 
 });
 
+$("#tableUsersGrid").on("click", "#btnEditUser", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#editUserContainer').html(data);
+
+        $('#editUserModal').modal('show');
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select bands",
+            placeholder_text_single: "Please, select country",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
+            console.debug("changed: %o", arguments);
+        });
+    });
+});
+
+function EditUserSuccess(data) {
+
+    if (data.data != "success") {
+        $('#editUserContainer').html(data.data);
+        ErrorNotify(data);
+        return;
+    }
+    $('#editUserModal').modal('hide');
+    $('#editUserContainer').html("");
+    $('#tableUsersGrid').DataTable().ajax.reload();
+}
+
 function DeleteUserSuccess(data) {
 
     if (data.data != "success") {
@@ -64,4 +95,24 @@ function DeleteUserSuccess(data) {
     $('#deleteUserModal').modal('hide');
     $('#deleteUserContainer').html("");
     $('#tableUsersGrid').DataTable().ajax.reload();
+}
+
+function ErrorNotify(data) {
+    if (data.errorMessage.length >= 1) {
+        data.errorMessage.forEach(function (item) {
+            $.notify({
+                // options
+                icon: 'fa fa-warning',
+                title: '<strong>Warning</strong>: ',
+                message: item
+            }, {
+                    type: 'warning',
+                    z_index: 1051,
+                    animate: {
+                        enter: 'animated bounceIn',
+                        exit: 'animated bounceOut'
+                    }
+                });
+        });
+    }
 }

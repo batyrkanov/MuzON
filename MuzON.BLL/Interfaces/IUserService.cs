@@ -14,6 +14,7 @@ namespace MuzON.BLL.Interfaces
     public interface IUserService
     {
         IEnumerable<UserDTO> GetUsers();
+        IEnumerable<RoleDTO> GetRoles();
         UserDTO GetUserById(Guid id);
         void DeleteUser(Guid id);
         Task Save();
