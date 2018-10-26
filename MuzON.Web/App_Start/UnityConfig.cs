@@ -56,6 +56,8 @@ namespace MuzON.Web
             container.RegisterType<IUserService, UserService>(new PerRequestLifetimeManager());
             container.RegisterType<ISongService, SongService>(new PerRequestLifetimeManager());
             container.RegisterType<IGenreService, GenreService>(new PerRequestLifetimeManager());
+            container.RegisterType<IPlayListService, PlayListService>(new PerRequestLifetimeManager());
+            container.RegisterType<ICommentService, CommentService>(new PerRequestLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager(), new InjectionConstructor("DefaultConnection"));
             container.RegisterType<IUserStore<User, Guid>, UserStore>(new PerRequestLifetimeManager());
             // TODO: Register your type's mappings here.

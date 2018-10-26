@@ -1,0 +1,85 @@
+﻿@model MuzON.Web.Models.PlaylistViewModel
+@{
+    Layout = null;
+}
+
+<div class="container" id="small-dialog">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3><strong>Playlist details page</strong></h3>
+            <hr />
+        </div>
+        @* Image *@
+        <div class="col-md-6 imageClass">
+            <h3><strong>Photo</strong></h3>
+            <a href="data:image/jpeg;base64,@Model.Image" class="see-img">
+                <img class="image img-fluid" src="data:image/jpeg;base64,@Model.Image" style="width: auto; display: inline-block;" />
+            </a>
+        </div>
+        <br />
+        @* Info *@
+        <div class="col-md-6">
+            <h3><strong>Info</strong></h3>
+            <ul class="unordered-list">
+                <li><strong>Playlist name:</strong> @Html.DisplayFor(model => model.Name)</li>
+
+            </ul>
+        </div>
+        <div class="col-md-12"><br /><hr></div>
+        @* Songs *@
+        <div class="col-md-12 text-center">
+            <h3><strong>Songs</strong></h3>
+            <ul>
+                @if (Model.Songs != null && Model.Songs.Count > 0)
+                {
+                    foreach (var song in Model.Songs)
+                    {
+                        <li>
+                            <hr />
+                            <p>@song.Name</p>
+                            <audio controls preload="metadata">
+                                <source src="@Url.Content("/songs/"+ song.Id +"/" + song.FileName)" type="audio/mp3">
+                            </audio>
+                        </li>
+
+                    }
+                }
+                else
+                {
+                    <li>
+                        No songs
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-12"><hr></div>
+        @* Comments *@
+        
+        <div class="col-md-12 text-center">
+            @{Html.RenderPartial("_Comments", Model);}
+            <hr />
+            <p><strong>Add comment</strong></p>
+            @using (Ajax.BeginForm("AddComment", new { id = Model.Id },
+            new AjaxOptions
+            {
+                HttpMethod = "Post",
+                OnSuccess = "AddComment(data)"
+            },
+            new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <textarea class="form-control" rows="5" id="text" name="text" placeholder="Type your comment..." required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" id="addAndEdit" class="btn btn-primary" value="Add" />
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using MuzON.BLL.DTO;
 using MuzON.BLL.Interfaces;
 using MuzON.Web.App_Start;
+using MuzON.Web.Models;
 using System;
 using System.IO;
 using System.Web;
@@ -17,6 +20,8 @@ namespace MuzON.Web.Controllers
         public IBandService bandService;
         public ISongService songService;
         public IGenreService genreService;
+        public IPlayListService playListService;
+        public ICommentService commentService;
         public Utility.Util util = new Utility.Util();
 
         // Artists and Bands controller constructor
@@ -55,6 +60,19 @@ namespace MuzON.Web.Controllers
             countryService = countryServ;
         }
 
+        // Playlist controller constructor
+        public BaseController(
+                    IGenreService genre, 
+                    IPlayListService playList,
+                    ISongService song,
+                    ICommentService comment)
+        {
+            genreService = genre;
+            playListService = playList;
+            songService = song;
+            commentService = comment;
+        }
+
         // Account controller constructor
         public BaseController(
                     IUserService userServ)
@@ -62,7 +80,19 @@ namespace MuzON.Web.Controllers
             userService = userServ;
         }
 
-
+        public void SaveComment(Guid userId, string text, Guid? songId = null, Guid? playlistId = null)
+        {
+            var comment = new CommentViewModel
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                Text = text,
+                SongId = songId,
+                PlaylistId = playlistId
+            };
+            var commentDto = Mapper.Map<CommentDTO>(comment);
+            commentService.AddComment(commentDto);
+        }
 
         public void SaveSong(HttpPostedFileBase song, Guid Id)
         {

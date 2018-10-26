@@ -136,10 +136,9 @@ function DeleteSongSuccess(data) {
 }
 
 function CreateSongSuccess(data) {
-    console.log(data);
     if (data.data != "success") {
         $('#createSongContainer').html(data.data);
-        ErrorNotify(data);
+        ErrorNotify.Notify(data);
         return;
     }
     $('#createSongModal').modal('hide');
@@ -151,7 +150,7 @@ function UpdateSongSuccess(data) {
 
     if (data.data != "success") {
         $('#editSongContainer').html(data.data);
-        ErrorNotify(data);
+        ErrorNotify.Notify(data);
         return;
     }
     $('#editSongModal').modal('hide');
@@ -159,7 +158,10 @@ function UpdateSongSuccess(data) {
     $('#tableSongsGrid').DataTable().ajax.reload();
 }
 
-function ErrorNotify(data) {
+
+
+export default class ErrorNotify {
+    static Notify(data) {
     if (data.errorMessage.length >= 1) {
         data.errorMessage.forEach(function (item) {
             $.notify({
@@ -177,4 +179,5 @@ function ErrorNotify(data) {
                 });
         });
     }
+  }
 }

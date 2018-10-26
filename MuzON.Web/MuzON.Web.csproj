@@ -224,6 +224,7 @@
     <Compile Include="Controllers\BandsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlaylistsController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -231,9 +232,11 @@
     <Compile Include="MappingProfiles\WebMappingProfile.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\BandViewModels.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\CountryViewModel.cs" />
     <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\IdentityViewModels.cs" />
+    <Compile Include="Models\PlaylistViewModel.cs" />
     <Compile Include="Models\SongViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -623,6 +626,7 @@
     <Content Include="Content\bootstrap-notify\LICENSE" />
     <Content Include="Content\bootstrap-notify\package.json" />
     <Content Include="Content\bootstrap-notify\README.md" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
@@ -790,6 +794,10 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\_Edit.cshtml" />
     <Content Include="Views\Account\_Details.cshtml" />
+    <Content Include="Views\Playlists\Index.cshtml" />
+    <Content Include="Views\Playlists\_PlaylistAction.cshtml" />
+    <Content Include="Views\Playlists\_Details.cshtml" />
+    <Content Include="Views\Playlists\_Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

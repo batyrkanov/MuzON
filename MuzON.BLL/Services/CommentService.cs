@@ -23,6 +23,11 @@ namespace MuzON.BLL.Services
         public void AddComment(CommentDTO commentDTO)
         {
             Comment comment = Mapper.Map<CommentDTO, Comment>(commentDTO);
+            if (comment.PlaylistId != null)
+                comment.Playlist = _unitOfWork.Playlists.Get(comment.PlaylistId);
+            if (comment.SongId != null)
+                comment.Song = _unitOfWork.Songs.Get(comment.SongId);
+            comment.User = _unitOfWork.Users.Get(comment.UserId);
             _unitOfWork.Comments.Create(comment);
             _unitOfWork.Save();
         }
@@ -43,6 +48,15 @@ namespace MuzON.BLL.Services
             var allComments = _unitOfWork.Comments.GetAll();
             var comments = (from c in allComments
                             where c.SongId == Id
+                            select c).ToList();
+            return Mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDTO>>(comments);
+        }
+
+        public IEnumerable<CommentDTO> GetCommentsByPlaylistId(Guid Id)
+        {
+            var allComments = _unitOfWork.Comments.GetAll();
+            var comments = (from c in allComments
+                            where c.PlaylistId == Id
                             select c).ToList();
             return Mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDTO>>(comments);
         }

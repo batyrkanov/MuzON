@@ -13,9 +13,10 @@ namespace MuzON.Domain.Entities
         public byte[] Image { get; set; }
         public int Index { get; set; }
         public virtual ICollection<Song> Songs { get; set; }
-
+        public virtual ICollection<Comment> Comments { get; set; }
         public Playlist()
         {
+            Comments = new List<Comment>();
             Songs = new List<Song>();
         }
     }

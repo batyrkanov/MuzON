@@ -1,3 +1,7 @@
+
+
+
+
 function ResetPassword(data) {
     console.log(data);
     if (data.data == "userNotFound") {
@@ -89,6 +93,74 @@ function ChangePassword(data) {
     return;
 }
 
+$("#btnCreatePlayList").on("click", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#createPlayListContainer').html(data);
+
+        $('#createPlayListModal').modal('show');
+        
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select some option",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
+            console.debug("changed: %o", arguments);
+        });
+    });
+
+});
+
+function AddComment(data) {
+    if (data.data == "success") {
+        $('.mfp-wrap').load("/Playlists/Details/" + data.id);
+        $.notify({
+            // options
+            icon: 'fa fa-success',
+            title: '<strong>Success</strong>: ',
+            message: "Comment added!"
+        }, {
+                type: 'success',
+                z_index: 1051,
+                animate: {
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
+                }
+            });
+        return;
+    }
+    if (data.errorMessage.length >= 1) {
+        data.errorMessage.forEach(function (item) {
+            $.notify({
+                // options
+                icon: 'fa fa-warning',
+                title: '<strong>Warning</strong>: ',
+                message: item
+            }, {
+                    type: 'warning',
+                    z_index: 1051,
+                    animate: {
+                        enter: 'animated bounceIn',
+                        exit: 'animated bounceOut'
+                    }
+                });
+        });
+    }
+    return;
+}
+
+function CreatePlaylistSuccess(data) {
+    if (data.data != "success") {
+        $('#createSongContainer').html(data.data);
+        notify.Notify(data);
+        return;
+    }
+    $('#createSongModal').modal('hide');
+    $('#createSongContainer').html("");
+    $('#tableSongsGrid').DataTable().ajax.reload();
+}
 $(document).ready(function () {
     "use strict";
     

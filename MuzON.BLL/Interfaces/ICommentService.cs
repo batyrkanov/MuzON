@@ -12,6 +12,7 @@ namespace MuzON.BLL.Interfaces
         IEnumerable<CommentDTO> GetComments();
         IEnumerable<CommentDTO> GetCommentsBySongId(Guid Id);
         IEnumerable<CommentDTO> GetCommentsByUserId(Guid Id);
+        IEnumerable<CommentDTO> GetCommentsByPlaylistId(Guid Id);
         void AddComment(CommentDTO commentDTO);
         void Dispose();
     }

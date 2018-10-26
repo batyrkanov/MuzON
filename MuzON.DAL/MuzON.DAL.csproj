@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201810180822398_Init.Designer.cs">
       <DependentUpon>201810180822398_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810260740421_Added-reference-to-playlist-in-comments.cs" />
+    <Compile Include="Migrations\201810260740421_Added-reference-to-playlist-in-comments.Designer.cs">
+      <DependentUpon>201810260740421_Added-reference-to-playlist-in-comments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -102,6 +106,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201810180822398_Init.resx">
       <DependentUpon>201810180822398_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810260740421_Added-reference-to-playlist-in-comments.resx">
+      <DependentUpon>201810260740421_Added-reference-to-playlist-in-comments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
