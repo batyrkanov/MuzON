@@ -32,7 +32,8 @@ namespace MuzON.Web.MappingProfiles
             CreateMap<PlaylistDTO, PlaylistViewModel>()
                 .ForMember(f => f.Image, opt => opt.MapFrom(src => Convert.ToBase64String(src.Image)))
                 .ForMember(trg => trg.Songs, opt => opt.MapFrom(x => x.Songs.Where(f => f.IsSelected)))
-                .ForMember(trg => trg.SelectedSongs, f => f.Ignore()).ReverseMap();
+                .ForMember(trg => trg.SelectedSongs, f => f.Ignore())
+                .ForMember(trg => trg.Rating, f => f.Ignore()).ReverseMap();
 
             CreateMap<UserDTO, LoginViewModel>(MemberList.None).ReverseMap();
             CreateMap<UserDTO, RegisterViewModel>(MemberList.None).ReverseMap();
@@ -40,6 +41,7 @@ namespace MuzON.Web.MappingProfiles
 
             CreateMap<GenreDTO, GenreViewModel>(MemberList.None).ReverseMap();
             CreateMap<CommentDTO, CommentViewModel>(MemberList.None).ReverseMap();
+            CreateMap<RatingDTO, RatingViewModel>(MemberList.None).ReverseMap();
         }
     }
 }

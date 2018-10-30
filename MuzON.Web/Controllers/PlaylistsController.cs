@@ -6,7 +6,6 @@ using MuzON.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MuzON.Web.Controllers
@@ -14,7 +13,7 @@ namespace MuzON.Web.Controllers
     public class PlaylistsController : BaseController
     {
         public PlaylistsController(IGenreService genre, IPlayListService playList, ISongService song, ICommentService comment)
-            : base (genre, playList, song, comment)
+            : base(genre, playList, song, comment)
         { }
 
         // GET: Playlists
@@ -27,6 +26,7 @@ namespace MuzON.Web.Controllers
                 foreach (var item2 in playlistDTOs.Where(x => x.Id == item.Id).ToList().Select(x => x.Songs).ToList())
                 {
                     item.Songs = Mapper.Map<List<SongViewModel>>(item2.ToList());
+                    item.Rating = playListService.PlaylistRating(item.Id);
                 }
             }
             return View(playlists);
@@ -55,7 +55,7 @@ namespace MuzON.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                playlistViewModel.Songs = GetAllSongs(playlistViewModel.SelectedSongs).Where(x=>x.IsSelected).ToList();
+                playlistViewModel.Songs = GetAllSongs(playlistViewModel.SelectedSongs).Where(x => x.IsSelected).ToList();
                 var playlist = Mapper.Map<PlaylistDTO>(playlistViewModel);
                 playlist.Id = Guid.NewGuid();
                 playlist.Image = util.SetImage(Request.Files["uploadImage"], playlist.Image);
@@ -70,13 +70,13 @@ namespace MuzON.Web.Controllers
         public JsonResult AddComment(Guid id)
         {
             var playlist = playListService.GetPlaylistById(id);
-            if(playlist != null)
+            if (playlist != null)
             {
                 var userId = User.Identity.GetUserId();
                 var text = Request.Form["text"];
                 SaveComment(Guid.Parse(userId), text, null, id);
                 GetComments(id);
-                return Json(new { data = "success", id = id });
+                return Json(new { data = "success", id });
             }
             return Json(new { playlist, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
@@ -85,6 +85,28 @@ namespace MuzON.Web.Controllers
         {
             var playlist = playListService.GetPlaylistById(id);
             return PartialView("_Comments", Mapper.Map<PlaylistViewModel>(playlist));
+        }
+
+        public JsonResult RatePlaylist(Guid id, int ratingFromUser)
+        {
+            var playlist = playListService.GetPlaylistById(id);
+            if (playlist != null)
+            {
+                var userId = User.Identity.GetUserId();
+                var rate = ratingFromUser;
+                var rating = new RatingViewModel
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = Guid.Parse(userId),
+                    Value = rate,
+                    SongId = null,
+                    PlaylistId = playlist.Id
+                };
+                var ratingDto = Mapper.Map<RatingDTO>(rating);
+                playListService.RatePlayList(ratingDto);
+                return Json(new { data = "success", id });
+            }
+            return Json(new { playlist, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
         protected List<SongViewModel> GetAllSongs(IEnumerable<Guid> selectedIds = null)

@@ -113,6 +113,23 @@ $("#btnCreatePlayList").on("click", function () {
 
 });
 
+function rating() {
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+    var id = $('#modelId').val();
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+    };
+    $.ajax({
+        url: "/Playlists/RatePlaylist/" + id,
+        type: "POST",
+        data: {
+            "ratingFromUser": slider.value
+        }
+    });
+}
+
 function AddComment(data) {
     if (data.data == "success") {
         $('.mfp-wrap').load("/Playlists/Details/" + data.id);

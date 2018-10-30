@@ -1,13 +1,11 @@
-﻿using MuzON.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace MuzON.BLL.DTO
+namespace MuzON.Web.Models
 {
-    public class RatingDTO
+    public class RatingViewModel
     {
         public Guid Id { get; set; }
         public int Value { get; set; }

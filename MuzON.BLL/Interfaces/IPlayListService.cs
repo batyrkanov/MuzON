@@ -12,5 +12,7 @@ namespace MuzON.BLL.Interfaces
         IEnumerable<PlaylistDTO> GetPlaylists();
         PlaylistDTO GetPlaylistById(Guid id);
         void AddPlayList(PlaylistDTO playlistDTO);
+        void RatePlayList(RatingDTO ratingDTO);
+        double PlaylistRating(Guid id);
     }
 }

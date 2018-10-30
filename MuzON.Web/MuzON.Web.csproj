@@ -237,6 +237,7 @@
     <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\IdentityViewModels.cs" />
     <Compile Include="Models\PlaylistViewModel.cs" />
+    <Compile Include="Models\RatingViewModel.cs" />
     <Compile Include="Models\SongViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

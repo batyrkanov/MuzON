@@ -6,6 +6,7 @@
 <div class="container" id="small-dialog">
     <div class="row">
         <div class="col-md-12 text-center">
+            <input type="hidden" name="id" id="modelId" value="@Model.Id" />
             <h3><strong>Playlist details page</strong></h3>
             <hr />
         </div>
@@ -19,10 +20,15 @@
         <br />
         @* Info *@
         <div class="col-md-6">
+            <h3><strong>Rate this</strong></h3>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                <p>Value: <span id="demo"></span></p>
+                <button onclick="rating()">Rate!</button>
+            </div>
             <h3><strong>Info</strong></h3>
             <ul class="unordered-list">
                 <li><strong>Playlist name:</strong> @Html.DisplayFor(model => model.Name)</li>
-
             </ul>
         </div>
         <div class="col-md-12"><br /><hr></div>
@@ -83,3 +89,13 @@
         </div>
     </div>
 </div>
+@section Scripts{
+<script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+    };
+</script> 
+}

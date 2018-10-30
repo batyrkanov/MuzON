@@ -12,6 +12,7 @@ namespace MuzON.Web.Models
         public string Image { get; set; }
         public int Index { get; set; }
         public List<Guid> SelectedSongs { get; set; }
+        public double Rating { get; set; }
         public ICollection<SongViewModel> Songs { get; set; }
         public ICollection<CommentViewModel> Comments { get; set; }
     }

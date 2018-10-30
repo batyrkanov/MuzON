@@ -45,5 +45,23 @@ namespace MuzON.BLL.Services
             IEnumerable<Playlist> playLists = _unitOfWork.Playlists.GetAll().ToList();
             return Mapper.Map<IEnumerable<PlaylistDTO>>(playLists); ;
         }
+
+        public double PlaylistRating(Guid id)
+        {
+            var avarageRate = _unitOfWork.Ratings.SearchFor(x => x.PlaylistId == id).Select(x => x.Value);
+            return avarageRate.Count() == 0 ? 0 : avarageRate.Average();
+        }
+
+        public void RatePlayList(RatingDTO ratingDTO)
+        {
+            var rating = Mapper.Map<Rating>(ratingDTO);
+            if (rating.PlaylistId != null)
+                rating.Playlist = _unitOfWork.Playlists.Get(rating.PlaylistId);
+            if (rating.SongId != null)
+                rating.Song = _unitOfWork.Songs.Get(rating.SongId);
+            rating.User = _unitOfWork.Users.Get(rating.UserId);
+            _unitOfWork.Ratings.Create(rating);
+            _unitOfWork.Save();
+        }
     }
 }
