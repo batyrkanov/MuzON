@@ -87,13 +87,13 @@ namespace MuzON.Web.Controllers
             return PartialView("_Comments", Mapper.Map<PlaylistViewModel>(playlist));
         }
 
-        public JsonResult RatePlaylist(Guid id, int ratingFromUser)
+        public JsonResult RatePlaylist(Guid id, string ratingFromUser)
         {
             var playlist = playListService.GetPlaylistById(id);
             if (playlist != null)
             {
                 var userId = User.Identity.GetUserId();
-                var rate = ratingFromUser;
+                var rate = double.Parse(ratingFromUser.Replace('.',','));
                 var rating = new RatingViewModel
                 {
                     Id = Guid.NewGuid(),

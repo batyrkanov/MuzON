@@ -113,6 +113,20 @@ $("#btnCreatePlayList").on("click", function () {
 
 });
 
+$(function Rating() {
+
+    var $rateYo = $("#rateYo").rateYo();
+
+    $("#getRating").click(function () {
+
+        /* get rating */
+        var rating = $rateYo.rateYo("rating");
+
+        window.alert("Its " + rating + " Yo!");
+    });
+
+
+});
 function rating() {
     var slider = document.getElementById("myRange");
     var output = document.getElementById("demo");

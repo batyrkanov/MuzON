@@ -21,10 +21,9 @@
         @* Info *@
         <div class="col-md-6">
             <h3><strong>Rate this</strong></h3>
-            <div class="slidecontainer">
-                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-                <p>Value: <span id="demo"></span></p>
-                <button onclick="rating()">Rate!</button>
+            <div id="rateYo"></div>
+            <div>
+                <button id="getRating">Rate</button>
             </div>
             <h3><strong>Info</strong></h3>
             <ul class="unordered-list">
@@ -60,7 +59,7 @@
         </div>
         <div class="col-md-12"><hr></div>
         @* Comments *@
-        
+
         <div class="col-md-12 text-center">
             @{Html.RenderPartial("_Comments", Model);}
             <hr />
@@ -88,14 +87,37 @@
 
         </div>
     </div>
+    <script>
+        $(document).ready(
+            $(function() {
+                var $rateYo = $("#rateYo").rateYo({ "rating": 0.7 });
+                /* set the option `onChange` */
+                $rateYo.rateYo("option", "onChange", function () {
+
+                    /* get the rated fill at the current point of time */
+                    var ratedFill = $rateYo.rateYo("option", "ratedFill");
+
+                    console.log("The color of rating is " + ratedFill);
+                });
+
+                /* set the option `multiColor` to show Multi Color Rating */
+                $rateYo.rateYo("option", "multiColor", true);
+                var id = $('#modelId').val();
+                
+
+                $("#getRating").click(function () {
+                    /* post rating */
+                    var rating = $rateYo.rateYo("rating");
+                    console.log(rating);
+                    $.ajax({
+                        url: "/Playlists/RatePlaylist/" + id,
+                        type: "POST",
+                        data: {
+                            "ratingFromUser": rating
+                        }
+                    });
+                });
+            }));
+    </script>
 </div>
-@section Scripts{
-<script>
-    var slider = document.getElementById("myRange");
-    var output = document.getElementById("demo");
-    output.innerHTML = slider.value;
-    slider.oninput = function () {
-        output.innerHTML = this.value;
-    };
-</script> 
-}
+

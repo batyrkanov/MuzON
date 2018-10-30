@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201810301003361_Edited-rating-table.Designer.cs">
       <DependentUpon>201810301003361_Edited-rating-table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810301155411_RatingValue-Changed-From-Int-To-Double.cs" />
+    <Compile Include="Migrations\201810301155411_RatingValue-Changed-From-Int-To-Double.Designer.cs">
+      <DependentUpon>201810301155411_RatingValue-Changed-From-Int-To-Double.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -116,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810301003361_Edited-rating-table.resx">
       <DependentUpon>201810301003361_Edited-rating-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810301155411_RatingValue-Changed-From-Int-To-Double.resx">
+      <DependentUpon>201810301155411_RatingValue-Changed-From-Int-To-Double.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
