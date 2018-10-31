@@ -35,6 +35,7 @@ namespace MuzON.Web.Controllers
             foreach (var artist in artists)
             {
                 artist.Bands = null;
+                artist.Songs = null;
             }
             return Json(new { data = artists },JsonRequestBehavior.AllowGet);
         }

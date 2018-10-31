@@ -32,7 +32,7 @@
                 "searchable": false,
                 "sortable": false,
                 "render": function (Image) {
-                    return "<img id=\"imageSize\" src=\"data:image/jpeg;base64," + Image + "\" />";
+                    return `<img id="imageSize" src="data:image/jpeg;base64,` + Image + `" />`;
                 }
             },
             {

@@ -160,7 +160,7 @@ function UpdateSongSuccess(data) {
 
 
 
-export default class ErrorNotify {
+class ErrorNotify {
     static Notify(data) {
     if (data.errorMessage.length >= 1) {
         data.errorMessage.forEach(function (item) {

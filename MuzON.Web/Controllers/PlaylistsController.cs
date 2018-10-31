@@ -109,6 +109,26 @@ namespace MuzON.Web.Controllers
             return Json(new { playlist, errorMessage = util.GetErrorList(ModelState.Values) }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Delete(Guid id)
+        {
+            var playlist = playListService.GetPlaylistById(id);
+            if (playlist == null)
+            {
+                return HttpNotFound();
+            }
+            PlaylistViewModel playlistViewModel = Mapper.Map<PlaylistViewModel>(playlist);
+            return PartialView("_Delete", playlistViewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public JsonResult DeleteConfirmed(Guid id)
+        {
+            var playlist = playListService.GetPlaylistById(id);
+            playListService.DeletePlaylist(playlist);
+            return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
+        }
+
         protected List<SongViewModel> GetAllSongs(IEnumerable<Guid> selectedIds = null)
         {
             IEnumerable<SongDTO> songDTOs = songService.GetSongs();

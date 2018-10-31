@@ -41,7 +41,11 @@
                         <div class="p-inner">
                             <h4>@item.Name</h4>
                             <div class="cat">@item.Songs.Count - Songs in playlist | @item.Comments.Count - Comments | Rate - @Math.Round(item.Rating,1)</div>
+                            <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="@Url.Action("Delete","Playlists", new { id = item.Id})" id="btnDeletePlaylist">
+                                <span class="fa fa-trash" aria-hidden="true"></span> Delete
+                            </button>
                         </div>
+                        
                     </div>
 
                 }
@@ -60,5 +64,10 @@
 
 <div class="modal fade" id="createPlayListModal" tabindex="-1" role="dialog" aria-labelledby="CreatePlayListModal" aria-hidden="true" data-backdrop="static">
     <div id="createPlayListContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="deletePlayListModal" tabindex="-1" role="dialog" aria-labelledby="DeletePlayListModal" aria-hidden="true" data-backdrop="static">
+    <div id="deletePlayListContainer">
     </div>
 </div>

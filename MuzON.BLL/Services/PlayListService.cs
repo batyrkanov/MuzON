@@ -6,8 +6,6 @@ using MuzON.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MuzON.BLL.Services
 {
@@ -15,7 +13,7 @@ namespace MuzON.BLL.Services
     {
         private IUnitOfWork _unitOfWork;
 
-        public PlayListService(IUnitOfWork uow) => 
+        public PlayListService(IUnitOfWork uow) =>
             _unitOfWork = uow;
 
         public void AddPlayList(PlaylistDTO playlistDTO)
@@ -31,6 +29,21 @@ namespace MuzON.BLL.Services
                 }
             }
             _unitOfWork.Playlists.Create(playList);
+            _unitOfWork.Save();
+        }
+
+        public void DeletePlaylist(PlaylistDTO playlistDTO)
+        {
+            var playlist = Mapper.Map<Playlist>(playlistDTO);
+            var ratings = _unitOfWork.Ratings.SearchFor(x => x.PlaylistId == playlist.Id).ToList();
+            if(ratings.Count > 0)
+            {
+                foreach (var rating in ratings)
+                {
+                    _unitOfWork.Ratings.Delete(rating.Id);
+                }
+            }
+            _unitOfWork.Playlists.Delete(playlist.Id);
             _unitOfWork.Save();
         }
 

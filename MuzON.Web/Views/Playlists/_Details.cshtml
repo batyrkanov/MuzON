@@ -87,9 +87,10 @@
 
         </div>
     </div>
+    @section scripts{
     <script>
         $(document).ready(
-            $(function() {
+            $(function () {
                 var $rateYo = $("#rateYo").rateYo({ "rating": 0.7 });
                 /* set the option `onChange` */
                 $rateYo.rateYo("option", "onChange", function () {
@@ -103,7 +104,7 @@
                 /* set the option `multiColor` to show Multi Color Rating */
                 $rateYo.rateYo("option", "multiColor", true);
                 var id = $('#modelId').val();
-                
+
 
                 $("#getRating").click(function () {
                     /* post rating */
@@ -118,6 +119,7 @@
                     });
                 });
             }));
-    </script>
+    </script>    
+    }
 </div>
 

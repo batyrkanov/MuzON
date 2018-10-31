@@ -1,7 +1,3 @@
-
-
-
-
 function ResetPassword(data) {
     console.log(data);
     if (data.data == "userNotFound") {
@@ -113,6 +109,42 @@ $("#btnCreatePlayList").on("click", function () {
 
 });
 
+$(".artist").on("click", "#btnDeletePlaylist", function () {
+
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#deletePlayListContainer').html(data);
+
+        $('#deletePlayListModal').modal('show');
+    });
+
+});
+
+function DeletePlaylistSuccess(data) {
+
+    if (data.data != "success") {
+        $('#deletePlayListContainer').html(data.data);
+        return;
+    }
+    $.notify({
+        // options
+        icon: 'fa fa-check-circle',
+        title: '<strong>Success</strong>: ',
+        message: 'Deleted!'
+    }, {
+            type: 'success',
+            z_index: 1051,
+            animate: {
+                enter: 'animated bounceIn',
+                exit: 'animated bounceOut'
+            }
+        });
+    $('#deletePlayListModal').modal('hide');
+    $('#deletePlayListContainer').html("");
+    window.location.reload();  
+}
+
 $(function Rating() {
 
     var $rateYo = $("#rateYo").rateYo();
@@ -188,9 +220,9 @@ function CreatePlaylistSuccess(data) {
         notify.Notify(data);
         return;
     }
-    $('#createSongModal').modal('hide');
-    $('#createSongContainer').html("");
-    $('#tableSongsGrid').DataTable().ajax.reload();
+    $('#createPlayListModal').modal('hide');
+    $('#createPlayListContainer').html("");
+    window.location.reload();  
 }
 $(document).ready(function () {
     "use strict";
