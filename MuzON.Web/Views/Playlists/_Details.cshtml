@@ -87,20 +87,24 @@
 
         </div>
     </div>
-    @section scripts{
     <script>
         $(document).ready(
             $(function () {
-                var $rateYo = $("#rateYo").rateYo({ "rating": 0.7 });
-                /* set the option `onChange` */
-                $rateYo.rateYo("option", "onChange", function () {
-
-                    /* get the rated fill at the current point of time */
-                    var ratedFill = $rateYo.rateYo("option", "ratedFill");
-
-                    console.log("The color of rating is " + ratedFill);
+                var rate = parseFloat(@Model.Rating.ToString().Replace(',','.'));
+                if (rate > 0) {
+                    $("#rateYo").rateYo({
+                        rating: rate,
+                        readOnly: true
+                    });
+                    $('#getRating').hide();
+                    return;
+                }
+                var $rateYo = $("#rateYo").rateYo({
+                    precision: 2,
+                    maxValue: 5,
+                    numStars: 5,
+                    "rating": rate
                 });
-
                 /* set the option `multiColor` to show Multi Color Rating */
                 $rateYo.rateYo("option", "multiColor", true);
                 var id = $('#modelId').val();
@@ -115,11 +119,31 @@
                         type: "POST",
                         data: {
                             "ratingFromUser": rating
+                        },
+                        cache: false,
+                        success: function (data) {
+                            if (data.data == "success") {
+                                $.notify({
+                                    // options
+                                    icon: 'fa fa-success',
+                                    title: '<strong>Success</strong>: ',
+                                    message: "You successfully rated this playlist!"
+                                }, {
+                                        type: 'success',
+                                        z_index: 1051,
+                                        animate: {
+                                            enter: 'animated bounceIn',
+                                            exit: 'animated bounceOut'
+                                        }
+                                    });
+                                $('#small-dialog').load("/Playlists/Details/" + data.id);
+                                return;
+                            }
                         }
                     });
                 });
             }));
-    </script>    
-    }
+    </script>
 </div>
+
 

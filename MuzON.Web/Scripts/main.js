@@ -178,7 +178,7 @@ function rating() {
 
 function AddComment(data) {
     if (data.data == "success") {
-        $('.mfp-wrap').load("/Playlists/Details/" + data.id);
+        $('#small-dialog').load("/Playlists/Details/" + data.id);
         $.notify({
             // options
             icon: 'fa fa-success',
@@ -217,11 +217,23 @@ function AddComment(data) {
 function CreatePlaylistSuccess(data) {
     if (data.data != "success") {
         $('#createSongContainer').html(data.data);
-        notify.Notify(data);
         return;
     }
     $('#createPlayListModal').modal('hide');
     $('#createPlayListContainer').html("");
+    $.notify({
+        // options
+        icon: 'fa fa-success',
+        title: '<strong>Success</strong>: ',
+        message: "Playlist was successfully added!"
+    }, {
+            type: 'success',
+            z_index: 1051,
+            animate: {
+                enter: 'animated bounceIn',
+                exit: 'animated bounceOut'
+            }
+        });
     window.location.reload();  
 }
 $(document).ready(function () {

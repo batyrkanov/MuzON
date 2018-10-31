@@ -14,6 +14,7 @@ namespace MuzON.BLL.Interfaces
         void AddPlayList(PlaylistDTO playlistDTO);
         void RatePlayList(RatingDTO ratingDTO);
         double PlaylistRating(Guid id);
+        double PlaylistRatingFromUser(Guid playlistId, Guid userId);
         void DeletePlaylist(PlaylistDTO playlist);
     }
 }

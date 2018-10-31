@@ -65,6 +65,14 @@ namespace MuzON.BLL.Services
             return avarageRate.Count() == 0 ? 0 : avarageRate.Average();
         }
 
+        public double PlaylistRatingFromUser(Guid playlistId, Guid userId)
+        {
+            var rating = _unitOfWork.Ratings.GetAll().Where(x => x.PlaylistId == playlistId)
+                                                     .Where(x => x.UserId == userId).SingleOrDefault();
+            return rating == null ? 0 : rating.Value;
+
+        }
+
         public void RatePlayList(RatingDTO ratingDTO)
         {
             var rating = Mapper.Map<Rating>(ratingDTO);

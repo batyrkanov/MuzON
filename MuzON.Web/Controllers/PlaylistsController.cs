@@ -36,6 +36,7 @@ namespace MuzON.Web.Controllers
         {
             var playlistDTO = playListService.GetPlaylistById(id);
             var playlist = Mapper.Map<PlaylistViewModel>(playlistDTO);
+            playlist.Rating = playListService.PlaylistRatingFromUser(playlist.Id, Guid.Parse(User.Identity.GetUserId()));
             playlist.Songs = GetAllSongs(playlistDTO.Songs.Select(x => x.Id)).Where(x => x.IsSelected).ToList();
             return PartialView("_Details", playlist);
         }
