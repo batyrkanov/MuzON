@@ -1,0 +1,157 @@
+﻿@model MuzON.Web.Models.ArtistViewModel
+@{
+    /**/
+    Layout = null;
+}
+@{
+    if (ViewBag.Action == "create")
+    {
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Artist</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                @using (Ajax.BeginForm("Create", null,
+                    new AjaxOptions
+                    {
+                        HttpMethod = "Post",
+                        OnSuccess = "CreateArtistSuccess(data)"
+                    },
+                    new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    <div class="editor-field">
+                                        <input class="form-control" type="file" id="uploadImage" name="uploadImage" accept="image/x-png,image/gif,image/jpeg" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.DropDownList("CountryId", null, "Select country", htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select country" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.ListBoxFor(model => model.SelectedBands,
+                                           new MultiSelectList(Model.Bands, "Id", "Name"),
+                                           htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", @placeholder = "Select bands", multiple = "multiple" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <input type="submit" id="addAndEdit" class="btn btn-primary" value="Create" />
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    }
+
+
+    else
+    { <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Artist</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                @using (Ajax.BeginForm("Edit", "Artists", null,
+                new AjaxOptions
+                {
+                    HttpMethod = "Post",
+                    OnSuccess = "UpdateArtistSuccess(data)"
+                },
+                new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    <div class="editor-field">
+                                        <img id="imageSize" src="data:image/jpeg;base64,@Model.Image" />
+                                        <input type="hidden" name="image" value="@Model.Image" />
+                                        <input class="form-control" type="file" id="uploadImage" name="uploadImage" accept="image/x-png,image/gif,image/jpeg" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.DropDownList("CountryId", null, htmlAttributes: new { @class = "chosen-select", @tabindex = "-1" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SelectedBands, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.ListBoxFor(model => model.SelectedBands, 
+                                           new MultiSelectList(Model.Bands, "Id", "Name", Model.Bands.Where(x=>x.IsSelected).Select(i=>i.Id)),
+                                           htmlAttributes: new { @class = "chosen-select", @tabindex = "-1", multiple = "multiple" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-primary" value="Save" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    }
+
+}
+

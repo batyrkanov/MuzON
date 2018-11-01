@@ -1,31 +1,93 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Artists";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<section class="portfolio-area section-gap" id="portfolio">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">All Artists and Bands</h1>
+                    <p>They're already in our site.</p>
+                </div>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <div class="filters">
+            <ul>
+                <li class="active" data-filter="*">All</li>
+                <li data-filter=".artist">Artists</li>
+                <li data-filter=".band">Bands</li>
+            </ul>
+        </div>
+
+        <div class="filters-content">
+            <div class="row grid">
+                @if (ViewBag.Artists != null)
+                {
+                    foreach (MuzON.Web.Models.ArtistViewModel a in ViewBag.Artists)
+                    {
+                <div class="single-portfolio col-sm-4 all artist">
+                    <div class="relative">
+                        <div class="thumb">
+                            <div class="overlay overlay-bg"></div>
+                            <img class="image img-fluid rounded" src="data:image/jpeg;base64,@a.Image" alt="">
+                        </div>
+                        <a href="@Url.Action("MoreAboutArtist","Home", new { id = a.Id})" class="img-pop-up">
+                            <div class="middle" style="left: 35%;">
+                                <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
+                            </div>
+                        </a>
+                        <a href="data:image/jpeg;base64,@a.Image" class="see-img">
+                            <div class="middle" style="left: 65%;">
+                                <div class="text align-self-center d-flex"><i class="fa fa-file-image-o"></i></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="p-inner">
+                        <h4>@a.FullName</h4>
+                        <div class="cat">@a.Country.Name</div>
+                    </div>
+                </div>
+                       
+                    }
+                }
+                @if (ViewBag.Bands != null)
+                {
+                    foreach (MuzON.Web.Models.BandViewModel b in ViewBag.Bands)
+                    {
+                        <div class="single-portfolio col-sm-4 all band">
+                            <div class="relative">
+                                <div class="thumb">
+                                    <div class="overlay overlay-bg"></div>
+                                    <img class="image img-fluid rounded" src="data:image/jpeg;base64,@b.Image" alt="">
+                                </div>
+                                <a href="@Url.Action("MoreAboutBand","Home", new { id = b.Id})" class="img-pop-up">
+                                    <div class="middle" style="left: 35%;">
+                                        <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
+                                    </div>
+                                </a>
+                                <a href="data:image/jpeg;base64,@b.Image" class="see-img">
+                                    <div class="middle" style="left: 65%;">
+                                        <div class="text align-self-center d-flex"><i class="fa fa-file-image-o"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-inner">
+                                <h4>@b.Name</h4>
+                                <div class="cat">@b.Country.Name</div>
+                            </div>
+                        </div>
+                    }
+                }
+                @if (ViewBag.Artists == null && ViewBag.Bands == null)
+                {
+                    <div class="single-portfolio col-sm-4 all">
+                        <h3>No items</h3>
+                    </div>
+                }
+            </div>
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>

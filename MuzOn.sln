@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuzON.BLL", "MuzON.BLL\MuzO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuzON.Web", "MuzON.Web\MuzON.Web.csproj", "{31143A16-5C02-4558-80A6-5BF31DD122CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuzON.Common", "MuzON.Common\MuzON.Common.csproj", "{5DB2886D-E802-4A7C-80A8-A980B071BE2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{31143A16-5C02-4558-80A6-5BF31DD122CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31143A16-5C02-4558-80A6-5BF31DD122CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31143A16-5C02-4558-80A6-5BF31DD122CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DB2886D-E802-4A7C-80A8-A980B071BE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DB2886D-E802-4A7C-80A8-A980B071BE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DB2886D-E802-4A7C-80A8-A980B071BE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DB2886D-E802-4A7C-80A8-A980B071BE2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

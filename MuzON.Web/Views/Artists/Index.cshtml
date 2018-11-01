@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MuzON.Web.Models.ArtistViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+<section class="portfolio-area section-gap" id="portfolio">
+    <br />
+    <br />
+    <div class="container" id="addButton">
+        <h2>Artists</h2>
+    </div>
+    <br />
+    <div class="container">
+
+        <table id="tableArtistsGrid" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Country</th>
+                    <th>Birth Date</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="container" id="addButton">
+            <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-url="@Url.Action("Create","Artists")" id="btnCreateArtist">
+                <span class="fa fa-plus-circle" aria-hidden="true"></span> Add Artist
+            </button>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="createArtistModal" tabindex="-1" role="dialog" aria-labelledby="CreateArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="createArtistContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="editArtistModal" tabindex="-1" role="dialog" aria-labelledby="CreateArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="editArtistContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="deleteArtistModal" tabindex="-1" role="dialog" aria-labelledby="DeleteArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="deleteArtistContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="detailsArtistModal" tabindex="-1" role="dialog" aria-labelledby="DetailsArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="detailsArtistContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="addSongArtistModal" tabindex="-1" role="dialog" aria-labelledby="AddSongArtistModal" aria-hidden="true" data-backdrop="static">
+    <div id="addSongArtistContainer">
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/artistsGrid.js"></script>
+}

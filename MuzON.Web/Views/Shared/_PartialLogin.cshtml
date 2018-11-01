@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+        <li><a href="@Url.Action("Index", "Playlists")">Playlists</a></li>
+        if (User.IsInRole("admin"))
+        {
+            <li><a href="@Url.Action("Index", "Artists")">Artists</a></li>
+            <li><a href="@Url.Action("Index", "Bands")">Bands</a></li>
+            <li><a href="@Url.Action("Index", "Songs")">Songs</a></li>
+            <li><a href="@Url.Action("Index", "Account")">Users</a></li>
+        }
+        <li>
+            <a href="@Url.Action("ChangePassword", "Account")">Hello @User.Identity.GetUserName()!</a>
+        </li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">
+                Log out
+            </a>
+        </li>
+
+    }
+}
+else
+{
+        <form>
+            <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+            <li><a href="@Url.Action("Index", "Playlists")">Playlists</a></li>
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </form>
+}

@@ -1,0 +1,101 @@
+﻿
+@model MuzON.Web.Models.SongViewModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Band Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    <label class="col-md-12"><strong>Genres</strong></label>
+                </dt>
+                <ul class="unordered-list">
+                    @if (Model.Genres.Count > 0)
+                    {
+                        foreach (var genre in Model.Genres)
+                        {
+                            <li>
+                                @genre.Name
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            No genres
+                        </li>
+                    }
+                </ul>
+
+                <dt>
+                    <label class="col-md-12"><strong>Artists</strong></label>
+                </dt>
+                <ul class="unordered-list">
+                    @if (Model.Artists.Count > 0)
+                    {
+                        foreach (var artist in Model.Artists)
+                        {
+                            <li>
+                                @artist.FullName
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            No artists
+                        </li>
+                    }
+                </ul>
+                <dt>
+                    <label class="col-md-12"><strong>Bands</strong></label>
+                </dt>
+                <ul class="unordered-list">
+                    @if (Model.Bands.Count > 0)
+                    {
+                        foreach (var band in Model.Bands)
+                        {
+                            <li>
+                                @band.Name
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            No bands
+                        </li>
+                    }
+                </ul>
+                <dt>
+                    <label class="col-md-12"><strong>Song name</strong></label>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    <label class="col-md-12"><strong>Song</strong></label>
+                </dt>
+
+                <dd>
+                    <audio controls preload="metadata">
+                        <source src="@Url.Content("/songs/"+ Model.Id +"/" + Model.FileName)" type="audio/mp3">
+                    </audio>
+                </dd>
+
+            </dl>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

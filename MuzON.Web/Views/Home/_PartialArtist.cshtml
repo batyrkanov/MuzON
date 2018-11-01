@@ -1,0 +1,87 @@
+﻿@model MuzON.Web.Models.ArtistViewModel
+@{
+    Layout = null;
+}
+
+<div class="container" id="small-dialog">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3><strong>Artist details page</strong></h3>
+            <hr />
+        </div>
+        @* Image *@
+        <div class="col-md-4 imageClass">
+            <h3><strong>Photo</strong></h3>
+            <a href="data:image/jpeg;base64,@Model.Image" class="see-img">
+                <img class="image img-fluid" src="data:image/jpeg;base64,@Model.Image" style="width: auto; display: inline-block;" />
+            </a>
+        </div>
+        <br />
+        @* Info *@
+        <div class="col-md-4">
+            <h3><strong>Info</strong></h3>
+            <ul class="unordered-list">
+                <li><strong>Artist full name:</strong> @Html.DisplayFor(model => model.FullName)</li>
+                <li><strong>Country name:</strong> @Html.DisplayFor(model => model.Country.Name)</li>
+                <li><strong>Birth date:</strong> @Html.DisplayFor(model => model.BirthDate)</li>
+
+            </ul>
+        </div>
+        @* Bands *@
+        <div class="col-md-4">
+            <h3><strong>Bands</strong></h3>
+            <ul class="unordered-list">
+                @if (Model.Bands != null && Model.Bands.Count > 0)
+                {
+                    foreach (var band in Model.Bands)
+                    {
+                        <li>@band.Name</li>
+                    }
+                }
+                else
+                {
+                    <li>No bands</li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-12"><br /><hr></div>
+        @* Songs *@
+        <div class="col-md-12 text-center">
+            <h3><strong>Songs</strong></h3>
+            <ul>
+                @if (Model.Songs != null && Model.Songs.Count > 0)
+                {
+                    foreach (var song in Model.Songs)
+                    {
+                <li>
+                    <hr />
+                    <p>@song.Name</p>
+                    <audio controls preload="metadata">
+                        <source src="@Url.Content("/songs/"+ song.Id +"/" + song.FileName)" type="audio/mp3">
+                    </audio>
+                </li>
+                
+                    }
+                }
+                else
+                {
+                    <li>
+                        No songs
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-12"><hr></div>
+        @* Comments *@
+        <div class="col-md-12 text-center">
+            <p>Here will be comments.</p>
+        </div>
+    </div>
+</div>
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $('audio').mediaelementplayer();
+    });
+</script>    
+}

@@ -1,0 +1,16 @@
+﻿@model MuzON.Web.Models.PlaylistViewModel
+
+
+<ul class="unordered-list partial">
+    @if (Model.Comments.Count > 0)
+    {
+        foreach (var item in Model.Comments)
+        {
+            <li>@item.Text</li>
+        }
+    }
+    else
+    {
+        <li>No comments</li>
+    }
+</ul>

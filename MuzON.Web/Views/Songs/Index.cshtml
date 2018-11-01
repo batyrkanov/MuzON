@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MuzON.Web.Models.SongViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+<section class="portfolio-area section-gap" id="portfolio">
+    <br />
+    <br />
+    <div class="container" id="addButton">
+        <h2>Songs</h2>
+    </div>
+    <br />
+    <div class="container">
+
+        <table id="tableSongsGrid" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Song Name</th>
+                    <th>File Name</th>
+                    <th>Song</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="container" id="addButton">
+            <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-url="@Url.Action("Create","Songs")" id="btnCreateSong">
+                <span class="fa fa-plus-circle" aria-hidden="true"></span> Add Song
+            </button>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="createSongModal" tabindex="-1" role="dialog" aria-labelledby="CreateSongModal" aria-hidden="true" data-backdrop="static">
+    <div id="createSongContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="editSongModal" tabindex="-1" role="dialog" aria-labelledby="CreateSongModal" aria-hidden="true" data-backdrop="static">
+    <div id="editSongContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="deleteSongModal" tabindex="-1" role="dialog" aria-labelledby="DeleteSongModal" aria-hidden="true" data-backdrop="static">
+    <div id="deleteSongContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="detailsSongModal" tabindex="-1" role="dialog" aria-labelledby="DetailsSongModal" aria-hidden="true" data-backdrop="static">
+    <div id="detailsSongContainer">
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/songsGrid.js"></script>
+}

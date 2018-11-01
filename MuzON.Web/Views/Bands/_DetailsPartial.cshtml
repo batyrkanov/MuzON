@@ -1,0 +1,72 @@
+﻿@model MuzON.Web.Models.BandViewModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Band Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+
+                <dd>
+                    <img id="imageSize" src="data:image/jpeg;base64,@Model.Image" />
+                </dd>
+
+                <dt>
+                    <label>Country</label>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Country.Name)
+                </dd>
+                <dt>
+                    <label>Artists</label>
+                </dt>
+                @if (Model.Artists.Count >= 1)
+                {
+                    foreach (var item in Model.Artists)
+                    {
+                        <dd>
+                            - @item.FullName
+                        </dd>
+                    }
+                }
+                else
+                {
+                    <dd>
+                        <strong>No Artists</strong>
+                    </dd>
+                }
+
+
+            </dl>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

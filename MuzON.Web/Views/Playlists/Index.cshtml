@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MuzON.Web.Models.PlaylistViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+<section class="portfolio-area section-gap" id="portfolio">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">All Playlists</h1>
+                    <p>You can add your playlist.</p>
+                </div>
+            </div>
+        </div>
+        <div class="filters">
+            <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-url="@Url.Action("Create", "Playlists")" id="btnCreatePlayList">
+                <span class="fa fa-plus-circle" aria-hidden="true"></span> Add Playlist
+            </button>
+        </div>
+        <div class="filters-content">
+            <div class="row grid">
+                @foreach (var item in Model)
+                {
+                    <div class="single-portfolio col-sm-4 all artist">
+                        <div class="relative">
+                            <div class="thumb">
+                                <div class="overlay overlay-bg"></div>
+                                <img class="image img-fluid rounded" src="data:image/jpeg;base64,@item.Image" alt="">
+                            </div>
+                            <a href="@Url.Action("Details","Playlists", new { id = item.Id})" class="img-pop-up">
+                                <div class="middle" style="left: 35%;">
+                                    <div class="text align-self-center d-flex"><img src="@Url.Content("~/Content/images/preview.png")" alt=""></div>
+                                </div>
+                            </a>
+                            <a href="data:image/jpeg;base64,@item.Image" class="see-img">
+                                <div class="middle" style="left: 65%;">
+                                    <div class="text align-self-center d-flex"><i class="fa fa-file-image-o"></i></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="p-inner">
+                            <h4>@item.Name</h4>
+                            <div class="cat">@item.Songs.Count - Songs in playlist | @item.Comments.Count - Comments | Rate - @Math.Round(item.Rating, 1)</div>
+                            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="@Url.Action("Edit","Playlists", new { id = item.Id})" id="btnCreatePlayList">
+                                <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit
+                            </button>
+                            <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="@Url.Action("Delete","Playlists", new { id = item.Id})" id="btnDeletePlaylist">
+                                <span class="fa fa-trash" aria-hidden="true"></span> Delete
+                            </button>
+                        </div>
+                        
+                    </div>
+
+                }
+                @if (Model == null || !(Model.Count() > 0))
+                {
+                    <div class="single-portfolio col-sm-12 all text-center">
+                        <h3>No playlists</h3>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div class="modal fade" id="createPlayListModal" tabindex="-1" role="dialog" aria-labelledby="CreatePlayListModal" aria-hidden="true" data-backdrop="static">
+    <div id="createPlayListContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="deletePlayListModal" tabindex="-1" role="dialog" aria-labelledby="DeletePlayListModal" aria-hidden="true" data-backdrop="static">
+    <div id="deletePlayListContainer">
+    </div>
+</div>
