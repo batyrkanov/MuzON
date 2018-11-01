@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using MuzON.BLL.DTO;
 using MuzON.BLL.Interfaces;
+using MuzON.Common.Common;
 using MuzON.Web.App_Start;
 using MuzON.Web.Models;
 using System;
@@ -23,6 +24,7 @@ namespace MuzON.Web.Controllers
         public IPlayListService playListService;
         public ICommentService commentService;
         public Utility.Util util = new Utility.Util();
+        public CommonLogger logger = new CommonLogger();
 
         // Artists and Bands controller constructor
         public BaseController(IBandService bandServ,

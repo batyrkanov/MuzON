@@ -164,6 +164,11 @@ namespace MuzON.Web.Controllers
                 var result = await CreateAsync(userDto);
                 if (result.Succeeded)
                 {
+                    logger.InfoLog("Register",
+                            "registered",
+                            model.Email,
+                            model.Id,
+                            User.Identity.Name);
                     return Json(new { data = "success" });
                 }
                 else

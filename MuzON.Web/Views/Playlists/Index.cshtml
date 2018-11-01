@@ -40,7 +40,10 @@
                         </div>
                         <div class="p-inner">
                             <h4>@item.Name</h4>
-                            <div class="cat">@item.Songs.Count - Songs in playlist | @item.Comments.Count - Comments | Rate - @Math.Round(item.Rating,1)</div>
+                            <div class="cat">@item.Songs.Count - Songs in playlist | @item.Comments.Count - Comments | Rate - @Math.Round(item.Rating, 1)</div>
+                            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-url="@Url.Action("Edit","Playlists", new { id = item.Id})" id="btnCreatePlayList">
+                                <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit
+                            </button>
                             <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-url="@Url.Action("Delete","Playlists", new { id = item.Id})" id="btnDeletePlaylist">
                                 <span class="fa fa-trash" aria-hidden="true"></span> Delete
                             </button>
@@ -49,7 +52,6 @@
                     </div>
 
                 }
-                
                 @if (Model == null || !(Model.Count() > 0))
                 {
                     <div class="single-portfolio col-sm-12 all text-center">

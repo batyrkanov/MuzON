@@ -108,7 +108,25 @@ $("#btnCreatePlayList").on("click", function () {
     });
 
 });
+$(".artist").on("click", "#btnCreatePlayList", function () {
 
+    var url = $(this).data("url");
+
+    $.get(url, function (data) {
+        $('#createPlayListContainer').html(data);
+
+        $('#createPlayListModal').modal('show');
+
+        $('.chosen-select').chosen({
+            no_results_text: "Oops, nothing found!",
+            placeholder_text_multiple: "Please, select some option",
+            hide_results_on_select: false
+        }).on('change', function (obj, result) {
+            console.debug("changed: %o", arguments);
+        });
+    });
+
+});
 $(".artist").on("click", "#btnDeletePlaylist", function () {
 
     var url = $(this).data("url");

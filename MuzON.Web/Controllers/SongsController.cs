@@ -72,6 +72,11 @@ namespace MuzON.Web.Controllers
                     var songDTO = Mapper.Map<SongDTO>(songViewModel);
                     songService.AddSong(songDTO);
                     SaveSong(song, songDTO.Id);
+                    logger.InfoLog("Song",
+                            "added",
+                            songDTO.FileName,
+                            songDTO.Id,
+                            User.Identity.Name);
                 }
                 return Json(new { data = "success" });
             }
@@ -101,6 +106,11 @@ namespace MuzON.Web.Controllers
                 songViewModel.Genres = GetAllGenres(songViewModel.SelectedGenres).Where(x => x.IsSelected).ToList();
                 var songDTO = Mapper.Map<SongDTO>(songViewModel);
                 songService.UpdateSong(songDTO);
+                logger.InfoLog("Song",
+                            "edited",
+                            songDTO.FileName,
+                            songDTO.Id,
+                            User.Identity.Name);
                 foreach (var song in songs)
                 {
                     SaveSong(song, songDTO.Id);
@@ -128,6 +138,11 @@ namespace MuzON.Web.Controllers
             var songDTO = songService.GetSongById(id);
             songService.DeleteSong(songDTO);
             DeleteSong(songDTO.Id);
+            logger.InfoLog("Song",
+                            "edited",
+                            songDTO.FileName,
+                            songDTO.Id,
+                            User.Identity.Name);
             return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
         }
 

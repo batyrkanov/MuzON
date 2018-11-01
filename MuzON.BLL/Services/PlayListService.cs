@@ -36,7 +36,7 @@ namespace MuzON.BLL.Services
         {
             var playlist = Mapper.Map<Playlist>(playlistDTO);
             var ratings = _unitOfWork.Ratings.SearchFor(x => x.PlaylistId == playlist.Id).ToList();
-            if(ratings.Count > 0)
+            if (ratings.Count > 0)
             {
                 foreach (var rating in ratings)
                 {
@@ -82,6 +82,32 @@ namespace MuzON.BLL.Services
                 rating.Song = _unitOfWork.Songs.Get(rating.SongId);
             rating.User = _unitOfWork.Users.Get(rating.UserId);
             _unitOfWork.Ratings.Create(rating);
+            _unitOfWork.Save();
+        }
+
+        public void UpdatePlaylist(PlaylistDTO playlistDTO)
+        {
+            var playlist = _unitOfWork.Playlists.Get(playlistDTO.Id);
+            Mapper.Map(playlistDTO, playlist);
+            if (playlist.Songs.Count > 0)
+            {
+                playlist.Songs.Clear();
+                foreach (var song in _unitOfWork.Songs.SearchFor(x => playlistDTO.Songs.Select(i => i.Id).Contains(x.Id)))
+                {
+                    playlist.Songs.Add(song);
+                }
+            }
+
+            if (playlist.Comments.Count > 0 && playlist.Comments != null)
+            {
+                playlist.Comments.Clear();
+                foreach (var comment in _unitOfWork.Comments.SearchFor(x => playlistDTO.Comments.Select(i => i.Id).Contains(x.Id)))
+                {
+                    playlist.Comments.Add(comment);
+                }
+            }
+
+            _unitOfWork.Playlists.Update(playlist);
             _unitOfWork.Save();
         }
     }

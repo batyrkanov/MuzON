@@ -70,6 +70,11 @@ namespace MuzON.Web.Controllers
 
                 bandDTO.Image = util.SetImage(Request.Files["uploadImage"], bandDTO.Image);
                 bandService.AddBand(bandDTO);
+                logger.InfoLog("Band",
+                            "created",
+                            bandDTO.Name,
+                            bandDTO.Id,
+                            User.Identity.Name);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
@@ -104,6 +109,11 @@ namespace MuzON.Web.Controllers
                 var bandDTO = Mapper.Map<BandViewModel, BandDTO>(bandViewModel);
                 bandDTO.Image = util.SetImage(Request.Files["uploadImage"], bandDTO.Image, Request.Form["image"]);
                 bandService.UpdateBand(bandDTO);
+                logger.InfoLog("Band",
+                            "edited",
+                            bandDTO.Name,
+                            bandDTO.Id,
+                            User.Identity.Name);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), bandViewModel.CountryId);
@@ -127,6 +137,11 @@ namespace MuzON.Web.Controllers
         {
             var bandDTO = bandService.GetBandById(id);
             bandService.DeleteBand(bandDTO);
+            logger.InfoLog("Band",
+                            "deleted",
+                            bandDTO.Name,
+                            bandDTO.Id,
+                            User.Identity.Name);
             return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
         }
 

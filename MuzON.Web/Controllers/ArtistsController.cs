@@ -74,6 +74,11 @@ namespace MuzON.Web.Controllers
                 artistDTO.Id = Guid.NewGuid();
                 artistDTO.Image = util.SetImage(Request.Files["uploadImage"], artistDTO.Image);
                 artistService.AddArtist(artistDTO);
+                logger.InfoLog("Artist",
+                            "created",
+                            artistDTO.FullName,
+                            artistDTO.Id,
+                            User.Identity.Name);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries());
@@ -106,6 +111,11 @@ namespace MuzON.Web.Controllers
                 var artistDTO = Mapper.Map<ArtistViewModel, ArtistDTO>(artistViewModel);
                 artistDTO.Image = util.SetImage(Request.Files["uploadImage"], artistDTO.Image, Request.Form["image"]);
                 artistService.UpdateArtist(artistDTO);
+                logger.InfoLog("Artist",
+                            "edited",
+                            artistDTO.FullName,
+                            artistDTO.Id,
+                            User.Identity.Name);
                 return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
             }
             ViewBag.CountryId = util.GetSelectListItems<CountryDTO, CountryViewModel>(countryService.GetCountries(), artistViewModel.CountryId);
@@ -130,6 +140,11 @@ namespace MuzON.Web.Controllers
         {
             var artistDTO = artistService.GetArtistById(id);
             artistService.DeleteArtist(artistDTO);
+            logger.InfoLog("Artist",
+                            "deleted",
+                            artistDTO.FullName,
+                            artistDTO.Id,
+                            User.Identity.Name);
             return Json(new { data = "success" }, JsonRequestBehavior.AllowGet);
         }
 
