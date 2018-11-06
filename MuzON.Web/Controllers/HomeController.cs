@@ -48,6 +48,20 @@ namespace MuzON.Web.Controllers
             return View();
         }
 
+        public ActionResult AboutArtist(Guid id)
+        {
+            var artistDto = artistService.GetArtistById(id);
+            var artist = Mapper.Map<ArtistViewModel>(artistDto);
+            return View(artist);
+        }
+
+        public ActionResult AboutBand(Guid id)
+        {
+            var bandDto = bandService.GetBandById(id);
+            var band = Mapper.Map<BandViewModel>(bandDto);
+            return View(band);
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

@@ -2,8 +2,12 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using MuzON.DAL.EF;
+using MuzON.DAL.Identity;
+using MuzON.Domain.Identity;
 using MuzON.Web.App_Start;
 using Owin;
+using System;
+using System.Linq;
 
 [assembly: OwinStartup(typeof(MuzON.Web.Startup))]
 namespace MuzON.Web
@@ -21,38 +25,38 @@ namespace MuzON.Web
             app.CreatePerOwinContext(MuzONContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
-            //createRolesandUsers();
+            createRolesandUsers();
         }
 
-        //private void createRolesandUsers()
-        //{
-        //    MuzONContext context = new MuzONContext("DefaultConnection");
-        //    var roleStore = new RoleStore(context);
-        //    var userStore = new UserStore(context);
-        //    var roleManager = new ApplicationRoleManager(roleStore);
-        //    var UserManager = new ApplicationUserManager(userStore);
+        private void createRolesandUsers()
+        {
+            MuzONContext context = new MuzONContext("DefaultConnection");
+            var roleStore = new RoleStore(context);
+            var userStore = new UserStore(context);
+            var roleManager = new ApplicationRoleManager(roleStore);
+            var UserManager = new ApplicationUserManager(userStore);
 
 
-        //    if (!context.Roles.Any(r => r.Name == "admin"))
-        //    {
-        //        var role = new Role { Id = Guid.NewGuid(), Name = "admin" };
-        //        roleManager.Create(role);
+            if (!context.Roles.Any(r => r.Name == "admin"))
+            {
+                var role = new Role { Id = Guid.NewGuid(), Name = "admin" };
+                roleManager.Create(role);
 
-        //        var user = new User();
-        //        user.Id = Guid.NewGuid();
-        //        user.Email = "admin@admin.com";
-        //        user.UserName = user.Email;
+                var user = new User();
+                user.Id = Guid.NewGuid();
+                user.Email = "admin@admin.com";
+                user.UserName = user.Email;
 
-        //        string userPWD = "123123";
+                string userPWD = "123123";
 
-        //        var chkUser = UserManager.Create(user, userPWD);
+                var chkUser = UserManager.Create(user, userPWD);
 
-        //        if (chkUser.Succeeded)
-        //        {
-        //            var result1 = UserManager.AddToRole(user.Id, "admin");
+                if (chkUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRole(user.Id, "admin");
 
-        //        }
-        //    }
-        //}
+                }
+            }
+        }
     }
 }

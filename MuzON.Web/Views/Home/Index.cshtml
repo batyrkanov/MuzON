@@ -45,7 +45,7 @@
                         </a>
                     </div>
                     <div class="p-inner">
-                        <h4>@a.FullName</h4>
+                        <h4><a href="@Url.Action("AboutArtist", "Home", new { id = a.Id })">@a.FullName</a></h4>
                         <div class="cat">@a.Country.Name</div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                                 </a>
                             </div>
                             <div class="p-inner">
-                                <h4>@b.Name</h4>
+                                <h4><a href="@Url.Action("AboutBand", "Home", new { id = b.Id })">@b.Name</a></h4>
                                 <div class="cat">@b.Country.Name</div>
                             </div>
                         </div>

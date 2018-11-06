@@ -1,0 +1,80 @@
+﻿@model MuzON.Web.Models.ArtistViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start about Area -->
+<section class="home-about-area section-gap">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-6 col-md-6 home-about-left">
+                <img class="img-fluid" src="data:image/jpeg;base64,@Model.Image" alt="">
+            </div>
+            <div class="col-lg-5 col-md-6 home-about-right">
+                <h1 class="text-uppercase">About @Model.FullName</h1>
+                <p>
+                    <h3><strong>General information</strong></h3>
+                    <ul class="unordered-list">
+                        <li><strong>Artist full name:</strong> <span><b class="bold">@Html.DisplayFor(model => model.FullName)</b></span> </li>
+                        <li><strong>Country name: </strong> <span><b class="bold">@Html.DisplayFor(model => model.Country.Name)</b></span></li>
+                        <li><strong>Birth date: </strong> <span><b class="bold">@Html.DisplayFor(model => model.BirthDate)</b></span></li>
+
+                    </ul>
+                    <br />
+                    <hr />
+                    <h3><strong>Bands</strong></h3>
+                    <ul class="unordered-list">
+                        @if (Model.Bands != null && Model.Bands.Count > 0)
+                        {
+                            foreach (var band in Model.Bands)
+                            {
+                                <li class="mt-10">
+                                    <span>
+                                        <b class="bold">
+                                            <a href="@Url.Action("AboutBand", new { id = band.Id})">@band.Name</a>
+                                        </b>
+                                    </span>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>No bands</li>
+                        }
+                    </ul>
+                </p>
+            </div>
+            <div class="col-lg-12 pt-60 text-center">
+                <p>
+                    <h3><strong>Songs</strong></h3>
+                    <ul>
+                        @if (Model.Songs != null && Model.Songs.Count > 0)
+                        {
+                            foreach (var song in Model.Songs)
+                            {
+                                <li>
+                                    <hr />
+                                    Song name:<span>
+                                        <b class="bold">
+                                            @song.Name
+                                        </b>
+                                    </span> <br />
+                                    <audio class="mt-10" controls preload="metadata">
+                                        <source src="@Url.Content("/songs/"+ song.Id +"/" + song.FileName)" type="audio/mp3">
+                                    </audio>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                No songs
+                            </li>
+                        }
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End about Area -->

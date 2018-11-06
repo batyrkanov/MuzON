@@ -4621,3 +4621,8 @@ footer {
         background: #4CAF50; /* Green background */
         cursor: pointer; /* Cursor on hover */
     }
+.bold{
+    color: black;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
