@@ -347,37 +347,6 @@ iframe {
     position: relative;
 }
 
-.alert-validate .focus-input100 {
-    box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-    -moz-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-    -webkit-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-    -o-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-    -ms-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-}
-
-.alert-validate::before {
-    content: attr(data-validate);
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    min-height: 62px;
-    background-color: #fff;
-    border-radius: 20px;
-    top: 0px;
-    left: 0px;
-    padding: 0 45px 0 22px;
-    pointer-events: none;
-    font-family: SourceSansPro-Bold;
-    font-size: 16px;
-    color: #fa4251;
-    line-height: 1.2;
-}
-
 .btn-hide-validate {
     font-family: Material-Design-Iconic-Font;
     font-size: 15px;
@@ -395,30 +364,6 @@ iframe {
     top: 0px;
     right: 23px;
 }
-
-.rs1-alert-validate.alert-validate::before {
-    background-color: #fff;
-}
-
-.true-validate::after {
-    content: "\f269";
-    font-family: Material-Design-Iconic-Font;
-    font-size: 15px;
-    color: #57b846;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    height: 62px;
-    top: 0px;
-    right: 23px;
-}
-
-
 
 /*//////////////////////////////////////////////////////////////////
 [ Social item ]*/
